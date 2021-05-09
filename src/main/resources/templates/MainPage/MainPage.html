@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device width, initial-scale=1"  charset="utf-8">
+    <title> FinalProject </title>
+    <link href="../../static/css/styles_MainPage.css" type="text/css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="banner" id="home">
+
+    <!-- navbar -->
+    <div id="sideNav">
+        <nav>
+            <ul>
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#">FEATURES</a></li>
+                <li><a href="#services">SERVICES</a></li>
+                <li><a href="#our_work">OUR WORK</a></li>
+                <li><a href="#contact">MEET US</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div id="menuBtn">
+        <img src="../../static/css/images/menu1.png" alt="" id="menu">
+    </div>
+
+    <div class="text-banner">
+        <h1>Welcome to FinalProject</h1>
+        <p>The best shareable task organizer</p>
+        <!-- <a href="#contact" class=""><b>Contact us</b></a>-->
+        <a href="#login" >Get started</a>
+    </div>
+
+    <div class="svg-banner">
+        <svg class="wave-svg" viewBox="0 0 500 150" preserveAspectRatio="none">
+            <path class="wave-path" d="M-1.41,54.77 C166.76,231.41 382.89,-55.75 500.00,49.98 L551.06,257.06 L0.00,150.00 Z"></path>
+        </svg>
+    </div>
+</header>
+
+<section class="wave-container website">
+    <img src="../../static/css/images/girl_laptop.svg" alt="">
+    <div class="container-text-main">
+        <h2 class="title left">Title of Section</h2>
+        <p class="paragraph">asdgsdgrsr</p>
+        <a href="" class="cta">Learn more</a>
+    </div>
+</section>
+
+<section class="info">
+    <div class="container">
+        <h2 class="title left">Akdjna</h2>
+        <p>awebfnawijfbnajwefnewjkn</p>
+    </div>
+</section>
+
+<section class="cards container" id="services">
+    <h2 class="title">Our services</h2>
+    <div class="content-cards">
+        <article class="card">
+            <i class="fas fa-list-ul"></i>
+            <h3>Task Organizer</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <a href="" class="cta">Learn more</a>
+        </article>
+        <article class="card">
+            <i class="far fa-calendar-alt"></i>
+            <h3>Timetable and calendar</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <a href="" class="cta">Learn more</a>
+        </article>
+        <article class="card">
+            <i class="fas fa-hourglass-half"></i>
+            <h3>Timers</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <a href="" class="cta">Learn more</a>
+        </article>
+        <article class="card">
+            <i class="fas fa-share-alt"></i>
+            <h3>Share your productivity</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <a href="" class="cta">Learn more</a>
+        </article>
+    </div>
+</section>
+
+
+<section class="gallery">
+    <div class="container">
+        <h2 class="title" id="our_work">Our work</h2>
+        <article class="gallery-pics">
+            <img src="../../static/css/images/" alt="">
+            <img src="../../static/css/images/img1.jpg" alt="">
+            <img src="../../static/css/images/" alt="">
+            <img src="../../static/css/images/" alt="">
+            <img src="../../static/css/images/" alt="">
+            <img src="../../static/css/images/" alt="">
+        </article>
+    </div>
+</section>
+
+<section class="info-last">
+    <div class="container last-section">
+        <div class="container-text-main">
+            <h2 class="title left">Title of section</h2>
+            <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur dolor explicabo fugiat harum impedit laboriosam necessitatibus nisi optio placeat quia?</p>
+            <a href="" class="cta">Learn more</a>
+        </div>
+        <img src="../../static/css/images/boy_tasks.svg" alt="">
+    </div>
+</section>
+
+<footer id="contact">
+
+    <div class="svg-footer">
+        <svg class="wave-svg-2" viewBox="0 0 500 150" preserveAspectRatio="none">
+            <path class="wave-path-2" d="M0.00,49.98 C149.99,150.00 271.49,-49.98 500.00,49.98 L500.00,0.00 L0.00,0.00 Z"></path>
+        </svg>
+    </div>
+
+    <div class="container">
+        <h2 class="title">Contact us</h2>
+        <form action="" class="form">
+            <input class="input" type="text" name="" id="" placeholder="Name">
+            <input class="input" type="email" name="" id="" placeholder="Email">
+            <textarea class="input" name="" id="" cols="30" rows="10" placeholder="Message"></textarea>
+            <input class="input" type="submit" value="Submit">
+        </form>
+    </div>
+</footer>
+
+<script src="https://kit.fontawesome.com/d324f99f68.js" crossorigin="anonymous"></script>
+<script>
+    var menuBtn = document.getElementById("menuBtn")
+    var menuBtn = document.getElementById("sideNav")
+    var menuBtn = document.getElementById("menu")
+
+    sideNav.style.right = "-250px";
+
+    menuBtn.onclick = function(){
+        if(sideNav.style.right == "-250px"){
+            sideNav.style.right = "0";
+            menu.src = "images/close.png";
+        }
+        else{
+            sideNav.style.right = "-250px";
+            menu.src = "images/menu1.png";
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+
+src/test/java/com/bakaful/project2021/UserRepositoryTests.java
