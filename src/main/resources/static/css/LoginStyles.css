@@ -16,6 +16,10 @@ body{
     z-index: -1;
 }
 
+form{
+    max-height: 500px;
+}
+
 .container{
     width: 100vw;
     height: 100vh;
@@ -66,7 +70,7 @@ form{
 
 .input-div:after, .input-div:before{
     content: '';
-    postion: absolute;
+    position: absolute;
     bottom: -2px;
     width: 0%;
     height: 2px;
@@ -80,10 +84,9 @@ form{
 .input-div:after{
     left: 50%;
 }*/
-.input-div.focus:before, .input-div.focus:after{
-	width: 50%;
+.input-div.focus:after, .input-div.focus:before{
+	width: 100%;
 }
-
 
 .input-div.focus > .i > i{
     color: #c471ed;
@@ -92,7 +95,6 @@ form{
     top: -5px;
     font-size: 15px;
 }
-
 
 .login-container .input-div.one{
     margin-top: 0;
@@ -122,7 +124,7 @@ form{
     transform: translateY(-50%);
     color: #999;
     font-size: 18px;
-    transition: .3s;
+    transition: 0.3s;
 }
 
 .input-div > div > input{

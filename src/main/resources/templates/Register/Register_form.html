@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta name="viewport" content="width=device width, initial-scale=1"  charset="utf-8">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Poppins:600&display=swap}">
+  <link type="text/css" rel="stylesheet" href="../../static/css/LoginStyles.css" th:href="@{/css/LoginStyles.css}">
+  <script src="https://kit.fontawesome.com/a81368914c.js" th:src="@{https://kit.fontawesome.com/a81368914c.js}"></script>
+
+</head>
+<body>
+<img class="wave" src="../../static/images/wave.png" th:src="@{/images/wave.png}">
+<div class="container">
+  <div class="img">
+    <img src="../../static/images/login__img-removebg.png" th:src="@{/images/login__img-removebg.png}">
+  </div>
+  <div class="login-container">
+    <form th:action="@{/register-user}" method="post" th:object="${user}">
+      <img class="avatar" src="../../static/images/profile_pic.png" th:src="@{/images/profile_pic.png}">
+      <h2 class="title">Welcome</h2>
+      <div class="input-div one focus">
+        <div class="i">
+          <i class="fas fa-file-signature"></i>
+        </div>
+        <div class="div">
+          <h5>Email</h5>
+          <input type="email" class="input" th:field="*{email}" required>
+        </div>
+      </div>
+      <div class="input-div one focus">
+        <div class="i">
+          <i class="fas fa-lock"></i>
+        </div>
+        <div class="div">
+          <h5>Password</h5>
+          <input type="password" class="input" th:field="*{password}" required minlength="4" maxlength="10">
+        </div>
+      </div>
+      <div class="input-div one focus">
+        <div class="i">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="div">
+          <h5>First name</h5>
+          <input type="text" class="input" th:field="*{firstName}" required minlength="3" maxlength="20">
+        </div>
+      </div>
+      <div class="input-div one focus">
+        <div class="i">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="div">
+          <h5>Last name</h5>
+          <input type="text" class="input" th:field="*{lastName}" required minlength="3" maxlength="20">
+        </div>
+      </div>
+      <input type="submit" class="btn" value="Login">
+    </form>
+  </div>
+</div>
+<script type="text/javascript" src="../../static/js/form.js" ></script>
+</body>
+</html>

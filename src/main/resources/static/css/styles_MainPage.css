@@ -58,7 +58,7 @@ nav ul li a{
 /*-----*/
 .banner {
     background-size: cover;
-    background: -webkit-linear-gradient(120deg, rgba(246, 79, 89, 0.7), rgba(196, 113, 237, 0.7), rgba(18, 194, 233, 0.7)), url("images/banner.jpg") center;
+    background: -webkit-linear-gradient(120deg, rgba(246, 79, 89, 0.7), rgba(196, 113, 237, 0.7), rgba(18, 194, 233, 0.7)), url("../images/banner.jpg") center;
     position: relative;
     overflow: hidden;
     width: 100%;
@@ -281,7 +281,7 @@ nav ul li a{
 /*Footer*/
 
 footer {
-    background: -webkit-linear-gradient(120deg, rgba(246, 79, 89, 0.7), rgba(196, 113, 237, 0.7), rgba(18, 194, 233, 0.7)), url("images/footer.jpg") fixed center;
+    background: -webkit-linear-gradient(120deg, rgba(246, 79, 89, 0.7), rgba(196, 113, 237, 0.7), rgba(18, 194, 233, 0.7)), url("../images/footer.jpg") fixed center;
     color: #fff;
 }
 

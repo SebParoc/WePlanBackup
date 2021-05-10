@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device width, initial-scale=1"  charset="utf-8">
     <title> FinalProject </title>
-    <link href="../../static/css/styles_MainPage.css" type="text/css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="webjars/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link type=text/css rel="stylesheet" href="../../static/css/styles_MainPage.css" th:href="@{/css/styles_MainPage.css}">
+    <link rel="preconnect" href="https://fonts.gstatic.com" th:href="@{https://fonts.gstatic.com}">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap">
+    <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap}">
+
+
 </head>
 <body>
 <header class="banner" id="home">
@@ -24,14 +28,14 @@
         </nav>
     </div>
     <div id="menuBtn">
-        <img src="../../static/css/images/menu1.png" alt="" id="menu">
+        <img th:src="@{/images/menu1.png}" src="../../static/images/menu1.png" alt="" id="menu">
     </div>
 
     <div class="text-banner">
         <h1>Welcome to FinalProject</h1>
         <p>The best shareable task organizer</p>
         <!-- <a href="#contact" class=""><b>Contact us</b></a>-->
-        <a href="#login" >Get started</a>
+        <a th:href="@{/register}" >Get started</a>
     </div>
 
     <div class="svg-banner">
@@ -42,7 +46,7 @@
 </header>
 
 <section class="wave-container website">
-    <img src="../../static/css/images/girl_laptop.svg" alt="">
+    <img th:src="@{/images/girl_laptop.svg}" src="../../static/images/girl_laptop.svg" alt="">
     <div class="container-text-main">
         <h2 class="title left">Title of Section</h2>
         <p class="paragraph">asdgsdgrsr</p>
@@ -92,12 +96,12 @@
     <div class="container">
         <h2 class="title" id="our_work">Our work</h2>
         <article class="gallery-pics">
-            <img src="../../static/css/images/" alt="">
-            <img src="../../static/css/images/img1.jpg" alt="">
-            <img src="../../static/css/images/" alt="">
-            <img src="../../static/css/images/" alt="">
-            <img src="../../static/css/images/" alt="">
-            <img src="../../static/css/images/" alt="">
+            <img src="../../static/images/" alt="">
+            <img th:src="@{/images/img1.jpg}" src="../../static/images/img1.jpg" alt="">
+            <img src="../../static/images/" alt="">
+            <img src="../../static/images/" alt="">
+            <img src="../../static/images/" alt="">
+            <img src="../../static/images/" alt="">
         </article>
     </div>
 </section>
@@ -109,7 +113,7 @@
             <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur dolor explicabo fugiat harum impedit laboriosam necessitatibus nisi optio placeat quia?</p>
             <a href="" class="cta">Learn more</a>
         </div>
-        <img src="../../static/css/images/boy_tasks.svg" alt="">
+        <img th:src="@{/images/boy_tasks.svg}" src="../../static/images/boy_tasks.svg" alt="">
     </div>
 </section>
 
@@ -133,6 +137,7 @@
 </footer>
 
 <script src="https://kit.fontawesome.com/d324f99f68.js" crossorigin="anonymous"></script>
+<!--<script type="text/javascript" src="/static/js/SideMenu.js" th:src="@{/js/SideMenu.js}"></script>-->
 <script>
     var menuBtn = document.getElementById("menuBtn")
     var menuBtn = document.getElementById("sideNav")
