@@ -23,7 +23,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new CustomUserDetailsService();
+        return new WePlanUserDetailsService();
     }
 
     @Bean
