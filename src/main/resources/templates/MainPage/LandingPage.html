@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device width, initial-scale=1"  charset="utf-8">
     <title> FinalProject </title>
     <link type="text/css" rel="stylesheet" href="webjars/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link type=text/css rel="stylesheet" href="../../static/css/styles_MainPage.css" th:href="@{/css/styles_MainPage.css}">
+    <link type=text/css rel="stylesheet" href="../../static/css/styles_LandingPage.css" th:href="@{/css/styles_LandingPage.css}">
     <link rel="preconnect" href="https://fonts.gstatic.com" th:href="@{https://fonts.gstatic.com}">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap">
     <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap}">
@@ -19,7 +19,7 @@
     <div id="sideNav">
         <nav>
             <ul>
-                <li><a href="#home">HOME</a></li>
+                <li><a href="#home" th:href="@{/profile}">HOME</a></li>
                 <li><a href="#">FEATURES</a></li>
                 <li><a href="#services">SERVICES</a></li>
                 <li><a href="#our_work">OUR WORK</a></li>
@@ -36,8 +36,8 @@
         <p>The best shareable task organizer</p>
         <!-- <a href="#contact" class=""><b>Contact us</b></a>-->
         <a th:href="@{/register}" >Sign up</a>
-        <a th:href="@{/login}" >Log in</a>
-        <a th:href="@{/list_users}" >List All Users</a>
+        <!--<a th:href="@{/login}" >Log in</a>-->
+        <a th:href="@{/list_users}" >Get Started</a>
     </div>
 
     <div class="svg-banner">

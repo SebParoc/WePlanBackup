@@ -1,7 +1,12 @@
 package com.bakaful.project2021.domains;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+@SuppressWarnings("ALL")
 @Entity
 @Table(name = "users")
 public class User {
@@ -21,6 +26,14 @@ public class User {
 
     @Column(name = "last_name", nullable = false, length = 40)
     private String lastName;
+
+    @ElementCollection
+    private Map<String, Task> timetable = new HashMap<>();
+
+    private String friendCode;
+
+    @ElementCollection
+    private List<User> friendList = new ArrayList<>();
 
     public Long getId () {
         return id;
@@ -61,4 +74,36 @@ public class User {
     public void setLastName (String lastName) {
         this.lastName = lastName;
     }
+
+    public Map<String, Task> getTimetable () {
+        return timetable;
+    }
+
+    public void setTimetable (Map<String, Task> timetable) {
+        this.timetable = timetable;
+    }
+
+    public String getFriendCode () {
+        return friendCode;
+    }
+
+    public void setFriendCode (String friendCode) {
+        this.friendCode = friendCode;
+    }
+
+    public List<User> getFriendList () {
+        return friendList;
+    }
+
+    public void setFriendList (List<User> friendList) {
+        this.friendList = friendList;
+    }
+
+    @Override
+    public String toString () {
+        return "Email: " + getEmail()
+                + "\nName: " + getFirstName()
+                + " " + getLastName();
+    }
 }
+

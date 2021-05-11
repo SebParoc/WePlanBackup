@@ -16,7 +16,7 @@ import java.util.List;
 
 @SuppressWarnings("ALL")
 @Controller
-public class AppController {
+public class WePlanController {
 
     @Autowired
     private UserRepository userRepository;
