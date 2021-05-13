@@ -4,8 +4,10 @@ import com.bakaful.project2021.domains.Task;
 import com.bakaful.project2021.domains.User;
 import com.bakaful.project2021.repositories.TaskRepository;
 import com.bakaful.project2021.repositories.UserRepository;
+import com.bakaful.project2021.user_security.WePlanUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.cdi.Eager;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,7 +58,8 @@ public class    WePlanController {
     }
 
     @PostMapping("/created-task")
-    public String CreatedTask(Task task) {
+    public String CreatedTask(Task task, @AuthenticationPrincipal WePlanUserDetails user) {
+        task.setTaskOwner(user.getUsername());
         taskRepository.save(task);
         return "MainPage/MainPage";
     }

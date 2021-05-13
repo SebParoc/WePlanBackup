@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-  <a th:href="@{/create-task}">Create Task</a>
+<p style="font-size: 3em" sec:authentication="principal.fullName"></p>
+
+
+<a th:href="@{/create-task}">Create Task</a>
+
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sing out">
+</form>
 </body>
 </html>

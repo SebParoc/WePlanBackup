@@ -75,9 +75,13 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Map<String, Task> getTimetable () {
-        return timetable;
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
+
+    /*public Map<String, Task> getTimetable () {
+        return timetable;
+    }*/
 
     public void setTimetable (Map<String, Task> timetable) {
         this.timetable = timetable;
@@ -98,6 +102,7 @@ public class User {
     public void setFriendList (List<User> friendList) {
         this.friendList = friendList;
     }
+
 
     @Override
     public String toString () {
