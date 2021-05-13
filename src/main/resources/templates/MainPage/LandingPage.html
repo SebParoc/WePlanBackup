@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device width, initial-scale=1"  charset="utf-8">
-    <title> FinalProject </title>
+    <title> WePlan </title>
     <link type="text/css" rel="stylesheet" href="webjars/bootstrap/3.3.6/css/bootstrap.min.css">
     <link type=text/css rel="stylesheet" href="../../static/css/styles_LandingPage.css" th:href="@{/css/styles_LandingPage.css}">
     <link rel="preconnect" href="https://fonts.gstatic.com" th:href="@{https://fonts.gstatic.com}">
@@ -19,7 +19,7 @@
     <div id="sideNav">
         <nav>
             <ul>
-                <li><a href="#home" th:href="@{/profile}">HOME</a></li>
+                <li><a href="#home">HOME</a></li>
                 <li><a href="#">FEATURES</a></li>
                 <li><a href="#services">SERVICES</a></li>
                 <li><a href="#our_work">OUR WORK</a></li>
@@ -35,9 +35,9 @@
         <h1>Welcome to FinalProject</h1>
         <p>The best shareable task organizer</p>
         <!-- <a href="#contact" class=""><b>Contact us</b></a>-->
-        <a th:href="@{/register}" href="../Register_Login/Register_form.html" >Sign up</a>
+        <a href="../Register_Login/Register_form.html" th:href="@{/register}">Sign up</a>
         <!--<a th:href="@{/login}" >Log in</a>-->
-        <a th:href="@{/list_users}" >Get Started</a>
+        <a href="../MainPage/MainPage.html" th:href="@{/profile}" >User Area</a>
     </div>
 
     <div class="svg-banner">
@@ -52,7 +52,7 @@
     <div class="container-text-main">
         <h2 class="title left">Title of Section</h2>
         <p class="paragraph">asdgsdgrsr</p>
-        <a href="" class="cta">Learn more</a>
+        <a class="cta">Learn more</a>
     </div>
 </section>
 

@@ -16,7 +16,7 @@
     background-size: contain;
     background-position: left ;
     overflow: auto;
-    z-index: -1;
+    z-index: 1;
 }
 h1{
     top: 24vh;
@@ -39,6 +39,7 @@ a{
     width: 18vw;
     margin-top: 1vh;
     margin-right: 5%;
+    padding: 10px;
     text-align: center;
     text-decoration: none;
     background: -webkit-linear-gradient(#12c2e9, #c471ed);

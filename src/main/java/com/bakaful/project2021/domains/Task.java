@@ -1,5 +1,7 @@
 package com.bakaful.project2021.domains;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.*;
 
@@ -20,12 +22,15 @@ public class Task {
     @Column()
     private String description;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = false)
     private LocalDate date;
 
+    @DateTimeFormat(pattern = "HH:mm")
     @Column(nullable = false)
     private LocalTime startTime;
 
+    @DateTimeFormat(pattern = "HH:mm")
     @Column(nullable = false)
     private LocalTime endTime;
 

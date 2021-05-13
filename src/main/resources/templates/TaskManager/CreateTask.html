@@ -24,6 +24,15 @@
                     <i class="fas fa-file-signature"></i>
                 </div>
                 <div class="div">
+                    <h5>TaskOw</h5>
+                    <input type="text" class="input" th:field="*{taskOwner}" required>
+                </div>
+            </div>
+            <div class="input-div one focus">
+                <div class="i">
+                    <i class="fas fa-file-signature"></i>
+                </div>
+                <div class="div">
                     <h5>Name</h5>
                     <input type="text" class="input" th:field="*{name}" required>
                 </div>
@@ -70,7 +79,7 @@
                 </div>
                 <div class="div">
                     <h5>Priority</h5>
-                    <input type="text" class="input" th:field="*{description}" required>
+                    <input type="text" class="input" th:field="*{priority}" required>
                 </div>
             </div>
             <div class="input-div one focus">
@@ -79,7 +88,7 @@
                 </div>
                 <div class="div">
                     <h5>Viewable</h5>
-                    <input type="text" class="input" th:field="*{description}" required>
+                    <input type="text" class="input" th:field="*{viewable}" required>
                 </div>
             </div>
             <input type="submit" class="btn" value="Create task">
