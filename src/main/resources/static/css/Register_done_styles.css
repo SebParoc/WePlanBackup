@@ -49,8 +49,8 @@ a{
     .main_content {
         height: 70vh;
         padding-left: 50%;
-        background-image: url("../../static/images/login_1.png");
-        background-repeat: no-repeat ;
+        background-image: url("../images/login_1.png");
+        background-repeat: no-repeat;
         background-size: contain;
         background-size: 300px;
         background-position: center ;
