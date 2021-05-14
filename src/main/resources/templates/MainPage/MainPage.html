@@ -22,10 +22,12 @@
                         <ion-icon name="home-outline" class="nav__icon"></ion-icon>
                         <span class="nav__name">Dashboard</span>
                     </a>
+
                     <a href="#" class="nav__link">
                         <ion-icon name="chatbubbles-outline" class="nav__icon"></ion-icon>
                         <span class="nav__name">Contact us</span>
                     </a>
+
                     <div class="nav__link collapse">
                         <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
                         <span class="nav__name">Templates</span>
@@ -38,13 +40,22 @@
                             <a href="#" class="collapse__sublink">Members</a>
                         </ul>
                 </div>
-                    <a th:href="@{/create-task}" class="nav__link">
+
+                    <div class="nav__link collapse">
                         <ion-icon name="pie-chart-outline" class="nav__icon"></ion-icon>
-                        <span class="nav__name">Create task</span>
-                    </a>
+                        <span class="nav__name">Tasks</span>
+
+                        <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
+
+                        <ul class="collapse__menu">
+                            <a th:href="@{/create-task}">Create Task</a>
+                            <a th:href="@{/task-list}">Task list</a>
+                            <a th:href="@{/user-list}">User list</a>
+                        </ul>
+                    </div>
                     <div class="nav__link collapse">
                         <ion-icon name="people-outline" class="nav__icon"></ion-icon>
-                        <span class="nav__name">Add Friend</span>
+                        <span class="nav__name">Team</span>
 
                         <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
 
@@ -52,6 +63,11 @@
                             <a href="#" class="collapse__sublink">Data</a>
                             <a href="#" class="collapse__sublink">Group</a>
                             <a href="#" class="collapse__sublink">Members</a>
+                            <form th:action="@{/user-area}" method="post">
+                                <h5>Add friend</h5>
+                                <input type="text" th:value="${friendUsername}" name="friendUsername">
+                                <input type="submit">
+                            </form>
                         </ul>
                     </div>
                     <a href="#" class="nav__link">
@@ -60,40 +76,17 @@
                     </a>
                 </div>
             </div>
-            <a href="#" class="nav__link">
+            <form th:action="@{/logout}" method="post" class="nav__link">
                 <ion-icon name="log-out-outline" class="nav__icon"></ion-icon>
-                <span class="nav__name">Log Out</span>
-            </a>
-
+                <input type="submit" value="Log Out" class="nav__name">
+            </form>
         </nav>
     </div>
 
 
-    <h1>Welcome xxx</h1>
+    <h1>Welcome </h1>
 
 <h1 sec:authentication="principal.fullName"></h1>
-
-
-<a th:href="@{/create-task}">Create Task</a>
-<a th:href="@{/task-list}">Task list</a>
-<a th:href="@{/user-list}">User list</a>
-
-<form th:action="@{/user-area}" method="post">
-    <h5>Add friend</h5>
-    <input type="text" th:value="${friendUsername}" name="friendUsername">
-    <input type="submit">
-</form>
-
-
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign out">
-</form>
-    <form th:action="@{/profile}" method="post">
-        <h5>Add friend</h5>
-        <input type="text" th:value="${friendUsername}" name="friendUsername">
-        <input type="submit">
-    </form>
-
 
     <!-- ===== IONICONS ===== -->
     <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>

@@ -78,7 +78,7 @@ public class    WePlanController {
         User friendlyUser = userRepository.findByUsername(user.getUsername());
         List<Task> taskList = taskRepository.findAll()
                 .stream()
-                .filter(task -> friendlyUser.getFriendList().contains(task.getTaskOwner()))
+                .filter(task -> friendlyUser.getFriendList().contains(task.getTaskOwner())|| task.getTaskOwner().equals(friendlyUser.getUsername()))
                 .collect(Collectors.toList());
 
         model.addAttribute("listTasks", taskList);
