@@ -4,17 +4,92 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type=text/css rel="stylesheet" href="../../static/css/User_area_styles.css" th:href="@{/css/User_area_styles.css}">
+    <title>Welcome</title>
 </head>
-<body>
-<p style="font-size: 3em" sec:authentication="principal.fullName"></p>
+<body id="body-pd">
+
+    <div class="l-navbar" id="navbar">
+        <nav class="nav">
+            <div>
+                <div class="nav__brand">
+                    <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
+                    <a href="#" class="nav_logo">WePlan</a>
+                </div>
+                <div class="nav_list">
+                    <a href="#" class="nav__link active">
+                        <ion-icon name="home-outline" class="nav__icon"></ion-icon>
+                        <span class="nav__name">Dashboard</span>
+                    </a>
+                    <a href="#" class="nav__link">
+                        <ion-icon name="chatbubbles-outline" class="nav__icon"></ion-icon>
+                        <span class="nav__name">Contact us</span>
+                    </a>
+                    <div class="nav__link collapse">
+                        <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
+                        <span class="nav__name">Templates</span>
+
+                        <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
+
+                        <ul class="collapse__menu">
+                            <a href="#" class="collapse__sublink">Data</a>
+                            <a href="#" class="collapse__sublink">Group</a>
+                            <a href="#" class="collapse__sublink">Members</a>
+                        </ul>
+                </div>
+                    <a th:href="@{/create-task}" class="nav__link">
+                        <ion-icon name="pie-chart-outline" class="nav__icon"></ion-icon>
+                        <span class="nav__name">Create task</span>
+                    </a>
+                    <div class="nav__link collapse">
+                        <ion-icon name="people-outline" class="nav__icon"></ion-icon>
+                        <span class="nav__name">Add Friend</span>
+
+                        <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
+
+                        <ul class="collapse__menu">
+                            <a href="#" class="collapse__sublink">Data</a>
+                            <a href="#" class="collapse__sublink">Group</a>
+                            <a href="#" class="collapse__sublink">Members</a>
+                        </ul>
+                    </div>
+                    <a href="#" class="nav__link">
+                        <ion-icon name="settings-outline" class="nav__icon"></ion-icon>
+                        <span class="nav__name">Settings</span>
+                    </a>
+                </div>
+            </div>
+            <a href="#" class="nav__link">
+                <ion-icon name="log-out-outline" class="nav__icon"></ion-icon>
+                <span class="nav__name">Log Out</span>
+            </a>
+
+        </nav>
+    </div>
+
+
+    <h1>Welcome xxx</h1>
+
+<h1 sec:authentication="principal.fullName"></h1>
 
 
 <a th:href="@{/create-task}">Create Task</a>
 
 
 <form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sing out">
+    <input type="submit" value="Sign out">
 </form>
+    <form th:action="@{/profile}" method="post">
+        <h5>Add friend</h5>
+        <input type="text" th:value="${friendUsername}" name="friendUsername">
+        <input type="submit">
+    </form>
+
+
+    <!-- ===== IONICONS ===== -->
+    <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+    <script src="../../static/js/user_area.js" th:src="@{/js/user_area.js}"></script>
+
 </body>
 </html>

@@ -12,10 +12,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
@@ -39,53 +39,38 @@ public class QuoteRepositoryTests {
 
 
     @Test
-    public void testCreateQuote() {
+    public void testCreateQuote() throws IOException {
         List<Quote> quoteL = new ArrayList<>();
         Quote quote = new Quote();
-        String read= "";
+        String read = "";
+        Quote savedQuote;
+        Quote existQuote;
 
 
-        /*try {
-            Scanner scan = new Scanner(new File("/Users/ilariasantangelo/pp_202021_the_bakaful_team/src/Mot_quotes.txt"));
-            while(scan.hasNextLine()){
+        String fileName = "/Users/ilariasantangelo/pp_202021_the_bakaful_team/src/Mot_quotes.txt";
 
-                quote.setContent(scan.nextLine());
-                quoteL.add(quote);
-            }
+        List<String> lines = Files.readAllLines(Paths.get(fileName),
+                StandardCharsets.UTF_8);
+        lines.forEach(System.out::println);
+        lines.forEach(line-> quote.setContent(line)
+                        );
 
-            scan.close();
-            System.out.println("quote" +" " +quoteL);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }*/
-
-        String filename = "/src/Mot_quotes.txt";
-        File file = new File(filename);
-
-        try (Stream linesStream = Files.lines(file.toPath())) {
-            linesStream.forEach(line -> {
-                quote.setContent((String) line);
-                quoteL.add(quote);
-
-                //Quote existQuote = entityManager.find(Quote.class, savedQuote.getId());
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        for(Quote qute: quoteL){
-            quoteRepository.save(qute);
+        for(int i=0;i<=lines.size(); i--) {
+            savedQuote=quoteRepository.save(quote);
+            existQuote = entityManager.find(Quote.class, savedQuote.getId());
+            assertThat(quote.getContent()).isEqualTo(existQuote.getContent());
         }
 
 
-
-        System.out.println(quoteL);
-
-        assertThat(quote.getContent()).isEqualTo(quote.getContent());
+        }
     }
 
-}
+
+
+
+
+
+
 
 
 
