@@ -44,7 +44,15 @@ public class UserRepositoryTests {
         User user = userRepository.findByEmail(email);
 
         assertThat(user).isNotNull();
-        System.out.println(user);
+    }
+
+    @Test
+    public void testFindUserByUsername() {
+        String username = "SebParoc";
+
+        User user = userRepository.findByUsername(username);
+
+        assertThat(user).isNotNull();
     }
 
 }

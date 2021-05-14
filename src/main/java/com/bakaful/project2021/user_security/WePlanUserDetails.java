@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 public class WePlanUserDetails implements UserDetails{
 
@@ -26,6 +27,10 @@ public class WePlanUserDetails implements UserDetails{
 
     @Override
     public String getUsername () {
+        return user.getUsername();
+    }
+
+    public String getEmail() {
         return user.getEmail();
     }
 
@@ -47,6 +52,10 @@ public class WePlanUserDetails implements UserDetails{
     @Override
     public boolean isEnabled () {
         return true;
+    }
+
+    public List<String> getFriendList() {
+        return user.getFriendList();
     }
 
     public String getFullName() {

@@ -14,12 +14,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.sql.DataSource;
 
+//@SuppressWarnings("ALL")
 @Configuration
 @EnableWebSecurity
 public class WebSecConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private DataSource dataSource;
+   /* @Autowired
+    private DataSource dataSource;*/
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -48,19 +49,18 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/profile")
+                .antMatchers("/user-area", "/user-list", "/task-list")
                 .authenticated()
                 .anyRequest()
                 .permitAll()
                 .and()
                 .formLogin()
                 .usernameParameter("email")
-                .defaultSuccessUrl("/profile")
+                .defaultSuccessUrl("/user-area")
                 .permitAll()
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
                 .permitAll();
     }
-
 }

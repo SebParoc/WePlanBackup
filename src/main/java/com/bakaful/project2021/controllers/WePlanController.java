@@ -13,8 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("ALL")
 @Controller
@@ -46,7 +48,7 @@ public class    WePlanController {
         return "Register_Login/Register_done";
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/user-area")
     public String toHome() {
         return "MainPage/MainPage";
     }
@@ -64,12 +66,30 @@ public class    WePlanController {
         return "MainPage/MainPage";
     }
 
-    @GetMapping("/list_users")
+    @GetMapping("/user-list")
     public String viewUsersList(Model model) {
-
         List<User> userList = userRepository.findAll();
         model.addAttribute("listUsers", userList);
-
         return "Register_Login/User_list";
+    }
+
+    @GetMapping("/task-list")
+    public String viewTasksList(Model model, @AuthenticationPrincipal WePlanUserDetails user) {
+        User friendlyUser = userRepository.findByUsername(user.getUsername());
+        List<Task> taskList = taskRepository.findAll()
+                .stream()
+                .filter(task -> friendlyUser.getFriendList().contains(task.getTaskOwner()))
+                .collect(Collectors.toList());
+
+        model.addAttribute("listTasks", taskList);
+        return "TaskManager/Task_list";
+    }
+
+    @PostMapping("/user-area")
+    public String addFriend(@RequestParam String friendUsername, @AuthenticationPrincipal WePlanUserDetails user) {
+        User updateUser = userRepository.findByEmail(user.getEmail());
+        updateUser.getFriendList().add(friendUsername);
+        userRepository.save(updateUser);
+        return "Mainpage/Mainpage";
     }
 }
