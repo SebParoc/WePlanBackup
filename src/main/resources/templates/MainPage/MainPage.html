@@ -75,6 +75,14 @@
 
 
 <a th:href="@{/create-task}">Create Task</a>
+<a th:href="@{/task-list}">Task list</a>
+<a th:href="@{/user-list}">User list</a>
+
+<form th:action="@{/user-area}" method="post">
+    <h5>Add friend</h5>
+    <input type="text" th:value="${friendUsername}" name="friendUsername">
+    <input type="submit">
+</form>
 
 
 <form th:action="@{/logout}" method="post">
