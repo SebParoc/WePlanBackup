@@ -1,22 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta name="viewport" content="width=device width, initial-scale=1"  charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../static/css/LoginStyles.css">
+    <link rel="stylesheet" href="../static/css/LoginStyles.css" th:href="@{/css/LoginStyles.css}">
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
 
 </head>
 <body>
 
-<img class="wave" src="../../static/images/wave.png">
+
+<img class="wave" src="../static/images/wave.png" th:src="@{/images/wave.png}">
 <div class="container">
     <div class="img">
-        <img src="../../static/images/login__img-removebg.png">
+        <img src="../static/images/login__img-removebg.png" th:src="@{/images/login__img-removebg.png}">
     </div>
     <div class="login-container">
-        <form action="Login_form.html">
-        <img class="avatar" src="../../static/images/profile_pic.png">
+        <form name="f" th:action="@{/login}" method="post">
+        <img class="avatar" src="../static/images/profile_pic.png" th:src="@{/images/profile_pic.png}">
             <h2 class="title">Welcome</h2>
             <div class="input-div one focus">
                 <div class="i">
@@ -24,7 +25,7 @@
                 </div>
                 <div class="div">
                     <h5>Username</h5>
-                    <input type="text" class="input">
+                    <input type="text" class="input" th:required="required" id="username" name="username">
                 </div>
             </div>
             <div class="input-div two">
@@ -33,14 +34,17 @@
                 </div>
                 <div class="div">
                     <h5>Password</h5>
-                    <input type="password" class="input">
+                    <input type="password" class="input" id="password" name="password" th:required="required">
                 </div>
             </div>
             <a href="#">Forgot Password?</a>
             <input type="submit" class="btn" value="Login">
+            <div th:if="${param.error}" class="alert alert-error">
+                <p> [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+            </div>
         </form>
     </div>
 </div>
-<script type="text/javascript" src="/static/js/form.js"></script>
+<script type="text/javascript" src="/static/js/form.js" th:src="@{/js/form.js}"></script>
 </body>
 </html>
