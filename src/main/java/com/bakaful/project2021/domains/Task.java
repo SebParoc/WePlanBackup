@@ -38,7 +38,7 @@ public class Task {
     private String priority;
 
     @Column(nullable = false)
-    private String Viewable;
+    private String shareable;
 
     public Long getId () {
         return id;
@@ -104,11 +104,11 @@ public class Task {
         this.priority = priority;
     }
 
-    public String getViewable () {
-        return Viewable;
+    public String getShareable () {
+        return shareable;
     }
 
-    public void setViewable (String viewable) {
-        Viewable = viewable;
+    public void setShareable (String viewable) {
+        shareable = viewable;
     }
 }

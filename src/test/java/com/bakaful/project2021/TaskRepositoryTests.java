@@ -36,7 +36,7 @@ public class TaskRepositoryTests {
         task.setStartTime(LocalTime.of(10,30));
         task.setEndTime(LocalTime.of(12,30));
         task.setPriority("Extremely Important");
-        task.setViewable("Private");
+        task.setShareable("Private");
 
         Task savedTask = taskRepository.save(task);
         Task existTask = entityManager.find(Task.class, savedTask.getId());

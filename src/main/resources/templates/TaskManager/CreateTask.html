@@ -70,7 +70,12 @@
                 </div>
                 <div class="div">
                     <h5>Priority</h5>
-                    <input type="text" class="input" th:field="*{priority}" required>
+                    <select th:field="*{priority}">
+                        <option th:value="'Low'" th:text="'Low'"></option>
+                        <option th:value="'Medium'" th:text="'Medium'"></option>
+                        <option th:value="'High'" th:text="'High'"></option>
+                        <option th:value="'Very_high'" th:text="'Very high'"></option>
+                    </select>
                 </div>
             </div>
             <div class="input-div one focus">
@@ -78,8 +83,12 @@
                     <i class="fas fa-lock"></i>
                 </div>
                 <div class="div">
-                    <h5>Viewable</h5>
-                    <input type="text" class="input" th:field="*{viewable}" required>
+                    <h5>Share?</h5>
+                    <select th:field="*{shareable}">
+                        <option th:value="'Private'" th:text="'No, keep it private'"></option>
+                        <option th:value="'Only_friends'" th:text="'With friends'"></option>
+                        <option th:value="'Public'" th:text="'With everyone'"></option>
+                    </select>
                 </div>
             </div>
             <input type="submit" class="btn" value="Create task">
