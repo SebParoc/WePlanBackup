@@ -20,7 +20,7 @@ public class User {
     @Column(nullable = false, unique = true, length = 50)
     private String email;
 
-    @Column(nullable = false, unique = true, length = 12)
+    @Column(nullable = false, unique = true, length = 15)
     private String username;
 
     @Column(nullable = false, length = 64)
@@ -32,11 +32,8 @@ public class User {
     @Column(name = "last_name", nullable = false, length = 40)
     private String lastName;
 
-    @ElementCollection
-    private Map<String, Long> timetable = new HashMap<>();
-
-    @ElementCollection
-    private List<String> friendList = new ArrayList<>();
+    @ManyToMany
+    private List<User> friendList = new ArrayList<>();
 
     public Long getId () {
         return id;
@@ -90,20 +87,9 @@ public class User {
         return firstName + " " + lastName;
     }
 
-    public Map<String, Long> getTimetable () {
-        return timetable;
-    }
-
-    public void setTimetable (Map<String, Long> timetable) {
-        this.timetable = timetable;
-    }
-
-    public List<String> getFriendList () {
+    public List<User> getFriendList () {
         return friendList;
     }
 
-    public void setFriendList (List<String> friendList) {
-        this.friendList = friendList;
-    }
 }
 

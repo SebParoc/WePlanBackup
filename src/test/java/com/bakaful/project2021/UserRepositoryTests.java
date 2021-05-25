@@ -26,13 +26,37 @@ public class UserRepositoryTests {
     @Test
     public void testCreateUser() {
         User user = new User();
+        user.setUsername("sparoc");
         user.setEmail("spazrocha@gmail.com");
         user.setPassword("12345");
         user.setFirstName("Sebastian");
         user.setLastName("Paz");
 
+        User user1 = new User();
+        user1.setUsername("ilariaaaa");
+        user1.setEmail("isantangelo@gmail.com");
+        user1.setPassword("12345");
+        user1.setFirstName("Ilaria");
+        user1.setLastName("Santangelo");
+
+        User user2 = new User();
+        user2.setUsername("Concha");
+        user2.setEmail("Springdemierda@gmail.com");
+        user2.setPassword("12345");
+        user2.setFirstName("Fuck");
+        user2.setLastName("PP");
+
+        user.getFriendList().add(user1);
+        user1.getFriendList().add(user);
+        user.getFriendList().add(user2);
+        user2.getFriendList().add(user);
+
         User savedUser = userRepository.save(user);
+        userRepository.save(user1);
+        userRepository.save(user2);
         User existUser = entityManager.find(User.class, savedUser.getId());
+
+        System.out.println(user.getFriendList());
 
         assertThat(user.getEmail()).isEqualTo(existUser.getEmail());
     }

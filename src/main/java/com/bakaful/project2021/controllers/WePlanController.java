@@ -1,17 +1,20 @@
 package com.bakaful.project2021.controllers;
 
+import com.bakaful.project2021.domains.FriendRequest;
+import com.bakaful.project2021.domains.FriendRequestWrapper;
 import com.bakaful.project2021.domains.Task;
 import com.bakaful.project2021.domains.User;
+import com.bakaful.project2021.repositories.FriendRequestRepository;
 import com.bakaful.project2021.repositories.TaskRepository;
 import com.bakaful.project2021.repositories.UserRepository;
 import com.bakaful.project2021.user_security.WePlanUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.cdi.Eager;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,13 +23,16 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("ALL")
 @Controller
-public class    WePlanController {
+public class WePlanController {
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private FriendRequestRepository friendRequestRepository;
 
     @GetMapping("")
     public String viewHomePage() {
@@ -50,6 +56,33 @@ public class    WePlanController {
 
     @GetMapping("/user-area")
     public String toHome() {
+        return "MainPage/MainPage";
+    }
+
+    @PostMapping("/user-area")
+    public String userAreaFunctions(Model model, @RequestParam(value = "accepted", required = false) String accepted,
+                                    @AuthenticationPrincipal WePlanUserDetails user)
+    {
+        User currentUser = userRepository.findByEmail(user.getEmail());
+
+        /*FriendRequestWrapper friendRequestForm = new FriendRequestWrapper();*/
+        List<FriendRequest> friendRequestList = friendRequestRepository.findAll()
+                .stream()
+                .filter(friendRequest -> friendRequest.getRecipient() == currentUser)
+                .collect(Collectors.toList());
+
+        if(friendRequestRepository.count() != 0 && accepted != null) {
+
+            User otherUser = friendRequestList.get(0).getSender();
+            if(accepted.equals("Accept")) {
+                currentUser.getFriendList().add(friendRequestList.get(0).getSender());
+                otherUser.getFriendList().add(currentUser);
+            }
+            friendRequestRepository.delete(friendRequestList.get(0));
+        }
+
+        //friendRequestForm.addAllRequests(friendRequestList);
+        model.addAttribute("friendRequestList", friendRequestList);
         return "MainPage/MainPage";
     }
 
@@ -85,11 +118,14 @@ public class    WePlanController {
         return "TaskManager/Task_list";
     }
 
-    @PostMapping("/user-area")
+    @PostMapping("/user-area/add-friend")
     public String addFriend(@RequestParam String friendUsername, @AuthenticationPrincipal WePlanUserDetails user) {
-        User updateUser = userRepository.findByEmail(user.getEmail());
-        updateUser.getFriendList().add(friendUsername);
-        userRepository.save(updateUser);
+
+        FriendRequest newRequest = new FriendRequest();
+        newRequest.setSender(userRepository.findByEmail(user.getEmail()));
+        newRequest.setRecipient(userRepository.findByUsername(friendUsername));
+        friendRequestRepository.save(newRequest);
+
         return "Mainpage/Mainpage";
     }
 }

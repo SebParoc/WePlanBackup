@@ -63,7 +63,7 @@
                             <a href="#" class="collapse__sublink">Data</a>
                             <a href="#" class="collapse__sublink">Group</a>
                             <a href="#" class="collapse__sublink">Members</a>
-                            <form th:action="@{/user-area}" method="post">
+                            <form th:action="@{/user-area/add-friend}" method="post">
                                 <h5>Add friend</h5>
                                 <input type="text" th:value="${friendUsername}" name="friendUsername">
                                 <input type="submit">
@@ -85,6 +85,21 @@
 
 
     <h1>Welcome </h1>
+    <form th:action="@{/user-area}" method="post">
+        <input type="submit" value="See friend request">
+    </form>
+
+    <th:block th:each="friendRequest, friendrequestStat: ${friendRequestList}" th:unless="${friendrequestStat.index > 0}">
+        <h3><h3 th:text="${friendRequest.sender.getUsername}"></h3> sent you a friend request</h3>
+
+        <form th:action="@{/user-area}" method="post">
+            <input type="submit" name="accepted" th:text="${accepted}" th:value="'Accept'">
+            <input type="submit" name="accepted" th:text="${accepted}" th:value="'Reject'">
+        </form>
+        <form th:action="@{/user-area}" method="post">
+            <input type="submit" th:value="'Next request'">
+        </form>
+    </th:block>
 
 <h1 sec:authentication="principal.fullName"></h1>
 

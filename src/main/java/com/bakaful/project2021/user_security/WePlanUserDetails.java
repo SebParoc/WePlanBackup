@@ -54,7 +54,7 @@ public class WePlanUserDetails implements UserDetails{
         return true;
     }
 
-    public List<String> getFriendList() {
+    public List<User> getFriendList() {
         return user.getFriendList();
     }
 
