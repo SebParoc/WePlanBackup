@@ -1,7 +1,6 @@
 package com.bakaful.project2021.controllers;
 
 import com.bakaful.project2021.domains.FriendRequest;
-import com.bakaful.project2021.domains.FriendRequestWrapper;
 import com.bakaful.project2021.domains.Task;
 import com.bakaful.project2021.domains.User;
 import com.bakaful.project2021.repositories.FriendRequestRepository;
@@ -14,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
