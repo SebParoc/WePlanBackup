@@ -6,23 +6,25 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class LoginController {
 
-    @GetMapping("/login")
+   /* @GetMapping("/login")
     public String login(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication == null || authentication instanceof AnonymousAuthenticationToken){
-            return "login";
+            return "/login";
         }
         return "redirect:/MainPage";
-    }
-
-  /*  @PostMapping("/login")
-    public String loginSucc(){
-        return "MainPage/MainPage";
     }*/
+
+    /*@RequestMapping("login")
+    public String login(){
+        return "login";
+    }*/
+
 
 }
 

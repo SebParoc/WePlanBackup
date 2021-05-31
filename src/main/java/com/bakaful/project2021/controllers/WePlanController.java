@@ -14,8 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -91,8 +94,9 @@ public class WePlanController {
     }
 
     @PostMapping("/created-task")
-    public String CreatedTask(Task task, @AuthenticationPrincipal WePlanUserDetails user) {
-        task.setTaskOwner(user.getUsername());
+    public String CreatedTask(Task task, @AuthenticationPrincipal WePlanUserDetails userInfo) {
+        User user = userRepository.findByEmail(userInfo.getEmail());
+        task.getTaskOwners().add(user);
         taskRepository.save(task);
         return "MainPage/MainPage";
     }
@@ -104,7 +108,7 @@ public class WePlanController {
         return "Register_Login/User_list";
     }
 
-    @GetMapping("/task-list")
+   /* @GetMapping("/task-list")
     public String viewTasksList(Model model, @AuthenticationPrincipal WePlanUserDetails user) {
         User friendlyUser = userRepository.findByUsername(user.getUsername());
         List<Task> taskList = taskRepository.findAll()
@@ -114,7 +118,7 @@ public class WePlanController {
 
         model.addAttribute("listTasks", taskList);
         return "TaskManager/Task_list";
-    }
+    }*/
 
     @PostMapping("/user-area/add-friend")
     public String addFriend(@RequestParam String friendUsername, @AuthenticationPrincipal WePlanUserDetails user) {

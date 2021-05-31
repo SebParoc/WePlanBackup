@@ -15,6 +15,10 @@
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
+        <bootstrap.version>4.0.0-2</bootstrap.version>
+        <webjars-locator.version>0.30</webjars-locator.version>
+        <lombok.version>1.18.2</lombok.version>
+        <font-awesome.version>5.11.2</font-awesome.version>
     </properties>
     <dependencies>
         <dependency>
@@ -71,8 +75,18 @@
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator</artifactId>
+            <version>0.30</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
             <version>1.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>font-awesome</artifactId>
+            <version>5.11.2</version>
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
@@ -86,6 +100,12 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
             <version>5.4.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.2</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

@@ -4,6 +4,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tasks")
@@ -13,8 +15,8 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 50)
-    private String taskOwner;
+    @ManyToMany
+    private List<User> taskOwners = new ArrayList<>();
 
     @Column(nullable = false, length = 40)
     private String name;
@@ -48,12 +50,8 @@ public class Task {
         this.id = id;
     }
 
-    public String getTaskOwner () {
-        return taskOwner;
-    }
-
-    public void setTaskOwner (String taskOwner) {
-        this.taskOwner = taskOwner;
+    public List<User> getTaskOwners() {
+        return taskOwners;
     }
 
     public String getName () {
