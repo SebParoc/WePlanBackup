@@ -91,5 +91,11 @@ public class User {
         return friendList;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                '}';
+    }
 }
 

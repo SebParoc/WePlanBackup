@@ -56,7 +56,9 @@ public class WePlanController {
     }
 
     @GetMapping("/user-area")
-    public String toHome() {
+    public String userArea(Model model, @AuthenticationPrincipal WePlanUserDetails user) {
+        List<Task> taskList = taskRepository.findAll();
+        model.addAttribute("listTasks", taskList);
         return "MainPage/MainPage";
     }
 
@@ -108,17 +110,12 @@ public class WePlanController {
         return "Register_Login/User_list";
     }
 
-   /* @GetMapping("/task-list")
+    @GetMapping("/task-list")
     public String viewTasksList(Model model, @AuthenticationPrincipal WePlanUserDetails user) {
-        User friendlyUser = userRepository.findByUsername(user.getUsername());
-        List<Task> taskList = taskRepository.findAll()
-                .stream()
-                .filter(task -> friendlyUser.getFriendList().contains(task.getTaskOwner())|| task.getTaskOwner().equals(friendlyUser.getUsername()))
-                .collect(Collectors.toList());
-
+        List<Task> taskList = taskRepository.findAll();
         model.addAttribute("listTasks", taskList);
         return "TaskManager/Task_list";
-    }*/
+    }
 
     @PostMapping("/user-area/add-friend")
     public String addFriend(@RequestParam String friendUsername, @AuthenticationPrincipal WePlanUserDetails user) {
@@ -128,6 +125,17 @@ public class WePlanController {
         newRequest.setRecipient(userRepository.findByUsername(friendUsername));
         friendRequestRepository.save(newRequest);
 
+        return "Mainpage/Mainpage";
+    }
+
+    @PostMapping("/add-collaborator")
+    public String addCollaborator(@RequestParam String collaboratorUsername, @RequestParam String taskId){
+        Task task = taskRepository.getOne(Long.parseLong(taskId));
+        User collab = userRepository.findByUsername(collaboratorUsername);
+        System.out.println(task);
+        System.out.println(collab.getUsername());
+        System.out.println(task.getTaskOwners());
+        task.getTaskOwners().add(collab);
         return "Mainpage/Mainpage";
     }
 }

@@ -1,6 +1,8 @@
 package com.bakaful.project2021;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.shouldHaveThrown;
+
 import com.bakaful.project2021.domains.Task;
 import com.bakaful.project2021.repositories.TaskRepository;
 import org.junit.jupiter.api.Test;
@@ -28,7 +30,10 @@ public class TaskRepositoryTests {
 
     @Test
     public void testCreateTask() {
-        Task task = new Task();
+        Task task = taskRepository.getOne(Long.parseLong("4"));
+        System.out.println(task);
+        System.out.println(task.getTaskOwners());
+       /* Task task = new Task();
        // task.setTaskOwner("isantangelo@unibz.it");
         task.setName("Programming Project Assigment");
         task.setDescription("Regular expressions exercises");
@@ -41,7 +46,7 @@ public class TaskRepositoryTests {
         Task savedTask = taskRepository.save(task);
         Task existTask = entityManager.find(Task.class, savedTask.getId());
 
-       // assertThat(task.getTaskOwner()).isEqualTo(existTask.getTaskOwner());
+       // assertThat(task.getTaskOwner()).isEqualTo(existTask.getTaskOwner());*/
     }
 
 }

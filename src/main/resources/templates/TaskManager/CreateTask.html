@@ -91,7 +91,19 @@
                     </select>
                 </div>
             </div>
-            <input type="submit" class="btn" value="Create task">
+            <form th:action="@{/add-collaborator}" method="post">
+                <div class="input-div one focus">
+                    <div class="i">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Add collaborators</h5>
+                        <input type="text" class="input">
+                    </div>
+                </div>
+                <input type="submit" value="Add">
+            </form>
+            <input type="submit" value="Create task">
         </form>
     </div>
 </div>

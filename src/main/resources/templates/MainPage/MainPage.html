@@ -85,6 +85,7 @@
 
 
     <h1>Welcome </h1>
+    <h1 sec:authentication="principal.fullName"></h1>
     <form th:action="@{/user-area}" method="post">
         <input type="submit" value="See friend request">
     </form>
@@ -101,7 +102,25 @@
         </form>
     </th:block>
 
-<h1 sec:authentication="principal.fullName"></h1>
+    <div th:each="task: ${listTasks}">
+        <ul>
+            <li th:text="${task.name}">User ID</li>
+            <ul>
+                <li th:text="${task.name}">Name</li>
+                <li th:text="${task.description}">Description</li>
+                <li th:text="${task.date}">Date</li>
+                <li th:text="${task.startTime}">Start time</li>
+                <li th:text="${task.priority}">Priority</li>
+            </ul>
+        </ul>
+        <form th:action="@{/add-collaborator}" method="post">
+            <h5>Collaborator</h5>
+            <input type="text" th:value="${collaboratorUsername}" name="collaboratorUsername">
+            <input type="submit" th:value="${task.id}" name="taskId" th:text="${taskId}">
+        </form>
+    </div>
+
+
 
     <!-- ===== IONICONS ===== -->
     <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>

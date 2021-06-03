@@ -15,6 +15,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     @ManyToMany
     private List<User> taskOwners = new ArrayList<>();
 
@@ -108,5 +109,12 @@ public class Task {
 
     public void setShareable (String viewable) {
         shareable = viewable;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                '}';
     }
 }
