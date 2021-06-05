@@ -8,7 +8,10 @@ import com.bakaful.project2021.repositories.TaskRepository;
 import com.bakaful.project2021.repositories.UserRepository;
 import com.bakaful.project2021.user_security.WePlanUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -140,14 +143,20 @@ public class WePlanController {
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
 
-        if (error != null)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if(authentication==null || authentication instanceof AnonymousAuthenticationToken) {
+            return "login";
+        }
+            /* if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
 
         if (logout != null){
             model.addAttribute("message", "You have been logged out successfully.");
-        return "LandingPage";}
+        return "LandingPage";}*/
 
-        return "login";
+
+        return "redirect:/";
     }
 
 }

@@ -23,19 +23,19 @@
                 <div class="i">
                     <i class="fas fa-user"></i>
                 </div>
-                <div class="div">
-                    <h5>Username</h5>
+                <div class="input-container">
                     <span th:text="${message}"></span>
-                    <input type="text" class="input" th:required="required" id="username" name="username">
+                    <h5>Username</h5>
+                    <input type="text" class="input" th:required="required" id="username" name="username" placeholder=" ">
                 </div>
             </div>
             <div class="input-div two">
                 <div class="i">
                     <i class="fas fa-lock"></i>
                 </div>
-                <div class="div">
+                <div class="input-container">
                     <h5>Password</h5>
-                    <input type="password" class="input" id="password" name="password" th:required="required">
+                    <input type="password" class="input" id="password" name="password" placeholder=" ">
                 </div>
             </div>
             <a href="#">Forgot Password?</a>
@@ -43,9 +43,10 @@
             <div th:if="${param.error}" class="alert alert-error">
                 <p> [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
             </div>
-
         </form>
     </div>
+
+
 </div>
 <script type="text/javascript" src="/static/js/form.js" th:src="@{/js/form.js}"></script>
 </body>
