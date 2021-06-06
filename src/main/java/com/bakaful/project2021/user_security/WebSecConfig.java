@@ -49,13 +49,12 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/user-area", "/user-list", "/task-list", "/create-task")
+                .antMatchers("/user-area", "/profile", "/create-task")
                 .authenticated()
                 .anyRequest()
                 .permitAll()
                 .and()
                 .formLogin()
-                //.usernameParameter("email")
                 .loginPage("/login")
                 .defaultSuccessUrl("/user-area")
                 .permitAll()

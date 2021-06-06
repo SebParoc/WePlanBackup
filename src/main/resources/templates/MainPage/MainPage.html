@@ -86,23 +86,33 @@
 
     <h1>Welcome </h1>
     <h1 sec:authentication="principal.fullName"></h1>
-    <form th:action="@{/user-area}" method="post">
-        <input type="submit" value="See friend request">
-    </form>
+    <a th:href="@{/profile}" >View Profile</a>
 
-    <th:block th:each="friendRequest, friendrequestStat: ${friendRequestList}" th:unless="${friendrequestStat.index > 0}">
+    <th:block th:each="friendRequest, friendrequestStat: ${friendRequestList}">
         <h3><h3 th:text="${friendRequest.sender.getUsername}"></h3> sent you a friend request</h3>
 
-        <form th:action="@{/user-area}" method="post">
+        <form th:action="@{/user-area/manage-request}" method="post">
+            <input type="hidden" name="senderId" th:value="${friendRequest.sender.getId}">
             <input type="submit" name="accepted" th:text="${accepted}" th:value="'Accept'">
             <input type="submit" name="accepted" th:text="${accepted}" th:value="'Reject'">
         </form>
-        <form th:action="@{/user-area}" method="post">
-            <input type="submit" th:value="'Next request'">
-        </form>
     </th:block>
 
-    <div th:each="task: ${listTasks}">
+    <div th:each="task: ${personalTasks}">
+        <ul>
+            <li th:text="${task.name}">User ID</li>
+            <ul>
+                <li th:text="${task.name}">Name</li>
+                <li th:text="${task.description}">Description</li>
+                <li th:text="${task.date}">Date</li>
+                <li th:text="${task.startTime}">Start time</li>
+                <li th:text="${task.priority}">Priority</li>
+            </ul>
+            <a th:href="@{/user-area/remove-task(taskId=${task.id})}">Remove task</a>
+        </ul>
+    </div>
+
+    <div th:each="task: ${teamsTasks}">
         <ul>
             <li th:text="${task.name}">User ID</li>
             <ul>
@@ -113,11 +123,12 @@
                 <li th:text="${task.priority}">Priority</li>
             </ul>
         </ul>
-        <form th:action="@{/add-collaborator}" method="post">
+        <form th:action="@{/user-area/add-collaborator}" method="post">
             <h5>Collaborator</h5>
             <input type="text" th:value="${collaboratorUsername}" name="collaboratorUsername">
-            <input type="submit" th:value="${task.id}" name="taskId" th:text="${taskId}">
+            <input type="submit" th:value="${task.id}" name="taskId"><!--th:text="${taskId}"-->
         </form>
+        <a th:href="@{/user-area/remove-task(taskId=${task.id})}">Remove task</a>
     </div>
 
 
