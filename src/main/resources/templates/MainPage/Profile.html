@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+    <span>User: </span>
+    <p style="font-size: 3em" sec:authentication="principal.fullName"></p>
+
+    <form th:action="@{/profile/upload-profile-pic}" method="post">
+        <input type="file" name="file">
+        <input type="submit" value="Upload image">
+    </form>
+
+    <div th:each="friend: ${friendList}">
+        <ul>
+            <li th:text="${friend.username}"></li>
+            <a th:href="@{/}">View Profile</a>
+            <a th:href="@{/profile/remove-friend(friendUsername=${friend.username})}">Remove friend</a>
+        </ul>
+    </div>
+</body>
+</html>

@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.security.Timestamp;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
     @Query(value="select current_timestamp", nativeQuery = true)

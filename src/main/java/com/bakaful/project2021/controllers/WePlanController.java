@@ -59,37 +59,69 @@ public class WePlanController {
     }
 
     @GetMapping("/user-area")
-    public String userArea(Model model, @AuthenticationPrincipal WePlanUserDetails user) {
-        List<Task> taskList = taskRepository.findAll();
-        model.addAttribute("listTasks", taskList);
-        return "MainPage/MainPage";
-    }
+    public String userArea(Model model1, Model model2, Model model3, @AuthenticationPrincipal WePlanUserDetails user) {
+        User currentUser = userRepository.findByUsername(user.getUsername());
 
-    @PostMapping("/user-area")
-    public String userAreaFunctions(Model model, @RequestParam(value = "accepted", required = false) String accepted,
-                                    @AuthenticationPrincipal WePlanUserDetails user)
-    {
-        User currentUser = userRepository.findByEmail(user.getEmail());
-
-        /*FriendRequestWrapper friendRequestForm = new FriendRequestWrapper();*/
         List<FriendRequest> friendRequestList = friendRequestRepository.findAll()
                 .stream()
                 .filter(friendRequest -> friendRequest.getRecipient() == currentUser)
                 .collect(Collectors.toList());
 
-        if(friendRequestRepository.count() != 0 && accepted != null) {
+        List<Task> taskList = taskRepository.findAll()
+                .stream()
+                .filter(task -> task.getTaskOwners().contains(currentUser))
+                .collect(Collectors.toList());
 
-            User otherUser = friendRequestList.get(0).getSender();
-            if(accepted.equals("Accept")) {
-                currentUser.getFriendList().add(friendRequestList.get(0).getSender());
-                otherUser.getFriendList().add(currentUser);
-            }
-            friendRequestRepository.delete(friendRequestList.get(0));
-        }
+        List<Task> personalTasks = taskList
+                .stream()
+                .filter(task -> task.getShareable().equals("Personal task"))
+                .collect(Collectors.toList());
+        List<Task> teamsTasks = taskList
+                .stream()
+                .filter(task -> task.getShareable().equals("Teams task"))
+                .collect(Collectors.toList());
 
-        //friendRequestForm.addAllRequests(friendRequestList);
-        model.addAttribute("friendRequestList", friendRequestList);
+        model1.addAttribute("personalTasks", personalTasks);
+        model2.addAttribute("teamsTasks", teamsTasks);
+        model3.addAttribute("friendRequestList", friendRequestList);
         return "MainPage/MainPage";
+    }
+    
+    @GetMapping("/profile")
+    public String profile(Model model, @AuthenticationPrincipal WePlanUserDetails userInfo) {
+        User user = userRepository.findByEmail(userInfo.getEmail());
+        model.addAttribute("friendList", user.getFriendList());
+        return "MainPage/Profile";
+    }
+
+    @GetMapping("/profile/remove-friend")
+    public String deleteFriend(@RequestParam String friendUsername,
+                               @AuthenticationPrincipal WePlanUserDetails userInfo) {
+        User user = userRepository.findByUsername(userInfo.getUsername());
+        User exFriend = userRepository.findByUsername(friendUsername);
+
+        user.getFriendList().remove(exFriend);
+        exFriend.getFriendList().remove(user);
+        userRepository.save(user);
+
+        return "redirect:/profile";
+    }
+
+    @PostMapping("/user-area/manage-request")
+    public String AcceptOrDeclineRequest(@RequestParam Long senderId, @RequestParam(value = "accepted", required = false) String accepted,
+                                         @AuthenticationPrincipal WePlanUserDetails userInfo) {
+        User recipient = userRepository.findByUsername(userInfo.getUsername());
+        User sender = userRepository.getOne(senderId);
+        recipient.getFriendList().add(sender);
+        sender.getFriendList().add(recipient);
+        friendRequestRepository.delete(friendRequestRepository.findBySender(sender));
+        return "redirect:/user-area";
+    }
+
+    @GetMapping("/user-area/remove-task")
+    public String removeTask(@RequestParam Long taskId) {
+        taskRepository.deleteById(taskId);
+        return "redirect:/user-area";
     }
 
     @GetMapping("/create-task")
@@ -103,21 +135,7 @@ public class WePlanController {
         User user = userRepository.findByEmail(userInfo.getEmail());
         task.getTaskOwners().add(user);
         taskRepository.save(task);
-        return "MainPage/MainPage";
-    }
-
-    @GetMapping("/user-list")
-    public String viewUsersList(Model model) {
-        List<User> userList = userRepository.findAll();
-        model.addAttribute("listUsers", userList);
-        return "Register_Login/User_list";
-    }
-
-    @GetMapping("/task-list")
-    public String viewTasksList(Model model, @AuthenticationPrincipal WePlanUserDetails user) {
-        List<Task> taskList = taskRepository.findAll();
-        model.addAttribute("listTasks", taskList);
-        return "TaskManager/Task_list";
+        return "redirect:/user-area";
     }
 
     @PostMapping("/user-area/add-friend")
@@ -128,18 +146,16 @@ public class WePlanController {
         newRequest.setRecipient(userRepository.findByUsername(friendUsername));
         friendRequestRepository.save(newRequest);
 
-        return "Mainpage/Mainpage";
+        return "redirect:/user-area";
     }
 
-    @PostMapping("/add-collaborator")
-    public String addCollaborator(@RequestParam String collaboratorUsername, @RequestParam String taskId){
-        Task task = taskRepository.getOne(Long.parseLong(taskId));
+    @PostMapping("/user-area/add-collaborator")
+    public String addCollaborator(@RequestParam String collaboratorUsername, @RequestParam Long taskId){
+        Task task = taskRepository.getOne(taskId);
         User collab = userRepository.findByUsername(collaboratorUsername);
-        System.out.println(task);
-        System.out.println(collab.getUsername());
-        System.out.println(task.getTaskOwners());
         task.getTaskOwners().add(collab);
-        return "Mainpage/Mainpage";
+        taskRepository.save(task);
+        return "redirect:/user-area";
     }
 
 
