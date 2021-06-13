@@ -72,21 +72,15 @@ form{
     content: '';
     position: absolute;
     bottom: -2px;
-    width: 0%;
+    width: 0;
     height: 2px;
     background-color: #c471ed;
     transition: .4s;
 }
-/*
-.input-div:before{
-    right: 50%;
-}
-.input-div:after{
-    left: 50%;
-}*/
 .input-div.focus:after, .input-div.focus:before{
 	width: 100%;
 }
+
 
 .input-div.focus > .i > i{
     color: #c471ed;
@@ -94,7 +88,9 @@ form{
 .input-div.focus > div > h5{
     top: -5px;
     font-size: 15px;
+    color: #c471ed;
 }
+
 
 .login-container .input-div.one{
     margin-top: 0;
@@ -117,7 +113,7 @@ form{
     height: 45px;
 }
 
-.input-div > div h5{
+.input-div > div > h5{
     position: absolute;
     left: 10px;
     top: 50%;

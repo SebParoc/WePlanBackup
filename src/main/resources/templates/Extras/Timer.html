@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>TaskTracker</title>
+</head>
+<body>
+  <h1>Task Tracker</h1>
+
+    <div>
+  <label id="hours">00</label>:<label id="minutes">00</label>:<label id="seconds">00</label>
+    <br>
+    <input type="button" id="start" onclick="startTimer()" value="Start">
+    <input type="button" id="pause" onclick="pauseTimer()" value="Pause">
+    <input type="button" id="stop" onclick="stopTimer()" value="Stop">
+    <label id="totalTime"></label>
+    </div>
+
+
+  <script src="../../static/js/view-index.js" th:src="@{/js/view-index.js}"></script>
+</body>
+</html>

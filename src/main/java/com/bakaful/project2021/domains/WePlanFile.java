@@ -3,7 +3,6 @@ package com.bakaful.project2021.domains;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.util.*;
 import java.util.Date;
 
 @Entity
