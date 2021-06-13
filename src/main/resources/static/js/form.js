@@ -1,21 +1,20 @@
-const inputs = document.querySelectorAll(".input");
+const inputs = document.querySelectorAll('.input');
 
 
-function addcl(){
+function focusFunc(){
     let parent = this.parentNode.parentNode;
-    parent.classList.add("focus");
+    parent.classList.add('focus');
 }
 
-function remcl(){
+function blurFunc(){
     let parent = this.parentNode.parentNode;
-    parent.classList.remove("focus");
-    if(this.value === ""){
-        parent.classList.remove("focus");
+    if(this.value == ""){
+        parent.classList.remove('focus');
     }
 }
 
 
 inputs.forEach(input => {
-    input.addEventListener("blur", remcl);
-    input.addEventListener("focus", addcl);
+    input.addEventListener('focus', focusFunc);
+    input.addEventListener('blur', blurFunc);
 });

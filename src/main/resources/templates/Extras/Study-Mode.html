@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type=text/css rel="stylesheet" href="../../static/css/study-mode_styles.css" th:href="@{/css/study-mode_styles.css}">
+
+    <title>Welcome</title>
+</head>
+<body id="body-pd">
+<div>
+    <img class="open-wrapper" id="nav-toggle" src="../static/images/left_arrow_wrapper.jpg" th:src="@{/images/left_arrow_wrapper.jpg}">
+</div>
+
+<div class="l-navbar" id="navbar">
+    <nav class="nav">
+        <div>
+            <div class="nav__brand">
+                <a class="nav_logo">WePlan - Study Mode</a>
+            </div>
+            <div class="nav_list">
+                <a href="#" th:href="@{/dashboard}"  class="nav__link active">
+                    <ion-icon name="home-outline" class="nav__icon"></ion-icon>
+                    <span class="nav__name">Dashboard</span>
+                </a>
+                <div class="nav__link collapse">
+                    <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
+                    <span class="nav__name">Templates</span>
+
+                    <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
+
+                    <ul class="collapse__menu">
+                        <a th:href="@{/timer}" >Timer</a>
+                    </ul>
+                </div>
+                <a href="#" class="nav__link">
+                    <ion-icon name="settings-outline" class="nav__icon"></ion-icon>
+                    <span class="nav__name">Create a Timer</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+<script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+<script src="../../static/js/user_area.js" th:src="@{/js/user_area.js}"></script>
+</body>
+</html>

@@ -6,6 +6,7 @@ import com.bakaful.project2021.domains.User;
 import com.bakaful.project2021.repositories.FriendRequestRepository;
 import com.bakaful.project2021.repositories.TaskRepository;
 import com.bakaful.project2021.repositories.UserRepository;
+
 import com.bakaful.project2021.user_security.WePlanUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,6 +36,7 @@ public class WePlanController {
 
     @Autowired
     private FriendRequestRepository friendRequestRepository;
+
 
     @GetMapping("")
     public String viewHomePage() {
@@ -158,5 +161,48 @@ public class WePlanController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/timer")
+    public String init() {
+       /*model.addAttribute("taskForm", new TaskForm());*/
+        return "Extras/Study-Mode";
+    }
+
+    @GetMapping("/dashboard")
+     public String goBack(){
+        return "MainPage/MainPage";
+    }
+
+
+    /*@PostMapping("/timer")
+    @ResponseBody
+    public String taskRegister(Model model, @RequestBody TaskForm taskForm) {
+
+        try {
+
+            Task regTask = registerService.registerTask(taskForm);
+
+            return regTask.getId().toString();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }*/
+
+
+   /* @PostMapping("/stop")
+    @ResponseBody
+    public String taskEnd(Model model, @RequestBody TaskForm taskForm) {
+
+        try {
+            cancelService.endTask(taskForm);
+        } catch(RuntimeException e) {
+            e.printStackTrace();
+            return "error";
+        }
+
+        return "task canceling success";
+    }*/
 
 }
