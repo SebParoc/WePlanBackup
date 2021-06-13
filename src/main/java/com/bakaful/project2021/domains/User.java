@@ -3,15 +3,23 @@ package com.bakaful.project2021.domains;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 @DynamicUpdate
 @Table(name = "users")
 public class User {
+
+    public User () {
+    }
+
+    public User (String email, String username, String password, String firstName, String lastName) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +31,8 @@ public class User {
     @Column(nullable = false, unique = true, length = 15)
     private String username;
 
+    private String image = "Default.png";
+
     @Column(nullable = false, length = 64)
     private String password;
 
@@ -33,7 +43,7 @@ public class User {
     private String lastName;
 
     @ManyToMany
-    private List<User> friendList = new ArrayList<>();
+    private Set<User> friends = new HashSet<>();
 
     public Long getId () {
         return id;
@@ -67,6 +77,14 @@ public class User {
         this.password = password;
     }
 
+    public String getImage () {
+        return image;
+    }
+
+    public void setImage (String image) {
+        this.image = image;
+    }
+
     public String getFirstName () {
         return firstName;
     }
@@ -87,8 +105,8 @@ public class User {
         return firstName + " " + lastName;
     }
 
-    public List<User> getFriendList () {
-        return friendList;
+    public Set<User> getFriends() {
+        return friends;
     }
 
     @Override

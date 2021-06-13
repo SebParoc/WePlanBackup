@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public class WePlanUserDetails implements UserDetails{
 
@@ -54,11 +55,15 @@ public class WePlanUserDetails implements UserDetails{
         return true;
     }
 
-    public List<User> getFriendList() {
-        return user.getFriendList();
+    public Set<User> getFriends() {
+        return user.getFriends();
     }
 
     public String getFullName() {
         return user.getFirstName() + " " + user.getLastName();
+    }
+
+    public String getImageName() {
+        return user.getImage();
     }
 }

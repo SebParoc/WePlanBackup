@@ -9,9 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FriendRequestRepository extends JpaRepository<FriendRequest, Long> {
 
-    @Query("select u from FriendRequest u where u.sender = ?1")
-    FriendRequest findBySender(User sender);
+    @Query("select u from FriendRequest u where u.senderUsername = ?1 and u.recipientUsername = ?2")
+    FriendRequest findByUsernames(String senderUsername, String recipientUsername);
 
-    @Query("select u from FriendRequest u where u.recipient = ?1")
-    FriendRequest findByRecipient(User recipient);
 }

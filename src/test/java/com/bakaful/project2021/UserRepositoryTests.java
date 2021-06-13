@@ -11,13 +11,15 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
+import java.io.File;
+
 @SuppressWarnings("ALL")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
 public class UserRepositoryTests {
 
-    @Autowired
+    /*@Autowired
     private TestEntityManager entityManager;
 
     @Autowired
@@ -46,17 +48,17 @@ public class UserRepositoryTests {
         user2.setFirstName("Fuck");
         user2.setLastName("PP");
 
-        user.getFriendList().add(user1);
-        user1.getFriendList().add(user);
-        user.getFriendList().add(user2);
-        user2.getFriendList().add(user);
+        user.getFriends().add(user1);
+        user1.getFriends().add(user);
+        user.getFriends().add(user2);
+        user2.getFriends().add(user);
 
         User savedUser = userRepository.save(user);
         userRepository.save(user1);
         userRepository.save(user2);
         User existUser = entityManager.find(User.class, savedUser.getId());
 
-        System.out.println(user.getFriendList());
+        System.out.println(user.getFriends());
 
         assertThat(user.getEmail()).isEqualTo(existUser.getEmail());
     }
@@ -77,6 +79,22 @@ public class UserRepositoryTests {
         User user = userRepository.findByUsername(username);
 
         assertThat(user).isNotNull();
+    }*/
+    StringBuilder builder = new StringBuilder()
+            .append(System.getProperty("user.dir"))
+            .append(File.separator)
+            .append("src");
+
+    @Test
+    public void print() {
+        builder.append(File.separator)
+                .append("main");
+        System.out.println(builder);
+    }
+
+    @Test
+    public void print2() {
+        System.out.println(builder);
     }
 
 }

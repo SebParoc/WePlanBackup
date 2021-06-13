@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
->
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 <body>
     <span>User: </span>
     <p style="font-size: 3em" sec:authentication="principal.fullName"></p>
 
-    <form th:action="@{/profile/upload-profile-pic}" method="post">
-        <input type="file" name="file">
-        <input type="submit" value="Upload image">
+    <img th:src="@{${'/profile_pictures/' + imageName}}" width="200" height="200">
+
+    <form th:action="@{/profile/upload-profile-pic}" method="post" enctype="multipart/form-data">
+        <input type="file" name="image">
+        <input type="submit" value="Upload picture" class="btn btn-primary">
     </form>
+
+    <div class="text-success">
+        <h3 th:text="${message}">[[${message}]]</h3>
+    </div>
+
 
     <div th:each="friend: ${friendList}">
         <ul>

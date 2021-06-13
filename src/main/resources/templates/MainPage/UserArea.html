@@ -98,43 +98,35 @@
             <input type="submit" name="accepted" th:text="${accepted}" th:value="'Reject'">
         </form>
     </th:block>
-    <div th:each="task: ${personalTasks}">
+
+    <div th:each="task: ${userTasks}">
+
+        <h3 th:if="${task.taskType == 'Personal Task'}">Personal Task</h3>
+        <h3 th:if="${task.taskType == 'Teams Task'}">Teams Task</h3>
+        <h3 th:if="${task.taskType == 'Timetable Event'}">Timetable Event</h3>
         <ul>
-            <li th:text="${task.name}">User ID</li>
+            <li th:text="${task.name}"></li>
             <ul>
-                <li th:text="${task.description}">Description</li>
-                <li th:text="${task.date}">Date</li>
-                <li th:text="${task.startTime}">Start time</li>
-                <li th:text="${task.priority}">Priority</li>
+                <li th:text="${task.description}"></li>
+                <li th:text="${task.date}"></li>
+                <li th:if="${task.taskType == 'Timetable Event'}" th:text="${'Start Time:' + task.taskTime}"></li>
+                <li th:if="${task.taskType == 'Timetable Event'}" th:text="${'End Time:' + task.endTime}"></li>
+                <li th:if="${task.taskType != 'Timetable Event'}" th:text="${'Task Time:' + task.taskTime}"></li>
             </ul>
-            <form th:action="@{/profile/upload-file}" method="post" enctype="multipart/form-data">
-                <input type="file" name="image">
+            <form th:if="${task.taskType != 'Timetable Event'}"
+                  th:action="@{/user-area/upload-file}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <input type="hidden" name="taskId" th:value="${task.id}">
                 <input type="submit" value="Upload picture" class="btn btn-primary">
+            </form>
+            <form th:if="${task.taskType == 'Teams Task'}"
+                  th:action="@{/user-area/add-collaborator}" method="post">
+                <h5>Collaborator</h5>
+                <input type="text" th:value="${collaboratorUsername}" name="collaboratorUsername">
+                <input type="submit" th:value="${task.id}" name="taskId">
             </form>
             <a th:href="@{/user-area/remove-task(taskId=${task.id})}">Remove task</a>
         </ul>
-    </div>
-
-    <div th:each="task: ${teamsTasks}">
-        <ul>
-            <li th:text="${task.name}">User ID</li>
-            <ul>
-                <li th:text="${task.description}">Description</li>
-                <li th:text="${task.date}">Date</li>
-                <li th:text="${task.startTime}">Start time</li>
-                <li th:text="${task.priority}">Priority</li>
-            </ul>
-        </ul>
-        <form th:action="@{/user-area/add-collaborator}" method="post">
-            <h5>Collaborator</h5>
-            <input type="text" th:value="${collaboratorUsername}" name="collaboratorUsername">
-            <input type="submit" th:value="${task.id}" name="taskId"><!--th:text="${taskId}"-->
-        </form>
-        <form th:action="@{/profile/upload-file}" method="post" enctype="multipart/form-data">
-            <input type="file" name="image">
-            <input type="submit" value="Upload picture" class="btn btn-primary">
-        </form>
-        <a th:href="@{/user-area/remove-task(taskId=${task.id})}">Remove task</a>
     </div>
 
     <div class="row table-bordered">

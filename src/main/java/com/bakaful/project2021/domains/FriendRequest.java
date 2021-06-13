@@ -9,11 +9,9 @@ public class FriendRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private User sender;
+    private String senderUsername;
 
-    @ManyToOne
-    private User recipient;
+    private String recipientUsername;
 
     public Long getId () {
         return id;
@@ -23,19 +21,19 @@ public class FriendRequest {
         this.id = id;
     }
 
-    public User getSender () {
-        return sender;
+    public String getSenderUsername () {
+        return senderUsername;
     }
 
-    public void setSender (User sender) {
-        this.sender = sender;
+    public void setSenderUsername (String senderUsername) {
+        this.senderUsername = senderUsername;
     }
 
-    public User getRecipient () {
-        return recipient;
+    public String getRecipientUsername () {
+        return recipientUsername;
     }
 
-    public void setRecipient (User recipient) {
-        this.recipient = recipient;
+    public void setRecipientUsername (String recipientUsername) {
+        this.recipientUsername = recipientUsername;
     }
 }
