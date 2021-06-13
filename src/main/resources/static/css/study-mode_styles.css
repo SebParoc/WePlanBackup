@@ -1,11 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
 :root{
-    --nav-width: 92px;
+    --nav-width: 15rem;
     --body-font: 'Poppins', sans-serif;
     --normal-font-size: 1rem;
     --small-font-size: .875rem;
-
     --z-fixed: 100;
 }
 
@@ -16,10 +15,13 @@
 body{
     position: relative;
     margin: 0;
-    padding: 2rem 0 0 6.75rem;
+    padding: 5rem 0 0 0rem;
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
     transition: .5s ;
+    width: 320px;
+    background-color: #172737;
+
 }
 h1{
     margin: 0;
@@ -44,6 +46,7 @@ a{
     padding: 0;
     transition: .5s;
     z-index: var(--z-fixed);
+    border-radius: 0 15px 15px 0;
 }
 
 .nav{
@@ -52,6 +55,7 @@ a{
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
+
 }
 .nav__brand{
     display: grid;
@@ -131,4 +135,14 @@ a{
     margin-top: 200px;
     cursor: pointer;
 }
+.nav_logo{
+    margin-left: 1.5rem;
+    margin-top: 1rem;
+}
+
+.nav_list{
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
 

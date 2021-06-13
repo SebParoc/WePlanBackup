@@ -51,8 +51,8 @@ function start() {
         seconds = seconds - 1;
         document.getElementById("seconds").innerHTML = seconds;
 
-        if (seconds <= 0) {
-            if (minutes <= 0) {
+        if (seconds <= 55) {
+            if (minutes <= 24) {
                 minutes = 5;
                 document.getElementById("minutes").innerHTML = minutes;
                 seconds = 60;
