@@ -48,9 +48,10 @@
                         <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
 
                         <ul class="collapse__menu">
-                            <a th:href="@{/create-task}">Create Task</a>
-                            <a th:href="@{/task-list}">Task list</a>
-                            <a th:href="@{/user-list}">User list</a>
+                            <li>Create</li>
+                            <a th:href="@{/create-task(eventType = 'Personal Task')}">Personal Task</a>
+                            <a th:href="@{/create-task(eventType = 'Teams Task')}">Teams Task</a>
+                            <a th:href="@{/create-task(eventType = 'Timetable Event')}">Timetable Event</a>
                         </ul>
                     </div>
                     <div class="nav__link collapse">
@@ -89,25 +90,27 @@
     <a th:href="@{/profile}" >View Profile</a>
 
     <th:block th:each="friendRequest, friendrequestStat: ${friendRequestList}">
-        <h3><h3 th:text="${friendRequest.sender.getUsername}"></h3> sent you a friend request</h3>
+        <h3><h3 th:text="${friendRequest.senderUsername}"></h3> sent you a friend request</h3>
 
         <form th:action="@{/user-area/manage-request}" method="post">
-            <input type="hidden" name="senderId" th:value="${friendRequest.sender.getId}">
+            <input type="hidden" name="senderUsername" th:value="${friendRequest.senderUsername}">
             <input type="submit" name="accepted" th:text="${accepted}" th:value="'Accept'">
             <input type="submit" name="accepted" th:text="${accepted}" th:value="'Reject'">
         </form>
     </th:block>
-
     <div th:each="task: ${personalTasks}">
         <ul>
             <li th:text="${task.name}">User ID</li>
             <ul>
-                <li th:text="${task.name}">Name</li>
                 <li th:text="${task.description}">Description</li>
                 <li th:text="${task.date}">Date</li>
                 <li th:text="${task.startTime}">Start time</li>
                 <li th:text="${task.priority}">Priority</li>
             </ul>
+            <form th:action="@{/profile/upload-file}" method="post" enctype="multipart/form-data">
+                <input type="file" name="image">
+                <input type="submit" value="Upload picture" class="btn btn-primary">
+            </form>
             <a th:href="@{/user-area/remove-task(taskId=${task.id})}">Remove task</a>
         </ul>
     </div>
@@ -116,7 +119,6 @@
         <ul>
             <li th:text="${task.name}">User ID</li>
             <ul>
-                <li th:text="${task.name}">Name</li>
                 <li th:text="${task.description}">Description</li>
                 <li th:text="${task.date}">Date</li>
                 <li th:text="${task.startTime}">Start time</li>
@@ -128,10 +130,23 @@
             <input type="text" th:value="${collaboratorUsername}" name="collaboratorUsername">
             <input type="submit" th:value="${task.id}" name="taskId"><!--th:text="${taskId}"-->
         </form>
+        <form th:action="@{/profile/upload-file}" method="post" enctype="multipart/form-data">
+            <input type="file" name="image">
+            <input type="submit" value="Upload picture" class="btn btn-primary">
+        </form>
         <a th:href="@{/user-area/remove-task(taskId=${task.id})}">Remove task</a>
     </div>
 
-
+    <div class="row table-bordered">
+        <th:block th:each="file : ${wePlanFiles}">
+            <div>
+                [[${file.name}]]
+            </div>
+            <ul>
+                <li th:text="${file.name}"></li>
+            </ul>
+        </th:block>
+    </div>
 
     <!-- ===== IONICONS ===== -->
     <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
