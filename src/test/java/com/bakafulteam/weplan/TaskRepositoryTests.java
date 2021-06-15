@@ -19,7 +19,7 @@ import java.time.LocalTime;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(false)
 public class TaskRepositoryTests {
-
+/*
     @Autowired
     private TaskRepository eventRepository;
 
@@ -52,5 +52,5 @@ public class TaskRepositoryTests {
 
         eventRepository.save(simpleTask);
         eventRepository.save(teamsTask);
-    }
+    }*/
 }

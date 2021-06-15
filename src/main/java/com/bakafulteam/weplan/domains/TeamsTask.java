@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -13,7 +14,7 @@ public class TeamsTask extends Task {
         setTaskType("Teams Task");
     }
 
-    public TeamsTask (String name, String description, LocalDate date, LocalTime taskTime) {
+    public TeamsTask (String name, String description, Date date, String taskTime) {
         super(name, description, date, taskTime);
         setTaskType("Teams task");
     }

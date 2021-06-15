@@ -74,7 +74,7 @@ public class WePlanController {
         userTasks.addAll(simpleTasks);
         userTasks.addAll(teamsTasks);
         userTasks.addAll(scheduledTasks);
-        userTasks.sort(Comparator.comparing(Task::getDate).thenComparing(Task::getTaskTime));
+        userTasks.sort(Comparator.comparing(Task::getDate)/*.thenComparing(Task::getTaskTime)*/);
 
         List<WePlanFile> wePlanFiles = fileRepository.findAll();
 

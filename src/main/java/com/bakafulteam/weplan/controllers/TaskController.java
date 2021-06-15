@@ -23,6 +23,7 @@ import org.supercsv.io.ICsvBeanReader;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -173,9 +174,7 @@ public class TaskController {
         userTasks.addAll(simpleTasks);
         userTasks.addAll(teamsTasks);
         userTasks.addAll(scheduledTasks);
-        userTasks.sort(Comparator.comparing(Task::getDate).thenComparing(Task::getTaskTime));
-
-        System.out.println("uwu" + userTasks);
+        userTasks.sort(Comparator.comparing(Task::getDate)/*.thenComparing(Task::getTaskTime)*/);
 
         ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
 
@@ -199,22 +198,22 @@ public class TaskController {
         ICsvBeanReader csvReader = null;
         CellProcessor[] processors = new CellProcessor[] {
                 new NotNull(),
-                //new org.supercsv.cellprocessor.Optional(),
-                //new ParseDate("yyyy-MM-dd"),
-                //new ParseDate("HH:mm"),
+                new org.supercsv.cellprocessor.Optional(),
+                new ParseDate("yyyy-MM-dd"),
                 new NotNull(),
+                /*new NotNull(),
                 new NotNull(),
-                new NotNull(),
+                new NotNull(),*/
                 new NotNull(),
         };
         try {
             csvReader = new CsvBeanReader(new FileReader("src/tasks_Sebas_2021-06-15_13..30..09.csv"), CsvPreference.STANDARD_PREFERENCE);
 
-            String[] header = {"A", "B", "C", "D", "E"};
-            asd task = null;
-            while((task = csvReader.read(asd.class, header, processors)) != null) {
-                System.out.printf("%s %s %s %s %s" , task.getA(),
-                        task.getB(), task.getC(), task.getD(), task.getE());
+            String[] header = {"Name", "Description", "Date", "Time", "Task Type"};
+            SimpleTask task = null;
+            while((task = csvReader.read(SimpleTask.class, header, processors)) != null) {
+                System.out.printf("%s %s %tD %s %s" , task.getName(),
+                        task.getDescription(), task.getDate(), task.getTaskTime(), task.getTaskType());
             }
         } catch (FileNotFoundException ex) {
             System.err.println("Could not find the CSV file: " + ex);
@@ -229,7 +228,6 @@ public class TaskController {
                 }
             }
         }
-        System.out.println("wenas");
         return "redirect:/user-area";
     }
 }

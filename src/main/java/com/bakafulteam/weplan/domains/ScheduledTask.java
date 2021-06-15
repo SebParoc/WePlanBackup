@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 
 @Entity
 public class ScheduledTask extends Task {
@@ -16,7 +17,7 @@ public class ScheduledTask extends Task {
         setTaskType("Scheduled Task");
     }
 
-    public ScheduledTask (String name, String description, LocalDate date, LocalTime taskTime) {
+    public ScheduledTask (String name, String description, Date date, String taskTime) {
         super(name, description, date, taskTime);
         setTaskType("Scheduled Task");
     }
@@ -24,9 +25,8 @@ public class ScheduledTask extends Task {
     @ManyToOne
     private User eventOwner;
 
-    @DateTimeFormat(pattern = "HH:mm")
     @Column(nullable = false)
-    private LocalTime endTime;
+    private String endTime;
 
     @Column
     private String timeString;
@@ -39,19 +39,19 @@ public class ScheduledTask extends Task {
         this.eventOwner = eventOwner;
     }
 
-    public LocalTime getStartTime() {
+    public String getStartTime() {
         return getTaskTime();
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(String startTime) {
         setTaskTime(startTime);
     }
 
-    public LocalTime  getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void  setEndTime(LocalTime endTime) {
+    public void  setEndTime(String endTime) {
         this.endTime = endTime;
     }
 

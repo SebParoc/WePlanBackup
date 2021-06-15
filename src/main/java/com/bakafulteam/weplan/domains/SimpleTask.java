@@ -13,7 +13,7 @@ public class SimpleTask extends Task {
         setTaskType("Simple Task");
     }
 
-    public SimpleTask (String name, String description, LocalDate date, LocalTime taskTime) {
+    public SimpleTask (String name, String description, Date date, String taskTime) {
         super(name, description, date, taskTime);
         setTaskType("Simple Task");
     }

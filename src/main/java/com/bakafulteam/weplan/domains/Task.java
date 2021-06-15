@@ -3,8 +3,7 @@ package com.bakafulteam.weplan.domains;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
@@ -26,11 +25,10 @@ public abstract class Task {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = false)
-    protected LocalDate date;
+    protected Date date;
 
-    @DateTimeFormat(pattern = "HH:mm")
     @Column(nullable = false)
-    protected LocalTime taskTime;
+    protected String taskTime;
 
     @Column
     protected String taskType;
@@ -38,7 +36,7 @@ public abstract class Task {
     public Task () {
     }
 
-    public Task (String name, String description, LocalDate date, LocalTime taskTime) {
+    public Task (String name, String description, Date date, String taskTime) {
         this.name = name;
         this.description = description;
         this.date = date;
@@ -69,19 +67,19 @@ public abstract class Task {
         this.description = description;
     }
 
-    public LocalDate getDate () {
+    public Date getDate () {
         return date;
     }
 
-    public void setDate (LocalDate date) {
+    public void setDate (Date date) {
         this.date = date;
     }
 
-    public LocalTime getTaskTime () {
+    public String getTaskTime () {
         return taskTime;
     }
 
-    public void setTaskTime (LocalTime taskTime) {
+    public void setTaskTime (String taskTime) {
         this.taskTime = taskTime;
     }
 
