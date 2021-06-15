@@ -47,9 +47,9 @@
 
                         <ul class="collapse__menu">
                             <li>Create</li>
-                            <a th:href="@{/create-task(eventType = 'Personal Task')}">Personal Task</a>
+                            <a th:href="@{/create-task(eventType = 'Simple Task')}">Simple Task</a>
                             <a th:href="@{/create-task(eventType = 'Teams Task')}">Teams Task</a>
-                            <a th:href="@{/create-task(eventType = 'Timetable Event')}">Timetable Event</a>
+                            <a th:href="@{/create-task(eventType = 'Scheduled Task')}">Scheduled Task</a>
                         </ul>
                     </div>
                     <div class="nav__link collapse">
@@ -86,6 +86,12 @@
     <h1>Welcome </h1>
     <h1 sec:authentication="principal.fullName"></h1>
     <a th:href="@{/profile}" >View Profile</a>
+    <a th:href="@{/user-area/export-timetable}">Export timetable to CSV</a>
+    <!--form th:action="@{/import}" method="post" enctype="multipart/form-data">
+        <input type="file" name="csvFile">
+        <input type="submit" value="Upload picture" class="btn btn-primary">
+    </form-->
+    <a th:href="@{/import}">Import</a>
 
     <th:block th:each="friendRequest, friendrequestStat: ${friendRequestList}">
         <h3><h3 th:text="${friendRequest.senderUsername}"></h3> sent you a friend request</h3>
@@ -99,19 +105,19 @@
 
     <div th:each="task: ${userTasks}">
 
-        <h3 th:if="${task.taskType == 'Personal Task'}">Personal Task</h3>
+        <h3 th:if="${task.taskType == 'Simple Task'}">Simple Task</h3>
         <h3 th:if="${task.taskType == 'Teams Task'}">Teams Task</h3>
-        <h3 th:if="${task.taskType == 'Timetable Event'}">Timetable Event</h3>
+        <h3 th:if="${task.taskType == 'Scheduled Task'}">Scheduled Task</h3>
         <ul>
             <li th:text="${task.name}"></li>
             <ul>
                 <li th:text="${task.description}"></li>
                 <li th:text="${task.date}"></li>
-                <li th:if="${task.taskType == 'Timetable Event'}" th:text="${'Start Time:' + task.taskTime}"></li>
-                <li th:if="${task.taskType == 'Timetable Event'}" th:text="${'End Time:' + task.endTime}"></li>
-                <li th:if="${task.taskType != 'Timetable Event'}" th:text="${'Task Time:' + task.taskTime}"></li>
+                <li th:if="${task.taskType == 'Scheduled Task'}" th:text="${'Start Time:' + task.taskTime}"></li>
+                <li th:if="${task.taskType == 'Scheduled Task'}" th:text="${'End Time:' + task.endTime}"></li>
+                <li th:if="${task.taskType != 'Scheduled Task'}" th:text="${'Task Time:' + task.taskTime}"></li>
             </ul>
-            <form th:if="${task.taskType != 'Timetable Event'}"
+            <form th:if="${task.taskType != 'Scheduled Task'}"
                   th:action="@{/user-area/upload-file}" method="post" enctype="multipart/form-data">
                 <input type="file" name="file">
                 <input type="hidden" name="taskId" th:value="${task.id}">
@@ -132,11 +138,9 @@
             <div>
                 [[${file.name}]]
             </div>
-            <ul>
-                <li th:text="${file.name}"></li>
-            </ul>
         </th:block>
     </div>
+
 
     <!-- ===== IONICONS ===== -->
     <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>

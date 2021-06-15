@@ -8,14 +8,14 @@ import java.time.LocalTime;
 import java.util.*;
 
 @Entity
-public class PersonalTask extends Task {
-    public PersonalTask () {
-        setTaskType("Personal Task");
+public class SimpleTask extends Task {
+    public SimpleTask () {
+        setTaskType("Simple Task");
     }
 
-    public PersonalTask (String name, String description, LocalDate date, LocalTime taskTime) {
+    public SimpleTask (String name, String description, LocalDate date, LocalTime taskTime) {
         super(name, description, date, taskTime);
-        setTaskType("Personal Task");
+        setTaskType("Simple Task");
     }
 
     @ManyToOne

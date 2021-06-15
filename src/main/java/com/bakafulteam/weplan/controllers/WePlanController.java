@@ -49,35 +49,31 @@ public class WePlanController {
                 .filter(friendRequest -> friendRequest.getRecipientUsername().equals(user.getUsername()))
                 .collect(Collectors.toList());
 
-        List<Task> personalTasks = taskRepository.findAll()
+        List<SimpleTask> simpleTasks = taskRepository.findAll()
                 .stream()
-                .filter(task -> task.getTaskType().equals("Personal Task"))
-                .map(task -> (PersonalTask)task)
-                .filter(personalTask -> personalTask.getTaskOwner().equals(user))
-                .map(personalTask -> (Task) personalTask)
+                .filter(task -> task.getTaskType().equals("Simple Task"))
+                .map(task -> (SimpleTask)task)
+                .filter(simpleTask -> simpleTask.getTaskOwner().equals(user))
                 .collect(Collectors.toList());
 
-        List<Task> teamsTasks = taskRepository.findAll()
+        List<TeamsTask> teamsTasks = taskRepository.findAll()
                 .stream()
                 .filter(task -> task.getTaskType().equals("Teams Task"))
                 .map(task -> (TeamsTask) task)
                 .filter(teamsTask -> teamsTask.getCollaborators().contains(user))
-                .map(teamsTask -> (Task) teamsTask)
                 .collect(Collectors.toList());
 
-        List<Task> timetableEvents = taskRepository.findAll()
+        List<ScheduledTask> scheduledTasks = taskRepository.findAll()
                 .stream()
-                .filter(task -> task.getTaskType().equals("Timetable Event"))
-                .map(task -> (TimeTableEvent) task)
-                .filter(timeTableEvent -> timeTableEvent.getEventOwner().equals(user))
-                .map(timeTableEvent -> (Task) timeTableEvent)
+                .filter(task -> task.getTaskType().equals("Scheduled Task"))
+                .map(task -> (ScheduledTask) task)
+                .filter(scheduledTask -> scheduledTask.getEventOwner().equals(user))
                 .collect(Collectors.toList());
 
         List<Task> userTasks = new ArrayList<>();
-        userTasks.addAll(personalTasks);
+        userTasks.addAll(simpleTasks);
         userTasks.addAll(teamsTasks);
-        userTasks.addAll(timetableEvents);
-
+        userTasks.addAll(scheduledTasks);
         userTasks.sort(Comparator.comparing(Task::getDate).thenComparing(Task::getTaskTime));
 
         List<WePlanFile> wePlanFiles = fileRepository.findAll();

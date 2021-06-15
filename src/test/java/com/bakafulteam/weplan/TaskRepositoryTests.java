@@ -1,7 +1,7 @@
 package com.bakafulteam.weplan;
 
 
-import com.bakafulteam.weplan.domains.PersonalTask;
+import com.bakafulteam.weplan.domains.SimpleTask;
 import com.bakafulteam.weplan.domains.TeamsTask;
 import com.bakafulteam.weplan.domains.User;
 import com.bakafulteam.weplan.repositories.UserRepository;
@@ -37,11 +37,11 @@ public class TaskRepositoryTests {
         userRepository.save(user1);
         userRepository.save(user2);
 
-        PersonalTask personalTask =
-                new PersonalTask("myTask", "myDescription",
+        SimpleTask simpleTask =
+                new SimpleTask("myTask", "myDescription",
                         LocalDate.now(), LocalTime.now());
 
-        personalTask.setTaskOwner(user1);
+        simpleTask.setTaskOwner(user1);
 
         TeamsTask teamsTask =
                 new TeamsTask("ourTask", "ourDescription",
@@ -50,7 +50,7 @@ public class TaskRepositoryTests {
         teamsTask.getCollaborators().add(user1);
         teamsTask.getCollaborators().add(user2);
 
-        eventRepository.save(personalTask);
+        eventRepository.save(simpleTask);
         eventRepository.save(teamsTask);
     }
 }
