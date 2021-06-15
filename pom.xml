@@ -8,10 +8,10 @@
         <version>2.4.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.bakaful</groupId>
-    <artifactId>Project2021</artifactId>
+    <groupId>com.bakafulteam</groupId>
+    <artifactId>WePlan</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Project2021</name>
+    <name>WePlan</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
