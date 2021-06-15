@@ -17,11 +17,11 @@
 <body>
 <div class="taskContainer">
     <div class="login-container">
-        <form th:action="@{${'/create-' + taskType}}" method="post" th:object="${task}">
+        <form th:action="@{${'/create-' + taskType + '-task'}}" method="post" th:object="${task}">
 
-            <h2 th:if="${taskType == 'personal-task'}" class="title">Create Personal Task</h2>
-            <h2 th:if="${taskType == 'teams-task'}" class="title">Create Teams Task</h2>
-            <h2 th:if="${taskType == 'timetable-event'}" class="title">Create Timetable Event</h2>
+            <h2 th:if="${taskType == 'simple'}" class="title">Create Simple Task</h2>
+            <h2 th:if="${taskType == 'teams'}" class="title">Create Teams Task</h2>
+            <h2 th:if="${taskType == 'scheduled'}" class="title">Create Scheduled Task</h2>
 
             <div class="input-div one focus">
                 <div class="i">
@@ -55,12 +55,12 @@
                     <i class="far fa-clock"></i>
                 </div>
                 <div class="div">
-                    <h5 th:if="${taskType == 'timetable-event'}">Start Time</h5>
-                    <h5 th:if="${taskType != 'timetable-event'}">End Time</h5>
+                    <h5 th:if="${taskType == 'scheduled'}">Start Time</h5>
+                    <h5 th:if="${taskType != 'scheduled'}">End Time</h5>
                     <input type="time" class="input" th:field="*{taskTime}" required>
                 </div>
             </div>
-            <div class="input-div one focus" th:if="${taskType == 'timetable-event'}">
+            <div class="input-div one focus" th:if="${taskType == 'scheduled'}">
                 <div class="i">
                     <i class="fas fa-clock"></i>
                 </div>

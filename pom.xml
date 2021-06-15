@@ -8,16 +8,15 @@
         <version>2.4.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.bakaful</groupId>
-    <artifactId>Project2021</artifactId>
+    <groupId>com.bakafulteam</groupId>
+    <artifactId>WePlan</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Project2021</name>
+    <name>WePlan</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
         <bootstrap.version>4.0.0-2</bootstrap.version>
         <webjars-locator.version>0.30</webjars-locator.version>
-        <lombok.version>1.18.2</lombok.version>
         <font-awesome.version>5.11.2</font-awesome.version>
     </properties>
     <dependencies>
@@ -124,6 +123,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.supercsv</groupId>
+            <artifactId>super-csv-distribution</artifactId>
+            <version>2.4.0</version>
+            <type>pom</type>
+
         </dependency>
     </dependencies>
 
