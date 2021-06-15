@@ -61,7 +61,6 @@ public class FileUploadController {
                               RedirectAttributes attributes ,
                               @AuthenticationPrincipal WePlanUserDetails userInfo) throws IOException {
 
-       // System.out.println(":3 = " + id);
         String fileName =  file.getOriginalFilename();
         WePlanFile wePlanFile = new WePlanFile();
         wePlanFile.setName(fileName);
@@ -83,12 +82,7 @@ public class FileUploadController {
             taskRepository.save(personalTaskOptional.get());
         }
 
-
-
-        //taskRepository.save(task.get());
-
         attributes.addAttribute("message", "Files successfully uploaded");
-
         return "redirect:/user-area";
     }
 }
