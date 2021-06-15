@@ -9,8 +9,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 public class LoginController {
@@ -24,13 +26,19 @@ public class LoginController {
         return "Register_Login/Register_form";
     }
 
-    @PostMapping("/register-user")
-    public String registerUser(User user) {
+    @RequestMapping(value="/register-user", method= RequestMethod.POST)
+    public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return "Register_Login/Register_form";
+        }else{
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encodedPassword = encoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        userRepository.save(user);
-        return "Register_Login/Register_done";
+      String encodedPassword = encoder.encode(user.getPassword());
+      user.setPassword(encodedPassword);
+
+
+            userRepository.save(user);
+      return "Register_Login/Register_done";
+        }
     }
 
     @GetMapping("/login")

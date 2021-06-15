@@ -3,51 +3,77 @@
 <head>
     <meta name="viewport" content="width=device width, initial-scale=1"  charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/LoginStyles.css" th:href="@{/css/LoginStyles.css}">
-    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../static/css/create_timer_styles.css" th:href="@{/css/create_timer_styles.css}">
+    <script src="../../static/js/pomodoro.js" th:src="@{/js/pomodoro.js}" th:inline="javascript"></script>
 
 </head>
 <body>
-
-
-<img class="wave" src="../static/images/wave.png" th:src="@{/images/wave.png}">
 <div class="container">
-    <div class="img">
-        <img src="../static/images/login__img-removebg.png" th:src="@{/images/login__img-removebg.png}">
-    </div>
-    <div class="login-container">
-        <form name="f" th:action="@{/login}" method="post">
-            <img class="avatar" src="../static/images/profile_pic.png" th:src="@{/images/profile_pic.png}">
-            <h2 class="title">Welcome</h2>
-            <div class="input-div one ">
-                <div class="i">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="div">
-                    <span th:text="${message}"></span>
-                    <h5>Username</h5>
-                    <input type="text" class="input" th:required="required" id="username" name="username" placeholder=" ">
-                </div>
-            </div>
-            <div class="input-div two">
-                <div class="i">
-                    <i class="fas fa-lock"></i>
-                </div>
-                <div class="div">
-                    <h5>Password</h5>
-                    <input type="password" class="input" id="password" name="password" placeholder=" ">
-                </div>
-            </div>
-            <a href="#">Forgot Password?</a>
-            <button class="btn" type="submit">Log In</button>
-            <div th:if="${param.error}" class="alert alert-error">
-                <p> [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
-            </div>
-        </form>
-    </div>
+    <form th:action="@{'/create-timer'}" method="post" th:object="${timer}" id="form">
 
+    <div class="form-row ">
+        <label for="labelInput">Timer Name:</label>
+        <input id="labelInput" type="text"  placeholder="Timer" th:field="*{timerName}">
+    </div>
+    <br>
+    <div class="form-row large" id="fm-timeset">
 
+        <div class="two fl">
+            <input id="minuteInput" class="fw" type="number"  placeholder="00" th:field="*{minutes}">
+            <label for="minuteInput">Minutes</label>
+        </div>
+        <span class="fld-aid fl">&nbsp;:&nbsp;</span>
+        <div class="two fl">
+            <input id="secondInput" class="fw" type="number"  placeholder="00" th:field="*{seconds}">
+            <label for="secondInput">Seconds</label>
+        </div>
+    </div>
+    <hr class="dotted">
+        <h4>Breaks</h4>
+        <br>
+        <h5>Short Break</h5>
+
+    <div class="form-row large" id="short-break">
+        <div class="two fl">
+            <input id="minuteInputSb" class="fw" type="number" placeholder="00" th:field="*{shortBreakMins}">
+            <label for="minuteInput">Minutes</label>
+        </div>
+        <span class="fld-aid fl">&nbsp;:&nbsp;</span>
+        <div class="two fl">
+            <input id="secondInputSb" class="fw" type="number"  placeholder="00" th:field="*{shortBreakSecs}">
+            <label for="secondInput">Seconds</label>
+        </div>
+    </div>
+    <hr class="dotted">
+    <h5>Long Break</h5>
+
+    <div class="form-row large" id="long-break">
+        <div class="two fl">
+            <input id="minuteInputLb" class="fw" type="number" placeholder="00" th:field="*{longBreakSecs}">
+            <label for="minuteInput">Minutes</label>
+        </div>
+        <span class="fld-aid fl">&nbsp;:&nbsp;</span>
+        <div class="two fl">
+            <input id="secondInputLb" class="fw" type="number" placeholder="00" th:field="*{longBreakMins}">
+            <label for="secondInput">Seconds</label>
+        </div>
+    </div>
+        <input type="submit" value="Create Timer" onclick="passValues()">
+
+    </form>
 </div>
-<script type="text/javascript" src="/static/js/form.js" th:src="@{/js/form.js}"></script>
+
+
+<script >
+    function passValues(){
+       /* var minutesT = document.getElementById("minuteInput").value;
+        localStorage.setItem("minutesvalue", minutesT);*/
+        var secondsT = document.getElementById("secondInput").value;
+        localStorage.setItem("secondsvalue", secondsT);
+        return false;
+
+    }
+</script>
 </body>
 </html>

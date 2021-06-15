@@ -4,9 +4,17 @@
   <meta name="viewport" content="width=device width, initial-scale=1"  charset="utf-8">
   <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
   <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Poppins:600&display=swap}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   <link type="text/css" rel="stylesheet" href="../../static/css/LoginStyles.css" th:href="@{/css/LoginStyles.css}">
   <script src="https://kit.fontawesome.com/a81368914c.js" th:src="@{https://kit.fontawesome.com/a81368914c.js}"></script>
 
+
+  <style>
+    span {
+      color: red;
+      font-style: italic;
+    }
+  </style>
 </head>
 <body>
 <img class="wave" src="../../static/images/wave.png" th:src="@{/images/wave.png}">
@@ -25,6 +33,8 @@
         <div class="div">
           <h5>Username</h5>
           <input type="text" class="input" th:field="*{username}" required>
+          <span  th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name
+            Error</span>
         </div>
       </div>
       <div class="input-div one ">
@@ -34,6 +44,8 @@
         <div class="div">
           <h5>Email</h5>
           <input type="email" class="input" th:field="*{email}" required>
+          <span  th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:text="*{message}">Email
+          Error</span>
         </div>
       </div>
       <div class="input-div one ">
@@ -43,6 +55,8 @@
         <div class="div">
           <h5>Password</h5>
           <input type="password" class="input" th:field="*{password}" required minlength="4" maxlength="10">
+          <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" th:text="*{message}">Password
+          Error</span>
         </div>
       </div>
       <div class="input-div one ">
@@ -64,6 +78,14 @@
         </div>
       </div>
       <input type="submit" class="btn" value="Register">
+      <div class="alert alert-success alert-dismissible col-sm-12"
+           th:if="${(bindingResult !=null && bindingResult.getAllErrors()!=null)}">
+          <button type="button" class="close" data-dismiss="alert"
+                  aria-hidden = "true">x</button>
+        <ul th:each="data : ${bindingResult.getAllErrors()}">
+          <li th:text="${data.getObjectName()+ '::' + data.getDefaultMessage()}"></li>
+        </ul>
+      </div>
     </form>
   </div>
 </div>

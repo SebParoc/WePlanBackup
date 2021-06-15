@@ -1,5 +1,6 @@
-var minutes = 25;
-var seconds = "00";
+var minutes = 25
+var seconds = document.getElementById("seconds").innerHTML;
+seconds= localStorage.getItem("secondsvalue");
 var click = new Audio("src/main/resources/static/sounds/click.mp3");
 var bell = new Audio("static/sounds/bell.mp3");
 var totalTime = document.getElementById("totalTime");
@@ -19,7 +20,8 @@ var totalMills = 0;
 
 function template(){
     document.getElementById("minutes").innerHTML = minutes;
-    document.getElementById("seconds").innerHTML = seconds;
+   seconds = localStorage.getItem("secondsvalue");
+
 
 }
 
@@ -35,8 +37,7 @@ function start() {
     seconds = 59;
 
     document.getElementById("minutes").innerHTML = minutes;
-    document.getElementById("seconds").innerHTML = seconds;
-
+    seconds = localStorage.getItem("secondsvalue") ;
 
     minutes_interval = setInterval(minutesTimer, 60000);
     seconds_interval = setInterval(secondsTimer, 1000);
@@ -49,10 +50,10 @@ function start() {
 
     function secondsTimer() {
         seconds = seconds - 1;
-        document.getElementById("seconds").innerHTML = seconds;
+        document.getElementById("minutes").innerHTML = localStorage.getItem("secondsvalue");
 
-        if (seconds <= 55) {
-            if (minutes <= 24) {
+        if (seconds <= 0) {
+            if (minutes <= 0) {
                 minutes = 5;
                 document.getElementById("minutes").innerHTML = minutes;
                 seconds = 60;

@@ -1,8 +1,10 @@
 package com.bakaful.project2021.domains;
 
+import com.bakaful.project2021.validator.IsValidPassword;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.*;
 
 @Entity
@@ -25,21 +27,30 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private String email;
 
+  @Pattern(regexp = "^[A-Z0-9+_.-]+@[A-Z0-9.-]+$")
+
+  @Column(nullable = false, unique = true, length = 50)
+  private String email;
+
+    @Size(min = 3, max = 50)
     @Column(nullable = false, unique = true, length = 15)
     private String username;
 
     private String image = "Default.png";
 
     @Column(nullable = false, length = 64)
+    @IsValidPassword
+    @NotNull
     private String password;
 
+    @NotNull(message = "First name is compulsory")
     @Column(name = "first_name", nullable = false, length = 40)
     private String firstName;
 
+    @NotNull(message = "Last name is compulsory")
     @Column(name = "last_name", nullable = false, length = 40)
+    @Size(min = 2, max = 35, message = "Surname must be 2-35 characters long.")
     private String lastName;
 
     @ManyToMany
