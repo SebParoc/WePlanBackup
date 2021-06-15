@@ -3,15 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type=text/css rel="stylesheet" href="../../static/css/study-mode_styles.css" th:href="@{/css/study-mode_styles.css}">
 
-    <title>Welcome</title>
+    <link type=text/css rel="stylesheet" href="../../static/css/study-mode_styles.css" th:href="@{/css/study-mode_styles.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="../../static/css/pomodoro_styles.css" th:href="@{/css/pomodoro_styles.css}" />
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <!-- My JS -->
+    <script src="../../static/js/pomodoro.js" th:src="@{/js/pomodoro.js}" ></script>
+
+    <!-- My CSS -->
+
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/996973c893.js"></script>
+
+    <!-- Google Font -->
+    <link
+            href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+            rel="stylesheet"
+    />
+
+    <title>WePlan - Study Mode</title>
 </head>
-<body id="body-pd">
+<body id="body-pd" >
+<div class="wrapping_element">
 <div>
     <img class="open-wrapper" id="nav-toggle" src="../static/images/left_arrow_wrapper.jpg" th:src="@{/images/left_arrow_wrapper.jpg}">
 </div>
-
+</div>
 <div class="l-navbar" id="navbar">
     <nav class="nav">
         <div>
@@ -23,26 +49,110 @@
                     <ion-icon name="home-outline" class="nav__icon"></ion-icon>
                     <span class="nav__name">Dashboard</span>
                 </a>
+                <a th:href="@{/create-timer}" class="nav__link" id="modifier" )>
+                    <ion-icon name="hourglass-outline" class="nav__icon" ></ion-icon>
+                    <span class="nav__name">Create a Timer</span>
+                </a>
+
                 <div class="nav__link collapse">
                     <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
                     <span class="nav__name">Templates</span>
 
                     <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
 
-                    <ul class="collapse__menu">
-                        <a th:href="@{/timer}" >Timer</a>
+                    <ul class="collapse__menu" >
+                        <a >Create Timer</a>
                     </ul>
                 </div>
-                <a href="#" class="nav__link">
-                    <ion-icon name="settings-outline" class="nav__icon"></ion-icon>
-                    <span class="nav__name">Create a Timer</span>
-                </a>
             </div>
         </div>
     </nav>
 </div>
 
 
+<section>
+<div id="content">
+<div th:each="timer : ${timerList}" >
+    <h3>Timer</h3>
+    <br>
+    <ul>
+        <li th:text="${timer.timerName}"></li>
+        <li th:text="${'Duration: ' + timer.minutes + ':' + timer.seconds}"></li>
+        <li th:text="${'Short Break: ' + timer.shortBreakMins + ':' + timer.shortBreakSecs}"></li>
+        <li th:text="${'Long Break: ' + timer.longBreakMins + ':' + timer.longBreakSecs}" ></li>
+    </ul>
+
+    <button type="submit" value="Start timer" class="btn btn-primary"  id="startTimer" onclick="template()">Start timer</button>
+
+
+</div>
+</div>
+    </section>
+
+<section id="pom">
+<div th:fragment="pomodoro" >
+    <div class="container heading">
+        <h1 class="text-center my-5 ">Pomodoro</h1>
+    </div>
+
+    <div class="container timer">
+        <div class="row">
+            <div class="col-5">
+                <h4 id="minutes"></h4>
+            </div>
+            <div class="col-2">
+                <h4>:</h4>
+            </div>
+            <div class="col-5">
+                <h4 id="seconds"></h4>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h3 id="done" class="text-center my-5"></h3>
+    </div>
+
+    <div class="container d-flex justify-content-center align-items-center my-5">
+        <button  id="start" class= "btn" onclick="start()" type="submit"><i class="fas fa-play fa-2x" ></i></button>
+        <button class="btn" id="pause" onclick="pause()" disabled><i class="fas fa-pause fa-2x" ></i></button>
+        <button class="btn" id="resume" onclick="start2()" disabled><i class="fas fa-play-circle fa-2x" ></i></button>
+
+        <a href="Pomodoro.html" th:href="@{/Pomodoro}"><i class="fas fa-redo-alt fa-2x"></i></a>
+        <label id="totalTime"></label>
+
+    </div>
+</div>
+
+</section>
+<script>
+    function showDiv(){
+        document.getElementById('pom').style.display = "block";
+
+    }
+</script>
+
+<!--<script>
+    function showFrame(){
+        var frame= document.getElementById('frame');
+        frame.src="Pomodoro.html";
+        frame.style.display = "block";
+    }
+</script>-->
+
+<!--<script>
+    $('#startTimer').click(function (){
+        $('#replace_div').change(getContent);
+
+        function getContent(){
+            var url = "Extras/Pomodoro.html";
+            $('#replace_div').load(url);
+        }
+    })
+</script>-->
+<script>
+    document.getElementById("minutes").innerHTML = localStorage.getItem("minutesvalue");
+</script>
 <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
 <script src="../../static/js/user_area.js" th:src="@{/js/user_area.js}"></script>
 </body>

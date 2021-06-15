@@ -12,13 +12,26 @@ public class Timer {
     private Long id;
 
     @Column
+    private String timerName;
+
+    @Column
     private int seconds;
 
     @Column
     private int minutes;
 
     @Column
-    private int hours;
+    private int shortBreakSecs;
+
+    @Column
+    private int shortBreakMins;
+
+    @Column
+    private int longBreakSecs;
+
+    @Column
+    private int longBreakMins;
+
 
     public Long getId() {
         return id;
@@ -44,11 +57,57 @@ public class Timer {
         this.minutes = minutes;
     }
 
-    public int getHours() {
-        return hours;
+    public int getShortBreakSecs() {
+        return shortBreakSecs;
     }
 
-    public void setHours(int hours) {
-        this.hours = hours;
+    public void setShortBreakSecs(int shortBreakSecs) {
+        this.shortBreakSecs = shortBreakSecs;
+    }
+
+    public int getShortBreakMins() {
+        return shortBreakMins;
+    }
+
+    public void setShortBreakMins(int shortBreakMins) {
+        this.shortBreakMins = shortBreakMins;
+    }
+
+    public int getLongBreakSecs() {
+        return longBreakSecs;
+    }
+
+    public void setLongBreakSecs(int longBreakSecs) {
+        this.longBreakSecs = longBreakSecs;
+    }
+
+    public int getLongBreakMins() {
+        return longBreakMins;
+    }
+
+    public void setLongBreakMins(int longBreakMins) {
+        this.longBreakMins = longBreakMins;
+    }
+
+    public String getTimerName() {
+        return timerName;
+    }
+
+    public void setTimerName(String timerName) {
+        this.timerName = timerName;
+    }
+
+    @Override
+    public String toString() {
+        return "Timer{" +
+                "id=" + id +
+                ", timerName='" + timerName + '\'' +
+                ", seconds=" + seconds +
+                ", minutes=" + minutes +
+                ", shortBreakSecs=" + shortBreakSecs +
+                ", shortBreakMins=" + shortBreakMins +
+                ", longBreakSecs=" + longBreakSecs +
+                ", longBreakMins=" + longBreakMins +
+                '}';
     }
 }

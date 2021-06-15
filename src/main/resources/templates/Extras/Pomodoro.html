@@ -16,7 +16,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
     <!-- My JS -->
-    <script src="../../static/js/pomodoro.js" th:src="@{/js/pomodoro.js}"></script>
+    <script src="../../static/js/pomodoro.js" th:src="@{/js/pomodoro.js}" th:inline="javascript"></script>
 
     <!-- My CSS -->
     <link rel="stylesheet" href="../../static/css/pomodoro_styles.css" th:href="@{/css/pomodoro_styles.css}" />
@@ -33,7 +33,7 @@
     <title>Pomodoro App</title>
 </head>
 <body onload="template()">
-
+<div th:fragment="pomodoro">
 <div class="container heading">
     <h1 class="text-center my-5 ">Pomodoro</h1>
 </div>
@@ -65,5 +65,7 @@
     <label id="totalTime"></label>
 
 </div>
+</div>
+
 </body>
 </html>
