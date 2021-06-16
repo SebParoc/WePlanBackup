@@ -4,6 +4,7 @@ import com.bakafulteam.weplan.domains.*;
 import com.bakafulteam.weplan.repositories.TaskRepository;
 import com.bakafulteam.weplan.repositories.UserRepository;
 import com.bakafulteam.weplan.repositories.WePlanFileRepository;
+import com.bakafulteam.weplan.services.FileUploadService;
 import com.bakafulteam.weplan.user_security.WePlanUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -41,17 +42,9 @@ public class FileUploadController {
         User user = userRepository.findByUsername(userInfo.getUsername());
         user.setImage(newImageName);
         userRepository.save(user);
-        byte[] imageBytes = image.getBytes();
 
-        String profilePicDirectory = System.getProperty("user.dir") +
-                File.separator + "src" +
-                File.separator + "main" +
-                File.separator + "resources" +
-                File.separator + "static" +
-                File.separator + "profile_pictures" +
-                File.separator + newImageName;
-        Path path = Paths.get(profilePicDirectory);
-        Files.write(path, imageBytes);
+        FileUploadService.uploadFile("profile_pictures", image);
+
         return "redirect:/profile";
     }
 

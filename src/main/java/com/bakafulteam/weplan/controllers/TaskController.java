@@ -3,6 +3,7 @@ package com.bakafulteam.weplan.controllers;
 import com.bakafulteam.weplan.domains.*;
 import com.bakafulteam.weplan.repositories.UserRepository;
 import com.bakafulteam.weplan.repositories.TaskRepository;
+import com.bakafulteam.weplan.services.FileUploadService;
 import com.bakafulteam.weplan.services.TaskService;
 import com.bakafulteam.weplan.user_security.WePlanUserDetails;
 import org.hibernate.engine.internal.Nullability;
@@ -134,8 +135,8 @@ public class TaskController {
         csvWriter.close();
     }
 
-    @GetMapping("/import")
-    public String readCSVFile(/*@RequestParam MultipartFile csvFile*/@AuthenticationPrincipal WePlanUserDetails userInfo) {
+    @PostMapping("/user-area/import-timetable")
+    public String readCSVFile(@RequestParam MultipartFile csvFile, @AuthenticationPrincipal WePlanUserDetails userInfo) {
         user = userRepository.findByEmail(userInfo.getEmail());
 
         ICsvMapReader csvReader = null;
@@ -146,8 +147,11 @@ public class TaskController {
                 new NotNull(),
                 new NotNull(),
         };
+
         try {
-            csvReader = new CsvMapReader(new FileReader("src/tasks_Sebas_2021-06-15_23..10..22.csv"), CsvPreference.STANDARD_PREFERENCE);
+            FileUploadService.uploadFile("CSVfiles", csvFile);
+            csvReader = new CsvMapReader(new FileReader(FileUploadService
+                    .getFileDirectory("CSVfiles", csvFile.getOriginalFilename())), CsvPreference.STANDARD_PREFERENCE);
 
             String[] header = {"Name", "Description", "Date", "TaskTime", "TaskType"};
             Map<String, Object> taskMap;
