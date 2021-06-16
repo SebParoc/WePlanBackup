@@ -86,12 +86,12 @@
     <h1>Welcome </h1>
     <h1 sec:authentication="principal.fullName"></h1>
     <a th:href="@{/profile}" >View Profile</a>
-    <a th:href="@{/user-area/export-timetable}">Export timetable to CSV</a>
-    <!--form th:action="@{/import}" method="post" enctype="multipart/form-data">
+    <a th:href="@{/user-area/export-timetable}">Export WePlan timetable to CSV</a>
+    <form th:action="@{/user-area/import-timetable}" method="post" enctype="multipart/form-data">
+        <span>Import WePlan timetable from CSV</span>
         <input type="file" name="csvFile">
-        <input type="submit" value="Upload picture" class="btn btn-primary">
-    </form-->
-    <a th:href="@{/import}">Import</a>
+        <input type="submit" value="Upload CSV  " class="btn btn-primary">
+    </form>
 
     <th:block th:each="friendRequest, friendrequestStat: ${friendRequestList}">
         <h3><h3 th:text="${friendRequest.senderUsername}"></h3> sent you a friend request</h3>
