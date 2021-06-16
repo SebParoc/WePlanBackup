@@ -67,14 +67,14 @@ public class WePlanController {
                 .stream()
                 .filter(task -> task.getTaskType().equals("Scheduled Task"))
                 .map(task -> (ScheduledTask) task)
-                .filter(scheduledTask -> scheduledTask.getEventOwner().equals(user))
+                .filter(scheduledTask -> scheduledTask.getTaskOwner().equals(user))
                 .collect(Collectors.toList());
 
         List<Task> userTasks = new ArrayList<>();
         userTasks.addAll(simpleTasks);
         userTasks.addAll(teamsTasks);
         userTasks.addAll(scheduledTasks);
-        userTasks.sort(Comparator.comparing(Task::getDate)/*.thenComparing(Task::getTaskTime)*/);
+        //userTasks.sort(Comparator.comparing(Task::getDate).thenComparing(Task::getTaskTime));
 
         List<WePlanFile> wePlanFiles = fileRepository.findAll();
 

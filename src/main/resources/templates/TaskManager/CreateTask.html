@@ -50,14 +50,22 @@
                     <input type="date" class="input" th:field="*{date}" required>
                 </div>
             </div>
-            <div class="input-div one focus">
+            <div class="input-div one focus" th:if="${taskType != 'scheduled'}">
                 <div class="i">
                     <i class="far fa-clock"></i>
                 </div>
                 <div class="div">
-                    <h5 th:if="${taskType == 'scheduled'}">Start Time</h5>
-                    <h5 th:if="${taskType != 'scheduled'}">End Time</h5>
+                    <h5 >Task Time</h5>
                     <input type="time" class="input" th:field="*{taskTime}" required>
+                </div>
+            </div>
+            <div class="input-div one focus" th:if="${taskType == 'scheduled'}">
+                <div class="i">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="div">
+                    <h5>Start Time</h5>
+                    <input type="time" class="input" th:field="*{startTime}" required>
                 </div>
             </div>
             <div class="input-div one focus" th:if="${taskType == 'scheduled'}">

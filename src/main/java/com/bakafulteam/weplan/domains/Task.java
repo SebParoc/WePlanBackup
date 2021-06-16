@@ -23,9 +23,8 @@ public abstract class Task {
     @Column()
     protected String description;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = false)
-    protected Date date;
+    protected String date;
 
     @Column(nullable = false)
     protected String taskTime;
@@ -36,11 +35,12 @@ public abstract class Task {
     public Task () {
     }
 
-    public Task (String name, String description, Date date, String taskTime) {
+    public Task (String name, String description, String date, String taskTime, String taskType) {
         this.name = name;
         this.description = description;
         this.date = date;
         this.taskTime = taskTime;
+        this.taskType = taskType;
     }
 
     public Long getId () {
@@ -67,11 +67,11 @@ public abstract class Task {
         this.description = description;
     }
 
-    public Date getDate () {
+    public String getDate () {
         return date;
     }
 
-    public void setDate (Date date) {
+    public void setDate (String date) {
         this.date = date;
     }
 

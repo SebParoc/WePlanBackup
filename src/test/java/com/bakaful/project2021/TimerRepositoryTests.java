@@ -1,7 +1,5 @@
 package com.bakaful.project2021;
 
-import com.bakaful.project2021.domains.Timer;
-import com.bakaful.project2021.repositories.TimerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

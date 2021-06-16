@@ -9,20 +9,21 @@ import java.util.*;
 
 @Entity
 public class SimpleTask extends Task {
-    public SimpleTask () {
-        setTaskType("Simple Task");
-    }
-
-    public SimpleTask (String name, String description, Date date, String taskTime) {
-        super(name, description, date, taskTime);
-        setTaskType("Simple Task");
-    }
 
     @ManyToOne
     private User taskOwner;
 
     @ManyToMany
-    private List<WePlanFile> taskFiles = new ArrayList<>();
+    private List<WePlanFile> taskFiles = new ArrayList<>();;
+
+    public SimpleTask () {
+        setTaskType("Simple Task");
+    }
+
+    public SimpleTask (String name, String description, String date, String taskTime, String taskType, User taskOwner) {
+        super(name, description, date, taskTime, taskType);
+        this.taskOwner = taskOwner;
+    }
 
     public User getTaskOwner () {
         return taskOwner;

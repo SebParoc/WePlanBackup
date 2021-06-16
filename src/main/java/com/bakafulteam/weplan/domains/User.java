@@ -1,6 +1,6 @@
 package com.bakafulteam.weplan.domains;
 
-import com.bakafulteam.validator.IsValidPassword;
+import com.bakafulteam.weplan.validator.IsValidPassword;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;

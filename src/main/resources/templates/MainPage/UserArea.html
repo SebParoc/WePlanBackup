@@ -47,9 +47,9 @@
 
                         <ul class="collapse__menu">
                             <li>Create</li>
-                            <a th:href="@{/create-task(eventType = 'Simple Task')}">Simple Task</a>
-                            <a th:href="@{/create-task(eventType = 'Teams Task')}">Teams Task</a>
-                            <a th:href="@{/create-task(eventType = 'Scheduled Task')}">Scheduled Task</a>
+                            <a th:href="@{/create-task(taskType = 'Simple Task')}">Simple Task</a>
+                            <a th:href="@{/create-task(taskType = 'Teams Task')}">Teams Task</a>
+                            <a th:href="@{/create-task(taskType = 'Scheduled Task')}">Scheduled Task</a>
                         </ul>
                     </div>
                     <div class="nav__link collapse">
@@ -113,7 +113,7 @@
             <ul>
                 <li th:text="${task.description}"></li>
                 <li th:text="${task.date}"></li>
-                <li th:if="${task.taskType == 'Scheduled Task'}" th:text="${'Start Time:' + task.taskTime}"></li>
+                <li th:if="${task.taskType == 'Scheduled Task'}" th:text="${'Start Time:' + task.startTime}"></li>
                 <li th:if="${task.taskType == 'Scheduled Task'}" th:text="${'End Time:' + task.endTime}"></li>
                 <li th:if="${task.taskType != 'Scheduled Task'}" th:text="${'Task Time:' + task.taskTime}"></li>
             </ul>

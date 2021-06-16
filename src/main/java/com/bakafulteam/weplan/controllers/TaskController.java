@@ -45,8 +45,8 @@ public class TaskController {
     User user;
 
     @GetMapping("/create-task")
-    public String CreateTask(Model model1, Model model2, @RequestParam String eventType) {
-        switch (eventType) {
+    public String CreateTask(Model model1, Model model2, @RequestParam String taskType) {
+        switch (taskType) {
             case "Simple Task":
                 model1.addAttribute("task", new SimpleTask());
                 model2.addAttribute("taskType", "simple");
@@ -84,9 +84,8 @@ public class TaskController {
     @PostMapping("/create-scheduled-task")
     public String CreateScheduledTask(ScheduledTask task, @AuthenticationPrincipal WePlanUserDetails userInfo) {
         user = userRepository.findByEmail(userInfo.getEmail());
-        task.setEventOwner(user);
-        task.setTimeString(task.getStartTime().toString() + " - " +
-                task.getEndTime().toString());
+        task.setTaskOwner(user);
+        task.setTaskTime(task.getStartTime() + " - " + task.getEndTime());
         taskRepository.save(task);
         return "redirect:/user-area";
     }
@@ -167,14 +166,14 @@ public class TaskController {
                 .stream()
                 .filter(task -> task.getTaskType().equals("Scheduled Task"))
                 .map(task -> (ScheduledTask) task)
-                .filter(scheduledTask -> scheduledTask.getEventOwner().equals(user))
+                .filter(scheduledTask -> scheduledTask.getTaskOwner().equals(user))
                 .collect(Collectors.toList());
 
         List<Task> userTasks = new ArrayList<>();
         userTasks.addAll(simpleTasks);
         userTasks.addAll(teamsTasks);
         userTasks.addAll(scheduledTasks);
-        userTasks.sort(Comparator.comparing(Task::getDate)/*.thenComparing(Task::getTaskTime)*/);
+        //userTasks.sort(Comparator.comparing(Task::getDate)/*.thenComparing(Task::getTaskTime)*/);
 
         ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
 
@@ -199,7 +198,7 @@ public class TaskController {
         CellProcessor[] processors = new CellProcessor[] {
                 new NotNull(),
                 new org.supercsv.cellprocessor.Optional(),
-                new ParseDate("yyyy-MM-dd"),
+                new NotNull(),
                 new NotNull(),
                 /*new NotNull(),
                 new NotNull(),
@@ -212,7 +211,7 @@ public class TaskController {
             String[] header = {"Name", "Description", "Date", "Time", "Task Type"};
             SimpleTask task = null;
             while((task = csvReader.read(SimpleTask.class, header, processors)) != null) {
-                System.out.printf("%s %s %tD %s %s" , task.getName(),
+                System.out.printf("%s %s %s %s %s" , task.getName(),
                         task.getDescription(), task.getDate(), task.getTaskTime(), task.getTaskType());
             }
         } catch (FileNotFoundException ex) {

@@ -13,58 +13,52 @@ import java.util.Date;
 
 @Entity
 public class ScheduledTask extends Task {
-    public ScheduledTask () {
-        setTaskType("Scheduled Task");
-    }
-
-    public ScheduledTask (String name, String description, Date date, String taskTime) {
-        super(name, description, date, taskTime);
-        setTaskType("Scheduled Task");
-    }
 
     @ManyToOne
-    private User eventOwner;
+    private User taskOwner;
+
+    @Column(nullable = false)
+    private String startTime;
 
     @Column(nullable = false)
     private String endTime;
 
-    @Column
-    private String timeString;
-
-    public User getEventOwner () {
-        return eventOwner;
+    public ScheduledTask () {
+        setTaskType("Scheduled Task");
+        setTaskTime(startTime + " - " + endTime);
     }
 
-    public void setEventOwner (User eventOwner) {
-        this.eventOwner = eventOwner;
+    public ScheduledTask (String name, String description, String date, String startTime, String endTime, String taskType, User eventOwner) {
+        super(name, description, date, startTime + " - " + endTime, taskType);
+        this.taskOwner = eventOwner;
     }
 
-    public String getStartTime() {
-        return getTaskTime();
+    public User getTaskOwner () {
+        return taskOwner;
     }
 
-    public void setStartTime(String startTime) {
-        setTaskTime(startTime);
+    public void setTaskOwner (User eventOwner) {
+        this.taskOwner = eventOwner;
+    }
+
+    public String getStartTime () {
+        return startTime;
+    }
+
+    public void setStartTime (String startTime) {
+        this.startTime = startTime;
     }
 
     public String getEndTime() {
         return endTime;
     }
 
-    public void  setEndTime(String endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
-    }
-
-    public String getTimeString () {
-        return timeString;
-    }
-
-    public void setTimeString (String time) {
-        this.timeString = time;
     }
 
     @Override
     public String toString () {
-        return "Event Owner = " + getEventOwner() + " --> " + super.toString();
+        return "Event Owner = " + getTaskOwner() + " --> " + super.toString();
     }
 }

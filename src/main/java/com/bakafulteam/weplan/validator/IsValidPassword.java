@@ -1,4 +1,4 @@
-package com.bakafulteam.validator;
+package com.bakafulteam.weplan.validator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
