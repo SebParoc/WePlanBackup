@@ -26,7 +26,7 @@ public class LoginController {
         return "Register_Login/Register_form";
     }
 
-    @RequestMapping(value="/register-user", method= RequestMethod.POST)
+    @PostMapping("/register-user")
     public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()){
             return "Register_Login/Register_form";

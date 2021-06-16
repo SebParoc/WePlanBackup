@@ -31,7 +31,7 @@ public class QuoteRepositoryTests {
     private QuoteRepository quoteRepository;
 
 
-    @Test
+   /* @Test
     public void testCreateQuote() throws IOException {
         List<Quote> quoteL = new ArrayList<>();
         Quote quote = new Quote();
@@ -55,7 +55,7 @@ public class QuoteRepositoryTests {
         }
 
 
-        }
+        }*/
     }
 
 
