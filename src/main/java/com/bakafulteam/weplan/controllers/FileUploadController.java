@@ -73,9 +73,9 @@ public class FileUploadController {
         Optional<Task> taskOptional = taskRepository.findById(taskId);
 
         if(taskOptional.get().getTaskType().equals("Personal Task")) {
-            Optional<SimpleTask> personalTaskOptional = taskOptional.map(task -> (SimpleTask) task);
-            personalTaskOptional.get().getTaskFiles().add(wePlanFile);
-            taskRepository.save(personalTaskOptional.get());
+                Optional<SimpleTask> personalTaskOptional = taskOptional.map(task -> (SimpleTask) task);
+                personalTaskOptional.get().getTaskFiles().add(wePlanFile);
+                taskRepository.save(personalTaskOptional.get());
         } else if (taskOptional.get().getTaskType().equals("Teams Task")) {
             Optional<TeamsTask> personalTaskOptional = taskOptional.map(task -> (TeamsTask) task);
             personalTaskOptional.get().getTaskFiles().add(wePlanFile);

@@ -3,6 +3,7 @@ package com.bakafulteam.weplan.controllers;
 import com.bakafulteam.weplan.domains.*;
 import com.bakafulteam.weplan.repositories.UserRepository;
 import com.bakafulteam.weplan.repositories.TaskRepository;
+import com.bakafulteam.weplan.services.TaskService;
 import com.bakafulteam.weplan.user_security.WePlanUserDetails;
 import org.hibernate.engine.internal.Nullability;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.supercsv.cellprocessor.ParseDate;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.io.CsvBeanReader;
-import org.supercsv.io.CsvBeanWriter;
-import org.supercsv.io.ICsvBeanReader;
-import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.io.*;
 import org.supercsv.prefs.CsvPreference;
 
 
@@ -30,6 +28,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -118,101 +119,66 @@ public class TaskController {
         String headerValue = "attachment; filename = " + fileName;
         response.setHeader(headerKey, headerValue);
 
-        /*List<Task> userTasks = taskRepository.findAll()
-                .stream()
-                .map(task -> {
-                    if (task.getTaskType().equals("Simple Task")) {
-                        SimpleTask simpleTask =
-                                Optional.of(task).map(simpleTaskCast -> (SimpleTask) simpleTaskCast).get();
-                        if (simpleTask.getTaskOwner().equals(user))
-                            return simpleTask;
-                        else
-                            return null;
-                    } else if (task.getTaskType().equals("Teams Task")) {
-                        TeamsTask teamsTask =
-                                Optional.of(task).map(teamsTaskCast -> (TeamsTask) teamsTaskCast).get();
-                        if (teamsTask.getCollaborators().contains(user))
-                            return teamsTask;
-                        else
-                            return null;
-                    } else {
-                        ScheduledTask scheduledTask =
-                                Optional.of(task).map(scheduledTaskCast -> (ScheduledTask) scheduledTaskCast).get();
-                        if (scheduledTask.getEventOwner().equals(user))
-                            return scheduledTask;
-                        else
-                            return null;
-                    }
-                })
-                .sorted(Comparator.comparing(Task::getDate)
-                        .thenComparing(Task::getTaskTime))
-                .collect(Collectors.toList());*/
-
-        List<SimpleTask> simpleTasks = taskRepository.findAll()
-                .stream()
-                .filter(task -> task.getTaskType().equals("Simple Task"))
-                .map(task -> (SimpleTask)task)
-                .filter(simpleTask -> simpleTask.getTaskOwner().equals(user))
-                .collect(Collectors.toList());
-
-        List<TeamsTask> teamsTasks = taskRepository.findAll()
-                .stream()
-                .filter(task -> task.getTaskType().equals("Teams Task"))
-                .map(task -> (TeamsTask) task)
-                .filter(teamsTask -> teamsTask.getCollaborators().contains(user))
-                .collect(Collectors.toList());
-
-        List<ScheduledTask> scheduledTasks = taskRepository.findAll()
-                .stream()
-                .filter(task -> task.getTaskType().equals("Scheduled Task"))
-                .map(task -> (ScheduledTask) task)
-                .filter(scheduledTask -> scheduledTask.getTaskOwner().equals(user))
-                .collect(Collectors.toList());
-
-        List<Task> userTasks = new ArrayList<>();
-        userTasks.addAll(simpleTasks);
-        userTasks.addAll(teamsTasks);
-        userTasks.addAll(scheduledTasks);
-        //userTasks.sort(Comparator.comparing(Task::getDate)/*.thenComparing(Task::getTaskTime)*/);
+        List<Task> userTasks = TaskService.getUserTasks(taskRepository, user);;
 
         ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
 
         String[] csvHeader = {"Task name", "Description", "Date", "Time", "Task type"};
-        String[] nameMapping1 = {"name", "description", "date", "taskTime", "taskType"};
-        String[] nameMapping2 = {"name", "description", "date", "timeString", "taskType"};
+        String[] nameMapping = {"name", "description", "date", "taskTime", "taskType"};
 
         csvWriter.writeHeader(csvHeader);
 
-        for(Task task : userTasks) {
-            if(task.getTaskType().equals("Scheduled Task"))
-                csvWriter.write(task, nameMapping2);
-            else csvWriter.write(task, nameMapping1);
-        }
+        for(Task task : userTasks)
+            csvWriter.write(task, nameMapping);
+
         csvWriter.close();
     }
 
     @GetMapping("/import")
-    public String readCSVFile(/*@RequestParam MultipartFile csvFile*/) {
+    public String readCSVFile(/*@RequestParam MultipartFile csvFile*/@AuthenticationPrincipal WePlanUserDetails userInfo) {
+        user = userRepository.findByEmail(userInfo.getEmail());
 
-        ICsvBeanReader csvReader = null;
+        ICsvMapReader csvReader = null;
         CellProcessor[] processors = new CellProcessor[] {
                 new NotNull(),
                 new org.supercsv.cellprocessor.Optional(),
                 new NotNull(),
                 new NotNull(),
-                /*new NotNull(),
-                new NotNull(),
-                new NotNull(),*/
                 new NotNull(),
         };
         try {
-            csvReader = new CsvBeanReader(new FileReader("src/tasks_Sebas_2021-06-15_13..30..09.csv"), CsvPreference.STANDARD_PREFERENCE);
+            csvReader = new CsvMapReader(new FileReader("src/tasks_Sebas_2021-06-15_23..10..22.csv"), CsvPreference.STANDARD_PREFERENCE);
 
-            String[] header = {"Name", "Description", "Date", "Time", "Task Type"};
-            SimpleTask task = null;
-            while((task = csvReader.read(SimpleTask.class, header, processors)) != null) {
-                System.out.printf("%s %s %s %s %s" , task.getName(),
-                        task.getDescription(), task.getDate(), task.getTaskTime(), task.getTaskType());
+            String[] header = {"Name", "Description", "Date", "TaskTime", "TaskType"};
+            Map<String, Object> taskMap;
+            while((taskMap = csvReader.read(header, processors)) != null) {
+
+                if(taskMap.get("TaskType").equals("Simple Task")) {
+
+                    SimpleTask simpleTask = new SimpleTask(taskMap.get("Name").toString(),
+                            taskMap.get("Description").toString(), taskMap.get("Date").toString(),
+                            taskMap.get("TaskTime").toString(), taskMap.get("TaskType").toString(), user);
+
+                    taskRepository.save(simpleTask);
+
+                } else if (taskMap.get("TaskType").equals("Teams Task")) {
+
+                    TeamsTask teamsTask = new TeamsTask(taskMap.get("Name").toString(),
+                            taskMap.get("Description").toString(), taskMap.get("Date").toString(),
+                            taskMap.get("TaskTime").toString(), taskMap.get("TaskType").toString());
+                    teamsTask.getCollaborators().add(user);
+
+                    taskRepository.save(teamsTask);
+
+                } else if (taskMap.get("TaskType").equals("Scheduled Task")) {
+
+                    ScheduledTask scheduledTask = new ScheduledTask(taskMap.get("Name").toString(),
+                            taskMap.get("Description").toString(), taskMap.get("Date").toString(),
+                            taskMap.get("TaskTime").toString().substring(0,5),
+                            taskMap.get("TaskTime").toString().substring(8),
+                            taskMap.get("TaskType").toString(), user);
+                    taskRepository.save(scheduledTask);
+                }
             }
         } catch (FileNotFoundException ex) {
             System.err.println("Could not find the CSV file: " + ex);

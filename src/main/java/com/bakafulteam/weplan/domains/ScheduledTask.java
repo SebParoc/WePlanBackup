@@ -30,6 +30,8 @@ public class ScheduledTask extends Task {
 
     public ScheduledTask (String name, String description, String date, String startTime, String endTime, String taskType, User eventOwner) {
         super(name, description, date, startTime + " - " + endTime, taskType);
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.taskOwner = eventOwner;
     }
 

@@ -87,7 +87,7 @@ public abstract class Task {
         return taskType;
     }
 
-    protected void setTaskType (String eventType) {
+    public void setTaskType (String eventType) {
         this.taskType = eventType;
     }
 

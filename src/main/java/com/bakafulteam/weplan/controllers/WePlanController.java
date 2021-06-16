@@ -6,6 +6,7 @@ import com.bakafulteam.weplan.repositories.TaskRepository;
 import com.bakafulteam.weplan.repositories.UserRepository;
 import com.bakafulteam.weplan.repositories.WePlanFileRepository;
 
+import com.bakafulteam.weplan.services.TaskService;
 import com.bakafulteam.weplan.user_security.WePlanUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -49,38 +50,13 @@ public class WePlanController {
                 .filter(friendRequest -> friendRequest.getRecipientUsername().equals(user.getUsername()))
                 .collect(Collectors.toList());
 
-        List<SimpleTask> simpleTasks = taskRepository.findAll()
-                .stream()
-                .filter(task -> task.getTaskType().equals("Simple Task"))
-                .map(task -> (SimpleTask)task)
-                .filter(simpleTask -> simpleTask.getTaskOwner().equals(user))
-                .collect(Collectors.toList());
-
-        List<TeamsTask> teamsTasks = taskRepository.findAll()
-                .stream()
-                .filter(task -> task.getTaskType().equals("Teams Task"))
-                .map(task -> (TeamsTask) task)
-                .filter(teamsTask -> teamsTask.getCollaborators().contains(user))
-                .collect(Collectors.toList());
-
-        List<ScheduledTask> scheduledTasks = taskRepository.findAll()
-                .stream()
-                .filter(task -> task.getTaskType().equals("Scheduled Task"))
-                .map(task -> (ScheduledTask) task)
-                .filter(scheduledTask -> scheduledTask.getTaskOwner().equals(user))
-                .collect(Collectors.toList());
-
-        List<Task> userTasks = new ArrayList<>();
-        userTasks.addAll(simpleTasks);
-        userTasks.addAll(teamsTasks);
-        userTasks.addAll(scheduledTasks);
-        //userTasks.sort(Comparator.comparing(Task::getDate).thenComparing(Task::getTaskTime));
+        List<Task> userTasks = TaskService.getUserTasks(taskRepository, user);
 
         List<WePlanFile> wePlanFiles = fileRepository.findAll();
 
         model1.addAttribute("userTasks", userTasks);
         model2.addAttribute("friendRequestList", friendRequests);
-        model2.addAttribute("wePlanFiles", wePlanFiles);
+        model3.addAttribute("wePlanFiles", wePlanFiles);
         return "MainPage/UserArea";
     }
 }
