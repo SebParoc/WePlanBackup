@@ -1,11 +1,15 @@
 package com.bakafulteam.weplan.controllers;
 
 import com.bakafulteam.weplan.domains.FriendRequest;
+import com.bakafulteam.weplan.domains.TeamsTask;
 import com.bakafulteam.weplan.domains.User;
 import com.bakafulteam.weplan.repositories.FriendRequestRepository;
+import com.bakafulteam.weplan.repositories.TaskRepository;
 import com.bakafulteam.weplan.repositories.UserRepository;
+import com.bakafulteam.weplan.services.TaskService;
 import com.bakafulteam.weplan.user_security.WePlanUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,16 +31,32 @@ public class UserController {
     @Autowired
     FriendRequestRepository friendRequestRepository;
 
+    @Autowired
+    TaskRepository taskRepository;
+
     @GetMapping("/profile")
-    public String profile(Model model1, Model model2, @AuthenticationPrincipal WePlanUserDetails userInfo) {
-        User user = userRepository.findByEmail(userInfo.getEmail());
-        List<User> friendList = new ArrayList<>(user.getFriends())
+    public String profile(@Param("username") String username, Model model1, Model model2, Model model3, Model model4,
+                          @AuthenticationPrincipal WePlanUserDetails currentUserInfo) {
+
+        User userProfile = userRepository.findByUsername(username);
+        User currentUser = userRepository.findByUsername(currentUserInfo.getUsername());
+
+        List<User> friendList = new ArrayList<>(currentUser.getFriends())
                 .stream()
                 .sorted(Comparator.comparing(User::getUsername))
                 .collect(Collectors.toList());
 
+        List<TeamsTask> teamsTasks = TaskService.getUserTasks(taskRepository, currentUser)
+                .stream()
+                .filter(task -> task.getTaskType().equals("Teams Task"))
+                .map(task -> (TeamsTask) task)
+                .filter(teamsTask -> teamsTask.getCollaborators().contains(userProfile))
+                .collect(Collectors.toList());
+
         model1.addAttribute("friendList", friendList);
-        model2.addAttribute("imageName", user.getImage());
+        model2.addAttribute("teamsTaskList", teamsTasks);
+        model3.addAttribute("userProfile", userProfile);
+
         return "MainPage/Profile";
     }
 

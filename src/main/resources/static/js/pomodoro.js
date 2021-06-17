@@ -1,5 +1,5 @@
-var minutes = 25
-var seconds = document.getElementById("seconds").innerHTML;
+var minutes = 25;
+var seconds = "00";
 seconds= localStorage.getItem("secondsvalue");
 var click = new Audio("src/main/resources/static/sounds/click.mp3");
 var bell = new Audio("static/sounds/bell.mp3");

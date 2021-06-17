@@ -2,7 +2,9 @@ package com.bakafulteam.weplan.controllers;
 
 
 import com.bakafulteam.weplan.domains.Timer;
+import com.bakafulteam.weplan.domains.User;
 import com.bakafulteam.weplan.repositories.TimerRepository;
+import com.bakafulteam.weplan.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +17,16 @@ import java.util.List;
 
 @Controller
 public class TimerController {
-    
+    @Autowired
+    UserRepository userRepository;
+
     @Autowired
     TimerRepository timerRepository;
 
     @GetMapping("/timer")
-    public String init(Model model) {
+    public String init(Model model, Model model2) {
+        User user = userRepository.getOne(4L);
+        model2.addAttribute("user", user);
         List<Timer> timerList = timerRepository.findAll();
         model.addAttribute("timerList", timerList);
         return "Extras/Study-Mode";
