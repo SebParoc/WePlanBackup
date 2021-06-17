@@ -23,11 +23,6 @@
             <input id="minuteInput" class="fw" type="number"  placeholder="00" th:field="*{minutes}">
             <label for="minuteInput">Minutes</label>
         </div>
-        <span class="fld-aid fl">&nbsp;:&nbsp;</span>
-        <div class="two fl">
-            <input id="secondInput" class="fw" type="number"  placeholder="00" th:field="*{seconds}">
-            <label for="secondInput">Seconds</label>
-        </div>
     </div>
     <hr class="dotted">
         <h4>Breaks</h4>
@@ -40,23 +35,14 @@
             <label for="minuteInput">Minutes</label>
         </div>
         <span class="fld-aid fl">&nbsp;:&nbsp;</span>
-        <div class="two fl">
-            <input id="secondInputSb" class="fw" type="number"  placeholder="00" th:field="*{shortBreakSecs}">
-            <label for="secondInput">Seconds</label>
-        </div>
     </div>
     <hr class="dotted">
     <h5>Long Break</h5>
 
     <div class="form-row large" id="long-break">
         <div class="two fl">
-            <input id="minuteInputLb" class="fw" type="number" placeholder="00" th:field="*{longBreakSecs}">
+            <input id="minuteInputLb" class="fw" type="number" placeholder="00" th:field="*{longBreakMins}">
             <label for="minuteInput">Minutes</label>
-        </div>
-        <span class="fld-aid fl">&nbsp;:&nbsp;</span>
-        <div class="two fl">
-            <input id="secondInputLb" class="fw" type="number" placeholder="00" th:field="*{longBreakMins}">
-            <label for="secondInput">Seconds</label>
         </div>
     </div>
         <input type="submit" value="Create Timer" onclick="passValues()">
