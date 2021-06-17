@@ -1,5 +1,7 @@
 package com.bakafulteam.weplan.controllers;
 
+import com.bakafulteam.weplan.Exceptions.WrongFileExtensionException;
+import com.bakafulteam.weplan.Exceptions.WrongImageExtensionException;
 import com.bakafulteam.weplan.domains.*;
 import com.bakafulteam.weplan.repositories.UserRepository;
 import com.bakafulteam.weplan.repositories.TaskRepository;
@@ -137,6 +139,10 @@ public class TaskController {
 
     @PostMapping("/user-area/import-timetable")
     public String readCSVFile(@RequestParam MultipartFile csvFile, @AuthenticationPrincipal WePlanUserDetails userInfo) {
+        String extension = csvFile.getOriginalFilename().substring(csvFile.getOriginalFilename().indexOf("."));
+        if(!extension.equals(".csv"))
+            throw new WrongFileExtensionException(extension);
+
         user = userRepository.findByEmail(userInfo.getEmail());
 
         ICsvMapReader csvReader = null;

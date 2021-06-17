@@ -11,7 +11,6 @@
     <groupId>com.bakafulteam</groupId>
     <artifactId>WePlan</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-   <!-- <packaging>jar</packaging>-->
     <name>WePlan</name>
     <description>Demo project for Spring Boot</description>
     <properties>
@@ -21,6 +20,7 @@
         <font-awesome.version>5.11.2</font-awesome.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <log4j.version>1.2.17</log4j.version>
        <!-- <start-class>com.bakafulteam.weplan.WePlanApplication</start-class>-->
     </properties>
     <dependencies>
@@ -152,26 +152,38 @@
             <artifactId>super-csv</artifactId>
             <version>2.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
         <pluginManagement>
             <plugins>
-               <!-- <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <mainClass>com.bakafulteam.weplan.WePlanApplication</mainClass>
+                            </manifest>
+                        </archive>
+                        <descriptorRefs>
+                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                        </descriptorRefs>
+                    </configuration>
                     <executions>
                         <execution>
+                            <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                            <phase>package</phase> <!-- bind to the packaging phase -->
                             <goals>
-                                <goal>jar</goal>
+                                <goal>single</goal>
                             </goals>
-                            <phase>package</phase>
-                            <configuration>
-                                <classifier>task</classifier>
-                            </configuration>
                         </execution>
                     </executions>
-                </plugin>-->
+                </plugin>
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>

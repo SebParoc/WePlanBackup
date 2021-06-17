@@ -18,4 +18,7 @@ public class GlobalExceptionHandler {
         ErrorDetails errorDetails = new ErrorDetails(new Date(), "Validation error", e.getBindingResult().getFieldError().getDefaultMessage() );
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
+
+    //
+
 }
