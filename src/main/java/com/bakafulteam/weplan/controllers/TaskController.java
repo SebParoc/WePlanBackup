@@ -108,33 +108,6 @@ public class TaskController {
         return "redirect:/user-area";
     }
 
-    @GetMapping("/user-area/export-timetable")
-    public void exportToCSV(HttpServletResponse response, @AuthenticationPrincipal WePlanUserDetails userInfo) throws IOException {
-
-        user = userRepository.findByEmail(userInfo.getEmail());
-        response.setContentType("text/csv");
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH..mm..ss");
-        String fileName = "tasks_" + user.getUsername() + "_" + dateFormat.format(new Date()) + ".csv";
-
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename = " + fileName;
-        response.setHeader(headerKey, headerValue);
-
-        List<Task> userTasks = TaskService.getUserTasks(taskRepository, user);;
-
-        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
-
-        String[] csvHeader = {"Task name", "Description", "Date", "Time", "Task type"};
-        String[] nameMapping = {"name", "description", "date", "taskTime", "taskType"};
-
-        csvWriter.writeHeader(csvHeader);
-
-        for(Task task : userTasks)
-            csvWriter.write(task, nameMapping);
-
-        csvWriter.close();
-    }
-
     @PostMapping("/user-area/import-timetable")
     public String readCSVFile(@RequestParam MultipartFile csvFile, @AuthenticationPrincipal WePlanUserDetails userInfo) {
         user = userRepository.findByEmail(userInfo.getEmail());
@@ -149,7 +122,7 @@ public class TaskController {
         };
 
         try {
-            FileUploadService.uploadFile("CSVfiles", csvFile);
+            FileUploadService.uploadFile("CSVfiles", csvFile.getOriginalFilename(), csvFile);
             csvReader = new CsvMapReader(new FileReader(FileUploadService
                     .getFileDirectory("CSVfiles", csvFile.getOriginalFilename())), CsvPreference.STANDARD_PREFERENCE);
 

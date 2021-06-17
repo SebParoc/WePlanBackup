@@ -20,9 +20,9 @@ public class FileUploadService {
                 File.separator + fileName;
     }
 
-    public static void uploadFile(String fileFolder, MultipartFile file) throws IOException {
+    public static void uploadFile(String fileFolder, String fileName, MultipartFile file) throws IOException {
         byte[] fileBytes = file.getBytes();
-        Path path = Paths.get(getFileDirectory(fileFolder, file.getOriginalFilename()));
+        Path path = Paths.get(getFileDirectory(fileFolder, fileName));
         Files.write(path, fileBytes);
     }
 }

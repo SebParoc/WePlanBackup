@@ -7,27 +7,36 @@
   <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 <body>
-    <span>User: </span>
-    <p style="font-size: 3em" sec:authentication="principal.fullName"></p>
 
-    <img th:src="@{${'/profile_pictures/' + imageName}}" width="200" height="200">
+    <div th:if="${userProfile.username == #request.userPrincipal.principal.username}">
+        <h1 sec:authentication="principal.fullName"></h1>
+        <img th:src="@{${'/profile_pictures/' + userProfile.image}}" width="200" height="200">
+        <form th:action="@{/profile/upload-profile-pic}" method="post" enctype="multipart/form-data">
+            <input type="file" name="image">
+            <!--input type="hidden" name="username" th:value="${userProfile.username}"-->
+            <input type="submit" value="Upload picture" class="btn btn-primary">
+        </form>
 
-    <form th:action="@{/profile/upload-profile-pic}" method="post" enctype="multipart/form-data">
-        <input type="file" name="image">
-        <input type="submit" value="Upload picture" class="btn btn-primary">
-    </form>
-
-    <div class="text-success">
-        <h3 th:text="${message}">[[${message}]]</h3>
+        <div class="text-success">
+            <h3 th:text="${message}">[[${message}]]</h3>
+        </div>
+        <div th:each="friend: ${friendList}">
+            <ul>
+                <li th:text="${friend.username}"></li>
+                <a th:href="@{'/profile?username=' + ${friend.username}}">View Profile</a>
+                <a th:href="@{/profile/remove-friend(friendUsername=${friend.username})}">Remove friend</a>
+            </ul>
+        </div>
     </div>
-
-
-    <div th:each="friend: ${friendList}">
-        <ul>
-            <li th:text="${friend.username}"></li>
-            <a th:href="@{/}">View Profile</a>
-            <a th:href="@{/profile/remove-friend(friendUsername=${friend.username})}">Remove friend</a>
-        </ul>
+    <div th:unless="${userProfile.username == #request.userPrincipal.principal.username}">
+        <h2 th:text="${userProfile.username + '(' + userProfile.firstName + ' ' + userProfile.lastName + ')'}"></h2>
+        <img th:src="@{${'/profile_pictures/' + userProfile.image}}" width="200" height="200">
+        <th:block th:each="teamTask: ${teamsTaskList}">
+            <h3 th:text="${'You share these tasks with ' + userProfile.username}"></h3>
+            <ul>
+                <li th:text="${teamTask.getName}"></li>
+            </ul>
+        </th:block>
     </div>
 </body>
 </html>
