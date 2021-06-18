@@ -50,7 +50,7 @@ public class FileUploadDownloadController {
     @PostMapping("/profile/upload-profile-pic")
     public String uploadImage(@RequestParam("image") MultipartFile image, @AuthenticationPrincipal WePlanUserDetails userInfo) throws IOException {
         String extension =  image.getOriginalFilename().substring(image.getOriginalFilename().indexOf("."));
-        if(!extension.equals(".png")&& !extension.equals(".jpg")){
+        if(!extension.equals(".png")&& !extension.equalsIgnoreCase(".jpg")){
             throw new WrongImageExtensionException(extension);
         }
 

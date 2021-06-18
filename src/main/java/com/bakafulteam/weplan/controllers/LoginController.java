@@ -3,6 +3,7 @@ package com.bakafulteam.weplan.controllers;
 import com.bakafulteam.weplan.domains.User;
 import com.bakafulteam.weplan.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,12 +11,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @Controller
 public class LoginController {
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true) );
+    }
 
     @Autowired
     UserRepository userRepository;
@@ -27,19 +34,14 @@ public class LoginController {
     }
 
     @PostMapping("/register-user")
-    public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
-            return "Register_Login/Register_form";
-        }else{
+    public String registerUser(User user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
       String encodedPassword = encoder.encode(user.getPassword());
       user.setPassword(encodedPassword);
-
-
-            userRepository.save(user);
+      userRepository.save(user);
       return "Register_Login/Register_done";
         }
-    }
+
 
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
@@ -49,13 +51,6 @@ public class LoginController {
         if(authentication==null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
-            /* if (error != null)
-            model.addAttribute("error", "Your username and password is invalid.");
-
-        if (logout != null){
-            model.addAttribute("message", "You have been logged out successfully.");
-        return "LandingPage";}*/
-
 
         return "redirect:/";
     }

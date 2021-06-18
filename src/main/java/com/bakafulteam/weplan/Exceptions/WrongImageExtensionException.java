@@ -1,7 +1,9 @@
 package com.bakafulteam.weplan.Exceptions;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
-
+@ResponseStatus(value= HttpStatus.BAD_REQUEST, reason="Not allowed")
 public class WrongImageExtensionException extends RuntimeException{
 
     String extension ;

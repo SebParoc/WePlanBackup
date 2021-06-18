@@ -1,5 +1,7 @@
 package com.bakafulteam.weplan.controllers;
 
+import com.bakafulteam.weplan.Exceptions.AlreadyAddedCollaboratorException;
+import com.bakafulteam.weplan.Exceptions.NonExistentUserException;
 import com.bakafulteam.weplan.Exceptions.WrongFileExtensionException;
 import com.bakafulteam.weplan.Exceptions.WrongImageExtensionException;
 import com.bakafulteam.weplan.domains.*;
@@ -99,7 +101,15 @@ public class TaskController {
         Optional<Task> taskOptional = taskRepository.findById(taskId);
         Optional<TeamsTask> teamsTaskOptional = taskOptional.map(task -> (TeamsTask) task);
         User collab = userRepository.findByUsername(collaboratorUsername);
+
+        if(teamsTaskOptional.get().getCollaborators().contains(collab)){
+            throw new AlreadyAddedCollaboratorException(collaboratorUsername);
+        }
+        if(collab==null){
+            throw new NonExistentUserException(collaboratorUsername);
+        }
         teamsTaskOptional.get().getCollaborators().add(collab);
+
         taskRepository.save(teamsTaskOptional.get());
         return "redirect:/user-area";
     }

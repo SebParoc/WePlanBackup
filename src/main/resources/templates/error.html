@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Title</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        h1{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Error</h1>
+<h4 th:if="${Error==null}">Operation not allowed.</h4>
+<h4 th:if="${Error=='Extension exception'}">The extension of the file you tried to add, is not allowed. Only .csv extension is allowed.</h4>
+<h4 th:if="${Error=='Image extension exception'}">The extension of the file you tried to add, is not allowed. Only .png or .jpg are allowed.</h4>
+<h4 th:if="${Error=='Data Integrity exception'}">Conflicts with the database. Username or email already taken.</h4>
+<h4 th:if="${Error=='Already added collaborator'}">You already added this user as a collaborator.</h4>
+<h4 th:if="${Error=='Already added friend'}">You already added this user as a friend.</h4>
+<h4 th:if="${Error=='Non existent user'}">This user does not exist.</h4>
+
+
+<br>
+<a class="btn btn-info" th:href="@{/user-area}" th:if="${Error!='Data Integrity exception'}">Go back</a>
+<a class="btn btn-info" th:href="@{/register}" th:if="${Error=='Data Integrity exception'}">Go back</a>
+</body>
+</html>
