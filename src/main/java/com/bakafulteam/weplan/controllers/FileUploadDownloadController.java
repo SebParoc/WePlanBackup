@@ -118,7 +118,7 @@ public class FileUploadDownloadController {
 
         User user = userRepository.findByEmail(userInfo.getEmail());
         response.setContentType("text/csv");
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH..mm..ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH#mm#ss");
         String fileName = "tasks_" + user.getUsername() + "_" + dateFormat.format(new Date()) + ".csv";
 
         String headerKey = "Content-Disposition";

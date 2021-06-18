@@ -20,7 +20,7 @@
     <div class="form-row large" id="fm-timeset">
 
         <div class="two fl">
-            <input id="minuteInput" class="fw" type="number"  placeholder="00" th:field="*{minutes}">
+            <input id="minuteInput" class="fw" type="number"  placeholder="00" th:field="*{minutes}"  step="0.1">
             <label for="minuteInput">Minutes</label>
         </div>
     </div>
@@ -31,7 +31,7 @@
 
     <div class="form-row large" id="short-break">
         <div class="two fl">
-            <input id="minuteInputSb" class="fw" type="number" placeholder="00" th:field="*{shortBreakMins}">
+            <input id="minuteInputSb" class="fw" type="number" placeholder="00" th:field="*{shortBreakMins}"  step="0.1">
             <label for="minuteInput">Minutes</label>
         </div>
     </div>
@@ -40,7 +40,7 @@
 
     <div class="form-row large" id="long-break">
         <div class="two fl">
-            <input id="minutesInputLb" class="fw" type="number" placeholder="00" th:field="*{longBreakMins}">
+            <input id="minutesInputLb" class="fw" type="number" placeholder="00" th:field="*{longBreakMins}"  step="0.1">
             <label for="minutesInputLb">Minutes</label>
         </div>
     </div>

@@ -36,7 +36,7 @@
                         <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
 
                         <ul class="collapse__menu">
-                            <a th:href="@{/timer}" >Timers</a>
+                            <a th:href="@{/timer}">Timers</a>
                         </ul>
                 </div>
 
@@ -62,7 +62,7 @@
                         <ul class="collapse__menu">
                             <a href="#" class="collapse__sublink">Data</a>
                             <a href="#" class="collapse__sublink">Group</a>
-                            <a href="#" class="collapse__sublink">Members</a>
+                            <a th:href="@{/teams-tasks}" class="collapse__sublink">Members</a>
                             <form th:action="@{/user-area/add-friend}" method="post">
                                 <h5>Add friend</h5>
                                 <input type="text" th:value="${friendUsername}" name="friendUsername">
@@ -95,7 +95,7 @@
     </form>
 
 
-    <th:block th:each="friendRequest, friendrequestStat: ${friendRequestList}">
+    <div th:each="friendRequest, friendrequestStat: ${friendRequestList}">
         <h3><h3 th:text="${friendRequest.senderUsername}"></h3> sent you a friend request</h3>
 
         <form th:action="@{/user-area/manage-request}" method="post">
@@ -103,48 +103,50 @@
             <input type="submit" name="accepted" th:text="${accepted}" th:value="'Accept'">
             <input type="submit" name="accepted" th:text="${accepted}" th:value="'Reject'">
         </form>
-    </th:block>
+    </div>
 
-    <div th:each="task: ${userTasks}">
-
-        <h3 th:if="${task.taskType == 'Simple Task'}">Simple Task</h3>
-        <h3 th:if="${task.taskType == 'Teams Task'}">Teams Task</h3>
-        <h3 th:if="${task.taskType == 'Scheduled Task'}">Scheduled Task</h3>
-        <ul>
-            <li th:text="${task.name}"></li>
-                    <li th:text="${task.description}"></li>
-                    <li th:text="${task.date}"></li>
-                    <li th:if="${task.taskType == 'Scheduled Task'}" th:text="${'Start Time:' + task.startTime}"></li>
-                    <li th:if="${task.taskType == 'Scheduled Task'}" th:text="${'End Time:' + task.endTime}"></li>
-                    <li th:if="${task.taskType != 'Scheduled Task'}" th:text="${'Task Time:' + task.taskTime}"></li>
-        </ul>
-        <form th:if="${task.taskType != 'Scheduled Task'}"
-              th:action="@{/user-area/upload-file}" method="post" enctype="multipart/form-data">
-            <input type="file" name="file">
-            <input type="hidden" name="taskId" th:value="${task.id}">
-            <input type="submit" value="Upload picture" class="btn btn-primary">
-        </form>
-        <div th:if="${task.taskType} != 'Scheduled Task'">
-            <th:block th:each="file: ${task.taskFiles}">
-                <div>
-                    <i class="far fa-file-alt"></i>
-                    <a th:href="@{'/download?id=' + ${file.id}}">[[${file.name}]]</a>
-                </div>
-            </th:block>
+    <div th:each="week: ${weeklyTasks}">
+     <h2 th:text="${weekIntervals.get(weekStat.index)}"></h2>
+        <div th:each="task: ${week}">
+            <h3 th:if="${task.taskType == 'Simple Task'}">Simple Task</h3>
+            <h3 th:if="${task.taskType == 'Teams Task'}">Teams Task</h3>
+            <h3 th:if="${task.taskType == 'Scheduled Task'}">Scheduled Task</h3>
+            <ul>
+                <li th:text="${task.name}"></li>
+                <li th:text="${task.description}"></li>
+                <li th:text="${task.date}"></li>
+                <li th:if="${task.taskType == 'Scheduled Task'}" th:text="${'Start Time:' + task.startTime}"></li>
+                <li th:if="${task.taskType == 'Scheduled Task'}" th:text="${'End Time:' + task.endTime}"></li>
+                <li th:if="${task.taskType != 'Scheduled Task'}" th:text="${'Task Time:' + task.taskTime}"></li>
+            </ul>
+            <form th:if="${task.taskType != 'Scheduled Task'}"
+                  th:action="@{/user-area/upload-file}" method="post" enctype="multipart/form-data">
+                <input type="file" name="file">
+                <input type="hidden" name="taskId" th:value="${task.id}">
+                <input type="submit" value="Upload picture" class="btn btn-primary">
+            </form>
+            <div th:if="${task.taskType} != 'Scheduled Task'">
+                <th:block th:each="file: ${task.taskFiles}">
+                    <div>
+                        <i class="far fa-file-alt"></i>
+                        <a th:href="@{'/download?id=' + ${file.id}}">[[${file.name}]]</a>
+                    </div>
+                </th:block>
+            </div>
+            <form th:if="${task.taskType == 'Teams Task'}"
+                  th:action="@{/user-area/add-collaborator}" method="post">
+                <h5>Collaborator</h5>
+                <input type="text" th:value="${collaboratorUsername}" name="collaboratorUsername">
+                <input type="submit" th:value="${task.id}" name="taskId">
+            </form>
+            <a th:href="@{/user-area/remove-task(taskId=${task.id})}">Remove task</a>
         </div>
-        <form th:if="${task.taskType == 'Teams Task'}"
-              th:action="@{/user-area/add-collaborator}" method="post">
-            <h5>Collaborator</h5>
-            <input type="text" th:value="${collaboratorUsername}" name="collaboratorUsername">
-            <input type="submit" th:value="${task.id}" name="taskId">
-        </form>
-        <a th:href="@{/user-area/remove-task(taskId=${task.id})}">Remove task</a>
+        <hr/>
     </div>
 
     <!-- ===== IONICONS ===== -->
     <script src="https://kit.fontawesome.com/d324f99f68.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
     <script src="../../static/js/user_area.js" th:src="@{/js/user_area.js}"></script>
-
 </body>
 </html>

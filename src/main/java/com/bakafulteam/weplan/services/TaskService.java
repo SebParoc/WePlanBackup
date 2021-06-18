@@ -5,10 +5,9 @@ import com.bakafulteam.weplan.repositories.TaskRepository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TaskService {
@@ -46,5 +45,35 @@ public class TaskService {
                         LocalTime.parse(task.getTaskTime().substring(0, 5)
                                 , timeformatter)));
         return userTasks;
+    }
+
+    public static int getWeekOfYear(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        Date date = Date.from((LocalDate.parse(dateString, formatter))
+                .atStartOfDay(ZoneId.systemDefault())
+                .toInstant());
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.get(Calendar.WEEK_OF_YEAR);
+    }
+
+    public static String getWeekInterval(int weekOfYear) {
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        cal1.set(Calendar.WEEK_OF_YEAR, weekOfYear);
+        cal1.set(Calendar.DAY_OF_WEEK, 2); //MONDAY
+        Date startDate = cal1.getTime();
+        LocalDate startLD = startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String start = startLD.format(formatter);
+
+        cal2.set(Calendar.WEEK_OF_YEAR, weekOfYear);
+        cal2.set(Calendar.DAY_OF_WEEK, 1); //SUNDAY
+        Date endDate = cal2.getTime();
+        LocalDate endLD = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String end = endLD.format(formatter);
+
+        return start + " - " + end;
     }
 }

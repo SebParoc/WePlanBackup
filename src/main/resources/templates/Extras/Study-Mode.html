@@ -31,19 +31,34 @@
                     <ion-icon name="add-outline"></ion-icon>
                     <span class="nav__name">Create a Timer</span>
                 </a>
+                <!--a th:href="@{/timer}" class="nav__link">
+                    <span class="nav__name">🍅 Pomodoro timer</span>
+                </a-->
+                <div class="nav__link collapse">
+                    <ion-icon name="hourglass-outline" class="nav__icon"></ion-icon>
+                    <span class="nav__name">🍅 Pomodoro timer</span>
+                    <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
+                    <ul class="collapse__menu">
+                        <li>Focus time: 25</li>
+                        <li>Short break: 5</li>
+                        <li>Long break: 15</li>
+                        <li><a th:href="@{/timer}" class="nav__link">
+                            <ion-icon name="play-outline" class="nav__icon"></ion-icon></a></li>
+                    </ul>
+                </div>
+
+
                 <div class="nav__link collapse" th:each="timer: ${timerList}">
                     <ion-icon name="hourglass-outline" class="nav__icon"></ion-icon>
                     <span class="nav__name" th:text="${timer.timerName}"></span>
-
                     <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
-
                     <ul class="collapse__menu">
                         <li th:text="${'Focus time: ' + timer.minutes}"></li>
                         <li th:text="${'Short break: ' + timer.shortBreakMins}"></li>
                         <li th:text="${'Long time: ' + timer.longBreakMins}"></li>
                         <li>
                             <div style="display: flex">
-                        <a th:href="@{/start-timer(timerId=${timer.id})}" class="nav__link">
+                        <a th:href="@{/timer(timerId=${timer.id})}" class="nav__link">
                             <ion-icon name="play-outline" class="nav__icon"></ion-icon></a>
                         <a th:href="@{/delete-timer}" class="nav__link">
                             <ion-icon name="close-outline" class="nav__icon"></ion-icon></a>
@@ -55,19 +70,21 @@
         </div>
     </nav>
 </div>
-<div class="timer" th:if="${displayTimer!=null}">
-
+<div class="timer">
     <div class="display">
-        <h1 class="display__time-left" id="minutes">[[${displayTimer.minutes}]]</h1>
+        <h1 th:if="${displayTimer == null}" class="display__time-left" id="minutes">25</h1>
+        <h1 th:if="${displayTimer != null}" class="display__time-left" id="minutes">[[${displayTimer.minutes}]]</h1>
+        <h1>minutes</h1>
         <p class="display__end-time"></p>
     </div>
     <button id="test">Test</button>
-    <span id="shortBreak" style="display: none">0.05</span>
-    <span id="longBreak" style="display: none">0.05</span>
-
+    <span th:if="${displayTimer == null}" id="shortBreak" style="display: none">5</span>
+    <span th:if="${displayTimer == null}" id="longBreak" style="display: none">15</span>
+    <span th:if="${displayTimer != null}" id="shortBreak" style="display: none">[[${displayTimer.shortBreakMins}]]</span>
+    <span th:if="${displayTimer != null}" id="longBreak" style="display: none">[[${displayTimer.longBreakMins}]]</span>
 </div>
 
-<script src="../../static/js/scripts-FINISHED.js" ></script>
+<script src="../../static/js/scripts-FINISHED.js" th:src="@{/js/scripts-FINISHED.js}"></script>
 <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
 <script src="../../static/js/user_area.js" th:src="@{/js/user_area.js}"></script>
 </body>

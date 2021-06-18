@@ -15,53 +15,64 @@ public class Timer {
     private String timerName;
 
     @Column
-    private int minutes;
+    private double minutes;
 
     @Column
-    private int shortBreakMins;
+    private double shortBreakMins;
 
     @Column
-    private int longBreakMins;
+    private double longBreakMins;
+
+    @ManyToOne
+    private User timerOwner;
 
 
-    public Long getId() {
+    public Long getId () {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId (Long id) {
         this.id = id;
     }
 
-    public int getMinutes() {
+    public double getMinutes () {
         return minutes;
     }
 
-    public void setMinutes(int minutes) {
+    public void setMinutes (double minutes) {
         this.minutes = minutes;
     }
 
-    public int getShortBreakMins() {
+    public double getShortBreakMins () {
         return shortBreakMins;
     }
 
-    public void setShortBreakMins(int shortBreakMins) {
+    public void setShortBreakMins (double shortBreakMins) {
         this.shortBreakMins = shortBreakMins;
     }
 
-    public int getLongBreakMins() {
+    public double getLongBreakMins () {
         return longBreakMins;
     }
 
-    public void setLongBreakMins(int longBreakMins) {
+    public void setLongBreakMins (double longBreakMins) {
         this.longBreakMins = longBreakMins;
     }
 
-    public String getTimerName() {
+    public String getTimerName () {
         return timerName;
     }
 
-    public void setTimerName(String timerName) {
+    public void setTimerName (String timerName) {
         this.timerName = timerName;
+    }
+
+    public User getTimerOwner () {
+        return timerOwner;
+    }
+
+    public void setTimerOwner (User timerOwner) {
+        this.timerOwner = timerOwner;
     }
 
     @Override
