@@ -60,7 +60,7 @@
                             <div style="display: flex">
                         <a th:href="@{/timer(timerId=${timer.id})}" class="nav__link">
                             <ion-icon name="play-outline" class="nav__icon"></ion-icon></a>
-                        <a th:href="@{/delete-timer}" class="nav__link">
+                        <a th:href="@{/delete-timer(timerId=${timer.id})}" class="nav__link">
                             <ion-icon name="close-outline" class="nav__icon"></ion-icon></a>
                             </div>
                         </li>

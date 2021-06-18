@@ -85,7 +85,4 @@ public class Timer {
                 ", longBreakMins=" + longBreakMins +
                 '}';
     }
-
-    public void setName (String timerTest) {
-    }
 }

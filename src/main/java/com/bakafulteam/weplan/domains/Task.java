@@ -20,7 +20,7 @@ public abstract class Task {
     @Column(nullable = false)
     protected String name;
 
-    @Column()
+    @Column(nullable = false)
     protected String description;
 
     @Column(nullable = false)

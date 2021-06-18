@@ -58,4 +58,10 @@ public class TimerController {
         timerRepository.save(timer);
         return "redirect:/timer";
     }
+
+    @GetMapping("/delete-timer")
+    public String deleteTimer(@RequestParam Long timerId) {
+        timerRepository.deleteById(timerId);
+        return "redirect:/timer";
+    }
 }

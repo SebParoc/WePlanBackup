@@ -37,7 +37,7 @@ public class TimerRepositoryTests {
     @BeforeEach
     public void createTimer(){
         timer = new Timer();
-        timer.setName("timerTest");
+        timer.setTimerName("timerTest");
         timer.setMinutes(25);
         timer.setLongBreakMins(15);
         timer.setShortBreakMins(5);

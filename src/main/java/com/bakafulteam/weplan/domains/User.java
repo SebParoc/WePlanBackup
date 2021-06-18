@@ -35,8 +35,6 @@ public class User {
     @Column(nullable = false, unique = true, length = 15)
     private String username;
 
-    private String image = "Default.png";
-
     @Column(nullable = false, length = 64)
     private String password;
 
@@ -79,14 +77,6 @@ public class User {
 
     public void setPassword (String password) {
         this.password = password;
-    }
-
-    public String getImage () {
-        return image;
-    }
-
-    public void setImage (String image) {
-        this.image = image;
     }
 
     public String getFirstName () {

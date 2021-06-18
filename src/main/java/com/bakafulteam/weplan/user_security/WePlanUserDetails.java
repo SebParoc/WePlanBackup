@@ -64,8 +64,4 @@ public class WePlanUserDetails implements UserDetails{
     public String getFullName() {
         return user.getFirstName() + " " + user.getLastName();
     }
-
-    public String getImageName() {
-        return user.getImage();
-    }
 }

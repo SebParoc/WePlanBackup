@@ -1,11 +1,9 @@
 package com.bakafulteam.weplan.controllers;
 
-import com.bakafulteam.weplan.Exceptions.WrongImageExtensionException;
 import com.bakafulteam.weplan.domains.*;
 import com.bakafulteam.weplan.repositories.TaskRepository;
 import com.bakafulteam.weplan.repositories.UserRepository;
 import com.bakafulteam.weplan.repositories.WePlanFileRepository;
-import com.bakafulteam.weplan.services.FileUploadService;
 import com.bakafulteam.weplan.services.TaskService;
 import com.bakafulteam.weplan.user_security.WePlanUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,22 +44,6 @@ public class FileUploadDownloadController {
 
     @Autowired
     TaskRepository taskRepository;
-
-    @PostMapping("/profile/upload-profile-pic")
-    public String uploadImage(@RequestParam("image") MultipartFile image, @AuthenticationPrincipal WePlanUserDetails userInfo) throws IOException {
-        String extension =  image.getOriginalFilename().substring(image.getOriginalFilename().indexOf("."));
-        if(!extension.equals(".png")&& !extension.equals(".jpg")){
-            throw new WrongImageExtensionException(extension);
-        }
-
-        String newImageName = userInfo.getUsername() + extension;
-        User user = userRepository.findByUsername(userInfo.getUsername());
-        user.setImage(newImageName);
-        userRepository.save(user);
-
-        FileUploadService.uploadFile(newImageName, image);
-        return "redirect:/profile?username=" + user.getUsername();
-    }
 
     /**
      * POST http request that uploads a file to a Single or Teams Task. The Multipart file is saved

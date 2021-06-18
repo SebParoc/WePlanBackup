@@ -1,18 +1,14 @@
 package com.bakafulteam.weplan.controllers;
 
-import com.bakafulteam.weplan.Exceptions.AlreadyAddedCollaboratorException;
+import com.bakafulteam.weplan.domains.*;
+import com.bakafulteam.weplan.repositories.TaskRepository;
+import com.bakafulteam.weplan.repositories.UserRepository;
+import com.bakafulteam.weplan.services.FileUploadService;
+import com.bakafulteam.weplan.user_security.WePlanUserDetails;
 import com.bakafulteam.weplan.Exceptions.NonExistentUserException;
 import com.bakafulteam.weplan.Exceptions.WrongFileExtensionException;
-import com.bakafulteam.weplan.Exceptions.WrongImageExtensionException;
-import com.bakafulteam.weplan.domains.*;
-import com.bakafulteam.weplan.repositories.UserRepository;
-import com.bakafulteam.weplan.repositories.TaskRepository;
-import com.bakafulteam.weplan.services.FileUploadService;
-import com.bakafulteam.weplan.services.TaskService;
-import com.bakafulteam.weplan.user_security.WePlanUserDetails;
-import org.hibernate.engine.internal.Nullability;
+import com.bakafulteam.weplan.Exceptions.AlreadyAddedCollaboratorException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,24 +16,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.supercsv.cellprocessor.ParseDate;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.io.*;
+import org.supercsv.io.CsvMapReader;
+import org.supercsv.io.ICsvMapReader;
 import org.supercsv.prefs.CsvPreference;
 
-
-import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class TaskController {
@@ -180,7 +169,7 @@ public class TaskController {
         ICsvMapReader csvReader = null;
         CellProcessor[] processors = new CellProcessor[] {
                 new NotNull(),
-                new org.supercsv.cellprocessor.Optional(),
+                new NotNull(),
                 new NotNull(),
                 new NotNull(),
                 new NotNull(),

@@ -22,14 +22,6 @@ public class GlobalExceptionHandler {
         return mv;
     }
 
-    @ExceptionHandler(WrongImageExtensionException.class)
-    public ModelAndView wrongImageExtensionException(){
-        ModelAndView mv = new ModelAndView("error");
-        mv.addObject("Error","Image extension exception");
-        return mv;
-    }
-
-
     @ExceptionHandler(AlreadyAddedCollaboratorException.class)
     public ModelAndView alreadyAddedCollaboratorException(){
         ModelAndView mv = new ModelAndView("error");

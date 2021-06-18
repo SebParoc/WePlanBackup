@@ -56,7 +56,8 @@ public class TaskService {
                                 , timeformatter)));
         userTasks = userTasks
                 .stream()
-                .filter(task -> LocalDate.now().isBefore(LocalDate.parse(task.getDate(), dateformatter)))
+                .filter(task -> LocalDate.now().isBefore(LocalDate.parse(task.getDate(), dateformatter)) ||
+                        LocalDate.now().equals(LocalDate.parse(task.getDate(), dateformatter)))
                 .collect(Collectors.toList());
         return userTasks;
     }
@@ -87,8 +88,6 @@ public class TaskService {
         Date endDate = cal2.getTime();
         LocalDate endLD = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         String end = endLD.format(formatter);
-
-        System.out.println(System.getProperty("user.home"));
 
         return start + " - " + end;
     }

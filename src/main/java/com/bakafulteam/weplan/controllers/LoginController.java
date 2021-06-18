@@ -36,11 +36,11 @@ public class LoginController {
     @PostMapping("/register-user")
     public String registerUser(User user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-      String encodedPassword = encoder.encode(user.getPassword());
-      user.setPassword(encodedPassword);
-      userRepository.save(user);
-      return "Register_Login/Register_done";
-        }
+        String encodedPassword = encoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
+        return "Register_Login/Register_done";
+    }
 
 
     @GetMapping("/login")

@@ -19,9 +19,8 @@
 <body>
 
 <h1>Error</h1>
-<h4 th:if="${Error==null}">Operation not allowed.</h4>
+<h4 th:if="${Error==null}">Operation not allowed. Check the exception</h4>
 <h4 th:if="${Error=='Extension exception'}">The extension of the file you tried to add, is not allowed. Only .csv extension is allowed.</h4>
-<h4 th:if="${Error=='Image extension exception'}">The extension of the file you tried to add, is not allowed. Only .png or .jpg are allowed.</h4>
 <h4 th:if="${Error=='Data Integrity exception'}">Conflicts with the database. Username or email already taken.</h4>
 <h4 th:if="${Error=='Already added collaborator'}">You already added this user as a collaborator.</h4>
 <h4 th:if="${Error=='Already added friend'}">You already added this user as a friend.</h4>
