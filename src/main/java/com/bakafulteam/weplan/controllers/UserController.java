@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -58,6 +59,7 @@ public class UserController {
         model1.addAttribute("friendList", friendList);
         model2.addAttribute("teamsTaskList", teamsTasks);
         model3.addAttribute("userProfile", userProfile);
+        model4.addAttribute("imagePath", System.getProperty("user.home") + File.separator + "WePlanFiles" + File.separator);
 
         return "MainPage/Profile";
     }

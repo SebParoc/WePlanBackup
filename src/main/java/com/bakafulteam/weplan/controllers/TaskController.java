@@ -138,9 +138,9 @@ public class TaskController {
         };
 
         try {
-            FileUploadService.uploadFile("CSVfiles", csvFile.getOriginalFilename(), csvFile);
+            FileUploadService.uploadFile(csvFile.getOriginalFilename(), csvFile);
             csvReader = new CsvMapReader(new FileReader(FileUploadService
-                    .getFileDirectory("CSVfiles", csvFile.getOriginalFilename())), CsvPreference.STANDARD_PREFERENCE);
+                    .getFileDirectory(csvFile.getOriginalFilename())), CsvPreference.STANDARD_PREFERENCE);
 
             String[] header = {"Name", "Description", "Date", "TaskTime", "TaskType"};
             Map<String, Object> taskMap;

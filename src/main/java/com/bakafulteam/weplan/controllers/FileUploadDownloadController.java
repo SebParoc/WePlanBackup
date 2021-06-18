@@ -50,7 +50,7 @@ public class FileUploadDownloadController {
     @PostMapping("/profile/upload-profile-pic")
     public String uploadImage(@RequestParam("image") MultipartFile image, @AuthenticationPrincipal WePlanUserDetails userInfo) throws IOException {
         String extension =  image.getOriginalFilename().substring(image.getOriginalFilename().indexOf("."));
-        if(!extension.equals(".png")&& !extension.equalsIgnoreCase(".jpg")){
+        if(!extension.equals(".png")&& !extension.equals(".jpg")){
             throw new WrongImageExtensionException(extension);
         }
 
@@ -59,7 +59,7 @@ public class FileUploadDownloadController {
         user.setImage(newImageName);
         userRepository.save(user);
 
-        FileUploadService.uploadFile("profile_pictures", newImageName, image);
+        FileUploadService.uploadFile(newImageName, image);
         return "redirect:/profile?username=" + user.getUsername();
     }
 

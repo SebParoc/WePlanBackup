@@ -10,7 +10,8 @@
 
     <div th:if="${userProfile.username == #request.userPrincipal.principal.username}">
         <h1 sec:authentication="principal.fullName"></h1>
-        <img th:src="@{${'/profile_pictures/' + userProfile.image}}" width="200" height="200">
+        <h2 th:text="${imagePath + userProfile.image}"></h2>
+        <img th:src="@{${imagePath + userProfile.image}}" width="200" height="200">
         <form th:action="@{/profile/upload-profile-pic}" method="post" enctype="multipart/form-data">
             <input type="file" name="image">
             <!--input type="hidden" name="username" th:value="${userProfile.username}"-->
