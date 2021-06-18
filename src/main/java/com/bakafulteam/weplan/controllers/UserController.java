@@ -1,5 +1,7 @@
 package com.bakafulteam.weplan.controllers;
 
+import com.bakafulteam.weplan.Exceptions.AlreadyAddedFriendException;
+import com.bakafulteam.weplan.Exceptions.NonExistentUserException;
 import com.bakafulteam.weplan.domains.FriendRequest;
 import com.bakafulteam.weplan.domains.TeamsTask;
 import com.bakafulteam.weplan.domains.User;
@@ -61,11 +63,20 @@ public class UserController {
     }
 
     @PostMapping("/user-area/add-friend")
-    public String addFriend(@RequestParam String friendUsername, @AuthenticationPrincipal WePlanUserDetails user) {
+    public String addFriend(@RequestParam String friendUsername, @AuthenticationPrincipal WePlanUserDetails userInfo) {
+        User user = userRepository.findByUsername(userInfo.getUsername());
 
         FriendRequest newRequest = new FriendRequest();
-        newRequest.setSenderUsername(user.getUsername());
+        newRequest.setSenderUsername(userInfo.getUsername());
         newRequest.setRecipientUsername(friendUsername);
+
+        User user2 = userRepository.findByUsername(friendUsername);
+        if(user.getFriends().contains(user2)){
+            throw new AlreadyAddedFriendException(friendUsername);
+        }
+        if(user2==null){
+            throw new NonExistentUserException(friendUsername);
+        }
         friendRequestRepository.save(newRequest);
 
         return "redirect:/user-area";

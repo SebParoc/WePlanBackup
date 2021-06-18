@@ -1,24 +1,64 @@
 package com.bakafulteam.weplan.Exceptions;
 
+import org.dom4j.rule.Mode;
+import org.hibernate.loader.custom.Return;
+import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Date;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    //handling custom validation errors
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> customValidationErrorHandling(MethodArgumentNotValidException e){
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), "Validation error", e.getBindingResult().getFieldError().getDefaultMessage() );
-        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(WrongFileExtensionException.class)
+        public ModelAndView wrongExtensionException(){
+        ModelAndView mv = new ModelAndView("error");
+        mv.addObject("Error","Extension exception");
+        return mv;
     }
 
-    //
+    @ExceptionHandler(WrongImageExtensionException.class)
+    public ModelAndView wrongImageExtensionException(){
+        ModelAndView mv = new ModelAndView("error");
+        mv.addObject("Error","Image extension exception");
+        return mv;
+    }
+
+
+    @ExceptionHandler(AlreadyAddedCollaboratorException.class)
+    public ModelAndView alreadyAddedCollaboratorException(){
+        ModelAndView mv = new ModelAndView("error");
+        mv.addObject("Error","Already added collaborator");
+        return mv;
+    }
+
+    @ExceptionHandler(AlreadyAddedFriendException.class)
+    public ModelAndView alreadyAddedFriendException(){
+        ModelAndView mv = new ModelAndView("error");
+        mv.addObject("Error","Already added friend");
+        return mv;
+    }
+    @ExceptionHandler(NonExistentUserException.class)
+    public ModelAndView nonExistentUserException(){
+        ModelAndView mv = new ModelAndView("error");
+        mv.addObject("Error","Non existent user");
+        return mv;
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)  // 409
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ModelAndView handleConflict() {
+        ModelAndView mv = new ModelAndView("error");
+        mv.addObject("Error","Data Integrity exception");
+        return mv;
+        // Nothing to do
+    }
+
+
 
 }
