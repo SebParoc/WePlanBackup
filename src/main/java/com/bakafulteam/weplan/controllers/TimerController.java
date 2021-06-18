@@ -8,9 +8,7 @@ import com.bakafulteam.weplan.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,12 +48,14 @@ public class TimerController {
     }
 
 
-
-        @RequestMapping("pomodoro")
-         public String getContent(){
-            return "Extras/Pomodoro :: pomodoro";
-        }
     
+    @GetMapping("/start-timer")
+    public String startTimer(@RequestParam Long timerId, Model model){
+        Timer timer = timerRepository.getOne(timerId);
+        System.out.println(timer);
+        model.addAttribute("displayTimer", timer);
+        return "redirect:/timer";
+    }
 
 
 }

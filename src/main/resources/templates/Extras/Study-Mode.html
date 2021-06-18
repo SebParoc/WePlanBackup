@@ -4,30 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link type=text/css rel="stylesheet" href="../../static/css/study-mode_styles.css" th:href="@{/css/study-mode_styles.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
-
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
-    <!-- My JS -->
-    <script src="../../static/js/pomodoro.js" th:src="@{/js/pomodoro.js}" ></script>
-
-    <!-- My CSS -->
-
-
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/996973c893.js"></script>
-
-    <!-- Google Font -->
-    <link
-            href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
-            rel="stylesheet"
-    />
+    <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+    <link type=text/css rel="stylesheet" href="../../static/css/study-mode_styles.css" th:href="@{/css/study-mode_styles.css}">
 
     <title>WePlan - Study Mode</title>
 </head>
@@ -48,272 +27,47 @@
                     <ion-icon name="home-outline" class="nav__icon"></ion-icon>
                     <span class="nav__name">Dashboard</span>
                 </a>
-                <a th:href="@{/create-timer}" class="nav__link" id="modifier" )>
-                    <ion-icon name="hourglass-outline" class="nav__icon" ></ion-icon>
+                <a th:href="@{/create-timer}" class="nav__link" )>
+                    <ion-icon name="add-outline"></ion-icon>
                     <span class="nav__name">Create a Timer</span>
                 </a>
-
-                <div class="nav__link collapse">
-                    <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
-                    <span class="nav__name">Templates</span>
+                <div class="nav__link collapse" th:each="timer: ${timerList}">
+                    <ion-icon name="hourglass-outline" class="nav__icon"></ion-icon>
+                    <span class="nav__name" th:text="${timer.timerName}"></span>
 
                     <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
 
-                    <ul class="collapse__menu" >
-                        <a >Create Timer</a>
+                    <ul class="collapse__menu">
+                        <li th:text="${'Focus time: ' + timer.minutes}"></li>
+                        <li th:text="${'Short break: ' + timer.shortBreakMins}"></li>
+                        <li th:text="${'Long time: ' + timer.longBreakMins}"></li>
+                        <li>
+                            <div style="display: flex">
+                        <a th:href="@{/start-timer(timerId=${timer.id})}" class="nav__link">
+                            <ion-icon name="play-outline" class="nav__icon"></ion-icon></a>
+                        <a th:href="@{/delete-timer}" class="nav__link">
+                            <ion-icon name="close-outline" class="nav__icon"></ion-icon></a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
     </nav>
 </div>
+<div class="timer" th:if="${displayTimer!=null}">
 
-
-<section>
-<div id="content">
-<div th:each="timer : ${timerList}" >
-    <h3>Timer</h3>
-    <br>
-    <ul>
-        <li th:text="${timer.timerName}"></li>
-        <li th:text="${'Duration: ' + timer.minutes + ':' + timer.seconds}"></li>
-        <li th:text="${'Short Break: ' + timer.shortBreakMins + ':' + timer.shortBreakSecs}"></li>
-        <li th:text="${'Long Break: ' + timer.longBreakMins + ':' + timer.longBreakSecs}" ></li>
-    </ul>
-
-    <button type="submit" value="Start timer" class="btn btn-primary"  id="startTimer" onclick="template()">Start timer</button>
-
+    <div class="display">
+        <h1 class="display__time-left" id="minutes">[[${displayTimer.minutes}]]</h1>
+        <p class="display__end-time"></p>
+    </div>
+    <button id="test">Test</button>
+    <span id="shortBreak" style="display: none">0.05</span>
+    <span id="longBreak" style="display: none">0.05</span>
 
 </div>
-</div>
-    </section>
 
-<section id="pom">
-<div th:fragment="pomodoro" >
-    <div class="container heading">
-        <h1 class="text-center my-5 ">Pomodoro</h1>
-    </div>
-
-    <div class="container timer">
-        <div class="row">
-            <div class="col-5">
-                <h4 id="minutes"></h4>
-            </div>
-            <div class="col-2">
-                <h4>:</h4>
-            </div>
-            <div class="col-5">
-                <h4 id="seconds"></h4>
-            </div>
-        </div>
-    </div>
-
-    <div>
-        <h3 id="done" class="text-center my-5"></h3>
-    </div>
-
-    <div class="container d-flex justify-content-center align-items-center my-5">
-        <button  id="start" class= "btn" onclick="start()" type="submit"><i class="fas fa-play fa-2x" ></i></button>
-        <button class="btn" id="pause" onclick="pause()" disabled><i class="fas fa-pause fa-2x" ></i></button>
-        <button class="btn" id="resume" onclick="start2()" disabled><i class="fas fa-play-circle fa-2x" ></i></button>
-
-        <a href="Pomodoro.html" th:href="@{/Pomodoro}"><i class="fas fa-redo-alt fa-2x"></i></a>
-        <label id="totalTime"></label>
-
-    </div>
-</div>
-
-</section>
-<script>
-    function showDiv(){
-        document.getElementById('pom').style.display = "block";
-
-    }
-</script>
-
-<!--<script>
-    function showFrame(){
-        var frame= document.getElementById('frame');
-        frame.src="Pomodoro.html";
-        frame.style.display = "block";
-    }
-</script>-->
-
-<!--<script>
-    $('#startTimer').click(function (){
-        $('#replace_div').change(getContent);
-
-        function getContent(){
-            var url = "Extras/Pomodoro.html";
-            $('#replace_div').load(url);
-        }
-    })
-</script>
-<script>
-    document.getElementById("minutes").innerHTML = localStorage.getItem("minutesvalue");
-</script>-->
-
-<script>
-    var minutes = 25;
-    var seconds = "00";
-    seconds= localStorage.getItem("secondsvalue");
-    var click = new Audio("src/main/resources/static/sounds/click.mp3");
-    var bell = new Audio("static/sounds/bell.mp3");
-    var totalTime = document.getElementById("totalTime");
-
-    var minutes_interval;
-    var seconds_interval;
-
-    var totalSeconds = 0;
-    var totalMinutes = 0;
-    var totalHours = 0;
-
-    var pause;
-    var counter;
-    var timerOn;
-    var htmlResets;
-    var totalMills = 0;
-
-    function template(){
-        document.getElementById("minutes").innerHTML = minutes;
-        seconds = localStorage.getItem("secondsvalue");
-
-
-    }
-
-    function start() {
-        document.getElementById('pause').removeAttribute('disabled');
-
-        timerOn = 1;
-        htmlResets = 0;
-
-        click.play();
-
-        minutes = minutes - 1;
-        seconds = 59;
-
-        document.getElementById("minutes").innerHTML = minutes;
-        seconds = localStorage.getItem("secondsvalue") ;
-
-        minutes_interval = setInterval(minutesTimer, 60000);
-        seconds_interval = setInterval(secondsTimer, 1000);
-
-        function minutesTimer() {
-
-            minutes = minutes - 1;
-            document.getElementById("minutes").innerHTML = minutes;
-        }
-
-        function secondsTimer() {
-            seconds = seconds - 1;
-            document.getElementById("minutes").innerHTML = localStorage.getItem("secondsvalue");
-
-            if (seconds <= 0) {
-                if (minutes <= 0) {
-                    minutes = 5;
-                    document.getElementById("minutes").innerHTML = minutes;
-                    seconds = 60;
-
-                    document.getElementById("done").classList.add("show_message");
-
-
-                    document.getElementById("done").innerHTML =
-                        "5 minutes break!";
-
-
-                }
-            }
-        }
-
-        seconds = 60;
-        end();
-    }
-
-
-    function pause() {
-        document.getElementById("start").setAttribute('disabled', 'disabled');
-
-        document.getElementById('resume').removeAttribute('disabled');
-        pause = true;
-        if (timerOn === 1) {
-            clearInterval(minutes_interval);
-            clearInterval(seconds_interval);
-            timerOn = 0;
-        }
-        if (htmlResets === 1) {
-            minutesLabel.innerHTML = "00";
-            secondsLabel.innerHTML = "00";
-            totalSeconds = 0;
-            totalMinutes = 0;
-        } else {
-            htmlResets = 1;
-        }
-
-    }
-
-
-    function start2() {
-        pause = true;
-        timerOn = 1;
-        htmlResets = 0;
-        seconds = seconds - 1;
-        document.getElementById("seconds").innerHTML = seconds;
-
-        minutes_interval = setInterval(minutesTimer, 60000);
-
-        seconds_interval = setInterval(secondsTimer, 1000);
-
-        function minutesTimer() {
-
-            minutes = minutes - 1;
-            document.getElementById("minutes").innerHTML = minutes;
-        }
-
-        function secondsTimer() {
-
-            seconds = seconds - 1;
-            document.getElementById("seconds").innerHTML = seconds;
-
-            if(seconds <= 0){
-                if(minutes <=0){
-                    clearInterval(minutes_interval);
-                    clearInterval(seconds_interval);
-
-                    document.getElementById("done").innerHTML =
-                        "Session Completed! Take a break.";
-
-                    document.getElementById("done").classList.add("show_message");
-                    bell.play();
-
-                }
-                minutes = 5;
-                seconds = 60;
-
-            }
-
-        }
-    }
-
-    //TODO
-    //buttons
-    function end() {
-        setInterval(function ()
-        {
-            clearInterval(minutes_interval);
-            clearInterval(seconds_interval);
-
-            // Add the message to the html
-            document.getElementById("done").innerHTML =
-                "Session Completed!! Take a Break";
-
-            // Make the html message div visible
-            document.getElementById("done").classList.add("show_message");
-        },120000);
-    }
-
-
-</script>
-
+<script src="../../static/js/scripts-FINISHED.js" ></script>
 <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
 <script src="../../static/js/user_area.js" th:src="@{/js/user_area.js}"></script>
 </body>

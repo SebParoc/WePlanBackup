@@ -30,6 +30,12 @@ ul{
     margin: 0;
     padding: 0;
     list-style: none;
+    min-width:100%;
+    width:auto;
+
+}
+li{
+    white-space: nowrap;
 }
 a{
     text-decoration: none;
@@ -133,6 +139,7 @@ a{
     height: 50px;
     margin-top: 200px;
     cursor: pointer;
+    border-radius: 10px;
 }
 .nav_logo{
     margin-left: 1.5rem;
@@ -146,8 +153,6 @@ a{
 
 .wrapping_element{
     float: left;
-    margin: 10px 12px 100px 10px;
-
 }
 
 #content{
@@ -158,15 +163,16 @@ a{
     width: 100%;
 }
 .timer{
+    margin-left: 20rem;
+    margin-top: 10rem;
     color: #fff;
     text-align: center;
     width: 20rem;
     height: 20rem;
-    border: 5px solid #fff;
-    border-radius: 10rem;
-    display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
 .fa-play, .fa-redo-alt, .fa-stop{
@@ -193,4 +199,28 @@ a{
     border-radius: 0.5rem;
     transition: 0.5s ease;
 }
+.display {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
+.display__end-time {
+    font-size: 2rem;
+    color: white;
+    white-space: nowrap;
+
+}
+
+.display__time-left {
+    font-weight: 100;
+    font-size: 20rem;
+    margin: 0;
+    color: white;
+    text-shadow: 4px 4px 0 rgba(0,0,0,0.05);
+}
+#body-pd{
+    width: 20rem;
+}
