@@ -50,6 +50,13 @@ public class TaskController {
 
     User user;
 
+    /**
+     * GET http request that receives the parameter taskType to decide which models to send.
+     * @param model1
+     * @param model2
+     * @param taskType
+     * @return a string with the name of the view template (html)
+     */
     @GetMapping("/create-task")
     public String CreateTask(Model model1, Model model2, @RequestParam String taskType) {
         switch (taskType) {
@@ -71,6 +78,13 @@ public class TaskController {
         return "TaskManager/CreateTask";
     }
 
+    /**
+     * POST http request that saves a Simple Task if such model was sent in the CreateTasks method
+     * it sets the current user as the owner
+     * @param task
+     * @param userInfo
+     * @return a redirection to the http request for the user area
+     */
     @PostMapping("/create-simple-task")
     public String CreatesimpleTask(SimpleTask task, @AuthenticationPrincipal WePlanUserDetails userInfo) {
         user = userRepository.findByEmail(userInfo.getEmail());
@@ -79,6 +93,13 @@ public class TaskController {
         return "redirect:/user-area";
     }
 
+    /**
+     * POST http request that saves a Teams Task if such model was sent in the CreateTasks method
+     * it adds the current user as a collaborator
+     * @param task
+     * @param userInfo
+     * @return a redirection to the http request for the user area
+     */
     @PostMapping("/create-teams-task")
     public String CreateTeamsTask(TeamsTask task, @AuthenticationPrincipal WePlanUserDetails userInfo) {
         user = userRepository.findByEmail(userInfo.getEmail());
@@ -87,6 +108,13 @@ public class TaskController {
         return "redirect:/user-area";
     }
 
+    /**
+     * POST http request that saves a Scheduled Task if such model was sent in the CreateTasks method
+     * it sets the current user as the owner
+     * @param task
+     * @param userInfo
+     * @return a redirection to the http request for the user area
+     */
     @PostMapping("/create-scheduled-task")
     public String CreateScheduledTask(ScheduledTask task, @AuthenticationPrincipal WePlanUserDetails userInfo) {
         user = userRepository.findByEmail(userInfo.getEmail());
@@ -96,6 +124,13 @@ public class TaskController {
         return "redirect:/user-area";
     }
 
+    /**
+     * This method is called only through Teams tasks, it adds a new collaborator depending on the username that
+     * the user writes. It throws exceptions in case the input is invalid
+     * @param collaboratorUsername
+     * @param taskId
+     * @return a redirection to the http request for the user area
+     */
     @PostMapping("/user-area/add-collaborator")
     public String addCollaborator(@RequestParam String collaboratorUsername, @RequestParam Long taskId){
         Optional<Task> taskOptional = taskRepository.findById(taskId);
@@ -114,12 +149,26 @@ public class TaskController {
         return "redirect:/user-area";
     }
 
+    /**
+     * It removes the task from the repository, and therefore, from the database.
+     * @param taskId
+     * @return a redirection to the http request for the user area
+     */
     @GetMapping("/user-area/remove-task")
     public String removeTask(@RequestParam Long taskId) {
         taskRepository.deleteById(taskId);
         return "redirect:/user-area";
     }
 
+    /**
+     * POST http request that receives a MultipartFile as a parameter to read it. Only files of type
+     * CSV are allowed, otherwise it will throw an Exception. It uses the SuperCSV Java library to map
+     * headers, processors, and finally, to create instances of the different subclasses of Task to
+     * save them in the repository.
+     * @param csvFile
+     * @param userInfo
+     * @return a redirection to the http request for the user area
+     */
     @PostMapping("/user-area/import-timetable")
     public String readCSVFile(@RequestParam MultipartFile csvFile, @AuthenticationPrincipal WePlanUserDetails userInfo) {
         String extension = csvFile.getOriginalFilename().substring(csvFile.getOriginalFilename().indexOf("."));

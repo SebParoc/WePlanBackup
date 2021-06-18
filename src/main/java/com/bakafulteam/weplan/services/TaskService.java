@@ -11,6 +11,16 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class TaskService {
+    /**
+     * Creates a list of the tasks of the user who is currently logged in.
+     * As Task has three subclasses, they are all casted depending on the taskType
+     * and the ones that belong to the user are filtered. In the end they are gathered
+     * in a List of Task objects and sorted by date and time. The tasks that already expired
+     * are not included.
+     * @param taskRepository
+     * @param user
+     * @return the list of filtered tasks
+     */
     public static List<Task> getUserTasks (TaskRepository taskRepository, User user) {
         List<SimpleTask> simpleTasks = taskRepository.findAll()
                 .stream()

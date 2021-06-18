@@ -63,6 +63,18 @@ public class FileUploadDownloadController {
         return "redirect:/profile?username=" + user.getUsername();
     }
 
+    /**
+     * POST http request that uploads a file to a Single or Teams Task. The Multipart file is saved
+     * as a WePlanFile object with some additional information to be stored in the database. It checks
+     * the type of the class and cast the Task object to access their attributes and adds the wePlanFile
+     * to their lists.
+     * @param file
+     * @param taskId
+     * @param attributes
+     * @param userInfo
+     * @return a redirection to the http request for the user area
+     * @throws IOException
+     */
     @PostMapping("/user-area/upload-file")
     public String uploadFile(@RequestParam("file") MultipartFile file,
                               @RequestParam() Long taskId,
@@ -113,6 +125,14 @@ public class FileUploadDownloadController {
         outputStream.close();
     }
 
+    /**
+     * This method uses HttpServlet response to be able to download the file that is generated, the file is
+     * named with the username and the local date and time. It gets a list of the tasks of the user who is currently
+     * logged in and with the SuperCsv library, it creates a CSV file with the data of the tasks and it is finally exported.
+     * @param response
+     * @param userInfo
+     * @throws IOException
+     */
     @GetMapping("/user-area/export-timetable")
     public void exportToCSV(HttpServletResponse response, @AuthenticationPrincipal WePlanUserDetails userInfo) throws IOException {
 

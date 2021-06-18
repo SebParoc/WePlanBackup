@@ -1,13 +1,10 @@
 package com.bakafulteam.weplan;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.bakafulteam.weplan.domains.User;
 import com.bakafulteam.weplan.repositories.UserRepository;
-import org.junit.jupiter.api.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
@@ -15,10 +12,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
-import javax.validation.constraints.AssertTrue;
-import java.io.File;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("ALL")
 @DataJpaTest
@@ -55,7 +52,6 @@ public class UserRepositoryTests {
         userRepository.save(user1);
         userRepository.save(user2);
     }
-
 
     @Test
     public void shouldCheckIfUsersAreSaved() {

@@ -6,6 +6,9 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.*;
 
+/**
+ * User entity that will be stored in the database
+ */
 @Entity
 @DynamicUpdate
 @Table(name = "users")
@@ -26,9 +29,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-  @Column(nullable = false, unique = true, length = 50)
-  private String email;
-
+    @Column(nullable = false, unique = true, length = 50)
+    private String email;
 
     @Column(nullable = false, unique = true, length = 15)
     private String username;
@@ -40,7 +42,6 @@ public class User {
 
     @Column(name = "first_name", nullable = false, length = 40)
     private String firstName;
-
 
     @Column(name = "last_name", nullable = false, length = 40)
     private String lastName;

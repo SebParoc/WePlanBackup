@@ -37,6 +37,18 @@ public class UserController {
     @Autowired
     TaskRepository taskRepository;
 
+    /**
+     * Shows the profile of any user. If it is the profile of the user who is currently logged in, it will show the
+     * list of friends. If the users is looking at other user's profile, the tasks that they share will be displayed.
+     * Different models are sent to the view template to show specific content depending on each profile.
+     * @param username
+     * @param model1
+     * @param model2
+     * @param model3
+     * @param model4
+     * @param currentUserInfo
+     * @return a string with the name of the view template (html)
+     */
     @GetMapping("/profile")
     public String profile(@Param("username") String username, Model model1, Model model2, Model model3, Model model4,
                           @AuthenticationPrincipal WePlanUserDetails currentUserInfo) {
@@ -64,6 +76,13 @@ public class UserController {
         return "MainPage/Profile";
     }
 
+    /**
+     * POST http request to save a friend request in the database so the recipient will be able to see it in their profile
+     * whenever they log in. They can accept it or reject it. Exceptions are thrown in case of wrong input.
+     * @param friendUsername
+     * @param userInfo
+     * @return a redirection to the http request for the user area
+     */
     @PostMapping("/user-area/add-friend")
     public String addFriend(@RequestParam String friendUsername, @AuthenticationPrincipal WePlanUserDetails userInfo) {
         User user = userRepository.findByUsername(userInfo.getUsername());
@@ -84,6 +103,15 @@ public class UserController {
         return "redirect:/user-area";
     }
 
+
+    /**
+     * POST request to manage a friend request. If accepted, the users will be added in each one's
+     * friend list. It will delete the request from the database so it will not be displayed anymore
+     * @param senderUsername
+     * @param accepted
+     * @param userInfo
+     * @return a redirection to the http request for the user area
+     */
     @PostMapping("/user-area/manage-request")
     public String AcceptOrDeclineRequest(@RequestParam String senderUsername, @RequestParam(value = "accepted", required = false) String accepted,
                                          @AuthenticationPrincipal WePlanUserDetails userInfo) {
@@ -95,6 +123,12 @@ public class UserController {
         return "redirect:/user-area";
     }
 
+    /**
+     * GET http request to remove a friend. It is removed from both list of friends
+     * @param friendUsername
+     * @param userInfo
+     * @return a redirection to the http request for the profile
+     */
     @GetMapping("/profile/remove-friend")
     public String deleteFriend(@RequestParam String friendUsername,
                                @AuthenticationPrincipal WePlanUserDetails userInfo) {

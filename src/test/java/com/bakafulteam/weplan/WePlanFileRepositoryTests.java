@@ -37,9 +37,9 @@ public class WePlanFileRepositoryTests {
     @Rollback(value = false)
     void testUploadFile() throws IOException {
 
-        String fileDirectory = builder + "profile_pictures" +
+        String fileDirectory = builder + "fileTests" +
                 File.separator +
-                "Default.png";
+                "FirstTestFile";
         File file = new File(fileDirectory);
         WePlanFile wePlanFile = new WePlanFile();
         wePlanFile.setName(file.getName());

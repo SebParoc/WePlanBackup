@@ -12,6 +12,12 @@ public class WePlanUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Check if the user exists based on the email to return their details and information.
+     * @param email
+     * @return instance of class WePlanUserDetails
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername (String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);

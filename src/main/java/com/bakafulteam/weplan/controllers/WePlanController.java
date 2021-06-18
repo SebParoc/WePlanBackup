@@ -36,11 +36,28 @@ public class WePlanController {
     @Autowired
     private WePlanFileRepository fileRepository;
 
+    /**
+     * Sets the view (Landing page) for the context path "" as the application starts.
+     * @return
+     */
     @GetMapping("")
     public String viewHomePage() {
         return "MainPage/LandingPage";
     }
 
+    /**
+     * Gets the http request for "/user-area" and redirects to a certain html file.
+     * Uses a bunch of models which are the responsible for sending collections and objects
+     * to the view templates, which are connected to the Front Controller through the template engine
+     * "Thymeleaf", it also gets the information of the user who is currently logged in to show
+     * pertinent information to him/her. Tasks, Requests and Files depending on the user.
+     * @param model1
+     * @param model2
+     * @param model3
+     * @param model4
+     * @param userInfo
+     * @return a string with the name of the view template (html)
+     */
     @GetMapping("/user-area")
     public String userArea(Model model1, Model model2, Model model3, Model model4,
                            @AuthenticationPrincipal WePlanUserDetails userInfo) {
@@ -79,6 +96,13 @@ public class WePlanController {
         return "MainPage/UserArea";
     }
 
+    /**
+     * Filters the list of Teams Tasks depending on the user who is currently logged in
+     * and sends a model to the view templato to show the collaborators of each task.
+     * @param userInfo
+     * @param model
+     * @return a string with the name of the view template (html)
+     */
     @GetMapping("/teams-tasks")
     public String getMyTeamsTasks(@AuthenticationPrincipal WePlanUserDetails userInfo, Model model) {
         User user = userRepository.findByEmail(userInfo.getEmail());

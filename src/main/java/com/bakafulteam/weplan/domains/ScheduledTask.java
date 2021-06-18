@@ -59,6 +59,10 @@ public class ScheduledTask extends Task {
         this.endTime = endTime;
     }
 
+    public void setTaskTime () {
+        this.taskTime = getStartTime() + " - " + getEndTime();
+    }
+
     @Override
     public String toString () {
         return "Event Owner = " + getTaskOwner() + " --> " + super.toString();

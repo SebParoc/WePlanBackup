@@ -7,6 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Set;
 
+/**
+ * The methods of this class help us get the information of the user who is currently logged in
+ */
 public class WePlanUserDetails implements UserDetails{
 
     private User user;
