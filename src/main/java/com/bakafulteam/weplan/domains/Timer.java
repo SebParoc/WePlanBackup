@@ -32,7 +32,6 @@ public class Timer {
         this.id = id;
     }
 
-
     public int getMinutes() {
         return minutes;
     }
@@ -40,7 +39,6 @@ public class Timer {
     public void setMinutes(int minutes) {
         this.minutes = minutes;
     }
-
 
     public int getShortBreakMins() {
         return shortBreakMins;
